@@ -6,6 +6,10 @@
 
     display: flex;
     justify-content: center;
+
+    background-image: url("./img/Desktop_1.png");
+    background-size: cover;
+    background-repeat: repeat;
 }
 
 .loginWrapper {
@@ -56,6 +60,9 @@
     align-items: center;
 
     color: #efefef;
+    background-image: url("./img/Desktop_1.png");
+    background-size: cover;
+    background-repeat: repeat;
 }
 
 .welcome__container {
@@ -276,70 +283,70 @@
     text-transform: none;
 }
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 600px) {
     .loginWrapper {
         margin: 20px 0px 25px 0px;
     }
 
-    .welcome__container{
+    .welcome__container {
         flex-direction: column;
     }
 
-    .welcome__container h1{
+    .welcome__container h1 {
         font-size: 7vw;
     }
-    
-    .gameCard__container{
+
+    .gameCard__container {
         width: 85vw;
     }
 
-    .form{
+    .form {
         margin-top: 25px;
         padding: 10px;
 
         width: 100%;
     }
 
-    .form label{
+    .form label {
         font-size: 3.75vw;
     }
 
-    .form__horizontal{
+    .form__horizontal {
         margin: 0;
         padding: 0;
-        
+
         flex-direction: column;
     }
 
-    .form__horizontal *{
+    .form__horizontal * {
         margin: 0;
         padding: 0;
     }
 
-    .form__left{
+    .form__left {
         width: 100%;
     }
 
-    .form__right{
+    .form__right {
         width: 100%;
     }
 
-    .form__left__left div{
+    .form__left__left div {
         justify-content: center;
         align-items: center;
     }
 
-    .form__left__right div{
+    .form__left__right div {
         justify-content: center;
         align-items: center;
     }
 
-    .form__right__left div{
+    .form__right__left div {
         justify-content: center;
         align-items: center;
     }
 
-    .form__right__right div{
+    .form__right__right div {
         justify-content: center;
         align-items: center;
     }
