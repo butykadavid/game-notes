@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
 
-    background-image: url("../public/Desktop_1.png");
+    background-image: url("/Desktop_1.png");
     background-size: cover;
     background-repeat: repeat;
 }
@@ -60,7 +60,7 @@
     align-items: center;
 
     color: #efefef;
-    background-image: url("../public/Desktop_1.png");
+    background-image: url("/Desktop_1.png");
     background-size: cover;
     background-repeat: repeat;
 }
