@@ -296,7 +296,7 @@ export default function Index({ games }) {
     )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 
     // get data from db
     const q = query(collection(db, "games"), orderBy('lastPlayed', 'desc'))
