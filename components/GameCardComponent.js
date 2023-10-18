@@ -1,10 +1,12 @@
-import { useEffect } from "react";
 import styles from "../styles/gameCard.module.css"
 
 const GameCardComponent = (games) => {
 
     const getDateFromTimestamp = (timestamp) => {
-        const date = new Date(timestamp * 1000);
+        return new Date(timestamp * 1000);
+    }
+
+    const getFormattedDate = (date) => {
         const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEC"];
         return date.getFullYear() + "." + months[date.getMonth()];
     }
@@ -27,16 +29,29 @@ const GameCardComponent = (games) => {
         else if (n < 10) return "#aa0000"
     }
 
+    const isReviewOutDated = game => {
+        if (getDateFromTimestamp(game.lastPlayed).getFullYear() + 3 < (new Date().getFullYear())) return true
+
+        return false
+    }
+
+    const getCardStyle = game => {
+        if (!isReviewOutDated(game)) return
+
+        return "linear-gradient(#121224, #121224) padding-box, linear-gradient(to right, yellow, red) border-box"
+    }
+
     return games.games.map(game => {
 
-        game.lastPlayed_Date = getDateFromTimestamp(game.lastPlayed)
+        const date = getDateFromTimestamp(game.lastPlayed)
+        game.lastPlayed_Date = getFormattedDate(date)
         game.ovr = getOvrRating(game)
 
         return <>
 
-            <div className={styles.game__card} title={game.notes}>
+            <div className={styles.game__card} title={game.notes} style={{background: getCardStyle(game)}}>
 
-                <div className={styles.card__left} style={{backgroundImage: `url(${game.img})`}} title={game.img}>
+                <div className={styles.card__left} style={{ backgroundImage: `url(${game.img})` }} title={game.img}>
                 </div>
 
                 <div className={styles.card__mid}>
@@ -51,31 +66,31 @@ const GameCardComponent = (games) => {
 
                                 <div>
                                     <p>Gameplay</p>
-                                    <p style={{color: getColor(game.gameplay)}}>{game.gameplay}</p>
+                                    <p style={{ color: getColor(game.gameplay) }}>{game.gameplay}</p>
                                 </div>
                                 <div>
                                     <p>Story</p>
-                                    <p style={{color: getColor(game.story)}}>{game.story}</p>
+                                    <p style={{ color: getColor(game.story) }}>{game.story}</p>
                                 </div>
                                 <div>
                                     <p>Atmosphere</p>
-                                    <p style={{color: getColor(game.atmosphere)}}>{game.atmosphere}</p>
+                                    <p style={{ color: getColor(game.atmosphere) }}>{game.atmosphere}</p>
                                 </div>
                                 <div>
                                     <p>Visuals</p>
-                                    <p style={{color: getColor(game.visuals)}}>{game.visuals}</p>
+                                    <p style={{ color: getColor(game.visuals) }}>{game.visuals}</p>
                                 </div>
                                 <div>
                                     <p>Characters</p>
-                                    <p style={{color: getColor(game.characters)}}>{game.characters}</p>
+                                    <p style={{ color: getColor(game.characters) }}>{game.characters}</p>
                                 </div>
                                 <div>
                                     <p>Audio</p>
-                                    <p style={{color: getColor(game.audio)}}>{game.audio}</p>
+                                    <p style={{ color: getColor(game.audio) }}>{game.audio}</p>
                                 </div>
                                 <div>
                                     <p>Replayability</p>
-                                    <p style={{color: getColor(game.replayability)}}>{game.replayability}</p>
+                                    <p style={{ color: getColor(game.replayability) }}>{game.replayability}</p>
                                 </div>
 
                             </div>
@@ -83,7 +98,7 @@ const GameCardComponent = (games) => {
                         </div>
 
                         <div className={styles.card__ovr}>
-                            <p style={{background: getColor(game.ovr)}}>{game.ovr}</p>
+                            <p style={{ background: getColor(game.ovr) }}>{game.ovr}</p>
                         </div>
 
                     </div>
