@@ -1,6 +1,6 @@
 import styles from "../styles/gameCard.module.css"
 
-const GameCardComponent = (games) => {
+const GameCardComponent = ({ games, fillParentForm }) => {
 
     const getDateFromTimestamp = (timestamp) => {
         return new Date(timestamp * 1000);
@@ -12,8 +12,11 @@ const GameCardComponent = (games) => {
     }
 
     const getOvrRating = (game) => {
-        var ovr = game.gameplay + game.story + game.atmosphere + game.visuals + game.characters + game.audio + game.replayability;
-        return Math.floor(ovr / 7);
+        // calculating overall rating
+        // the multipliers are there for weights for certain stats
+        var ovr = (game.gameplay * 4) + (game.story * 3) + (game.atmosphere * 4) + (game.visuals * 3) +
+            (game.characters * 2) + (game.audio * 2) + game.replayability;
+        return Math.floor(ovr / 19);
     }
 
     const getColor = n => {
@@ -41,7 +44,11 @@ const GameCardComponent = (games) => {
         return "linear-gradient(#121224, #121224) padding-box, linear-gradient(to right, yellow, red) border-box"
     }
 
-    return games.games.map(game => {
+    const cardDoubleClick = game => {
+        fillParentForm(game)
+    }
+
+    return games.map(game => {
 
         const date = getDateFromTimestamp(game.lastPlayed)
         game.lastPlayed_Date = getFormattedDate(date)
@@ -49,7 +56,7 @@ const GameCardComponent = (games) => {
 
         return <>
 
-            <div className={styles.game__card} title={game.notes} style={{background: getCardStyle(game)}}>
+            <div className={styles.game__card} title={game.notes} style={{ background: getCardStyle(game) }} onDoubleClick={() => cardDoubleClick(game)}>
 
                 <div className={styles.card__left} style={{ backgroundImage: `url(${game.img})` }} title={game.img}>
                 </div>

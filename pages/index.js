@@ -97,10 +97,46 @@ export default function Index({ games }) {
 
     }
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
     const toggleForm = () => {
         const f = _form.current
         if (f.style.display == "flex") f.style.display = "none"
         else f.style.display = "flex"
+    }
+
+    const fillForm = (game) => {
+        _title.current.value = game.title;
+        _gameplay.current.value = game.gameplay;
+        _story.current.value = game.story;
+        _atmosphere.current.value = game.atmosphere;
+        _visuals.current.value = game.visuals;
+        _characters.current.value = game.characters;
+        _audio.current.value = game.audio;
+        _replayability.current.value = game.replayability;
+        _frenchise.current.value = game.frenchise;
+        _lastPlayed.current.value = formatDate(game.lastPlayed * 1000);
+        _playtime.current.value = game.playtime;
+        _playtroughs.current.value = game.playtroughs;
+        _price.current.value = game.price;
+        _img.current.value = game.img;
+        _notes.current.value = game.notes;
+
+        // also opening form
+        _form.current.style.display = "flex"
+        window.scrollTo(0, 0);
     }
 
     const clearFields = () => {
@@ -264,7 +300,7 @@ export default function Index({ games }) {
 
                             <div className={styles.gameCard__container}>
 
-                                <GameCardComponent games={games} />
+                                <GameCardComponent games={games} fillParentForm={fillForm} />
 
                             </div>
 
