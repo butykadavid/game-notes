@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, signInWithGoogle, signOutFunc, db } from "../public/firebase";
-import { query, getDocs, collection, where, addDoc, updateDoc, doc, orderBy } from 'firebase/firestore';
+import { query, getDocs, collection, where, addDoc, updateDoc, doc, orderBy} from 'firebase/firestore';
 
 import GameCardComponent from "../components/GameCardComponent"
 
@@ -97,7 +97,7 @@ export default function Index({ games }) {
 
     }
 
-    function formatDate(date) {
+    const formatDate = (date) => {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
@@ -186,10 +186,10 @@ export default function Index({ games }) {
             {user != null ?
 
                 <>
-                    {user.uid == 'NupJEpLKYQXDBGrsq3B7ehyz8x42' ?
+                    {user.uid == process.env.ADMIN ?
 
-                        <div className={styles.main__container}>
-
+                        <div className={styles.main__container} >
+                    
                             <div className={styles.welcome__container}>
 
                                 <h1><span className={styles.welcome__text}>Welcome</span> {user.displayName}</h1>

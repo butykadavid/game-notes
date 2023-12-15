@@ -1,6 +1,12 @@
+import { useRouter } from "next/router";
+import { db } from "../public/firebase";
+import { query, getDocs, collection, where, doc, deleteDoc } from 'firebase/firestore';
+
 import styles from "../styles/gameCard.module.css"
 
 const GameCardComponent = ({ games, fillParentForm }) => {
+
+    const router = useRouter();
 
     const getDateFromTimestamp = (timestamp) => {
         return new Date(timestamp * 1000);
@@ -48,6 +54,39 @@ const GameCardComponent = ({ games, fillParentForm }) => {
         fillParentForm(game)
     }
 
+    // !!!
+    // Needs implementing
+    // !!!
+    const deleteGame = async (game) => {
+        if (confirm("Are you sure you want to delete this review?")) {
+
+            try {
+
+                const q = query(collection(db, "games"), where("title", "==", game.title))
+                const docs = await getDocs(q);
+
+                var id;
+                docs.forEach(doc => {
+                    id = doc.id;
+                })
+
+                const docRef = doc(db, 'games', id)
+
+                await deleteDoc(docRef);
+
+                // console.log(game.title + " deleted")
+
+                router.reload()
+
+            } catch (err) {
+                console.log(err)
+            }
+
+        } else {
+            console.log("Process canceled")
+        }
+    }
+
     return games.map(game => {
 
         const date = getDateFromTimestamp(game.lastPlayed)
@@ -57,6 +96,8 @@ const GameCardComponent = ({ games, fillParentForm }) => {
         return <>
 
             <div className={styles.game__card} title={game.notes} style={{ background: getCardStyle(game) }} onDoubleClick={() => cardDoubleClick(game)}>
+
+                <button className={styles.card_delete} title="Delete game" onClick={() => deleteGame(game)}>x</button>
 
                 <div className={styles.card__left} style={{ backgroundImage: `url(${game.img})` }} title={game.img}>
                 </div>
