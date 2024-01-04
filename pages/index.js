@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, signInWithGoogle, signOutFunc, db } from "../public/firebase";
-import { query, getDocs, collection, where, addDoc, updateDoc, doc, orderBy} from 'firebase/firestore';
+import { query, getDocs, collection, where, addDoc, updateDoc, doc, orderBy } from 'firebase/firestore';
 
 import GameCardComponent from "../components/GameCardComponent"
 
@@ -35,6 +35,7 @@ export default function Index({ games }) {
     const _price = useRef()
     const _img = useRef()
     const _notes = useRef()
+    const _platinum = useRef()
 
     const uploadNewGame = async () => {
 
@@ -63,7 +64,8 @@ export default function Index({ games }) {
                     playtroughs: Number(_playtroughs.current.value),
                     price: Number(_price.current.value),
                     img: _img.current.value,
-                    notes: _notes.current.value
+                    notes: _notes.current.value,
+                    platinum: _platinum.current.checked
                 });
             }
             else {
@@ -83,7 +85,8 @@ export default function Index({ games }) {
                     playtroughs: Number(_playtroughs.current.value),
                     price: Number(_price.current.value),
                     img: _img.current.value,
-                    notes: _notes.current.value
+                    notes: _notes.current.value,
+                    platinum: _platinum.current.checked
                 })
             }
 
@@ -133,6 +136,7 @@ export default function Index({ games }) {
         _price.current.value = game.price;
         _img.current.value = game.img;
         _notes.current.value = game.notes;
+        _platinum.current.checked = game.platinum;
 
         // also opening form
         _form.current.style.display = "flex"
@@ -155,6 +159,7 @@ export default function Index({ games }) {
         _price.current.value = null;
         _img.current.value = null;
         _notes.current.value = null;
+        _platinum.current.checked = false;
     }
 
     return (
@@ -189,7 +194,7 @@ export default function Index({ games }) {
                     {user.uid == process.env.ADMIN ?
 
                         <div className={styles.main__container} >
-                    
+
                             <div className={styles.welcome__container}>
 
                                 <h1><span className={styles.welcome__text}>Welcome</span> {user.displayName}</h1>
@@ -224,6 +229,10 @@ export default function Index({ games }) {
                                             <div>
                                                 <label for="atmos">Atmosphere</label>
                                                 <input type="number" id="atmos" ref={_atmosphere}></input>
+                                            </div>
+                                            <div className={styles.checkbox_div}>
+                                                <label for="platinum">Platinum</label>
+                                                <input type="checkbox" id="platinum" ref={_platinum}></input>
                                             </div>
                                         </div>
                                         <div className={styles.form__left__right}>

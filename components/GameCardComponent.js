@@ -54,9 +54,6 @@ const GameCardComponent = ({ games, fillParentForm }) => {
         fillParentForm(game)
     }
 
-    // !!!
-    // Needs implementing
-    // !!!
     const deleteGame = async (game) => {
         if (confirm("Are you sure you want to delete this review?")) {
 
@@ -73,8 +70,6 @@ const GameCardComponent = ({ games, fillParentForm }) => {
                 const docRef = doc(db, 'games', id)
 
                 await deleteDoc(docRef);
-
-                // console.log(game.title + " deleted")
 
                 router.reload()
 
@@ -108,7 +103,7 @@ const GameCardComponent = ({ games, fillParentForm }) => {
 
                         <div className={styles.card__mid__content__divider}>
 
-                            <h1 className={styles.card__title}>{game.title}</h1>
+                            <h1 className={`${styles.card__title} ${game.platinum ? styles.platinum : ""}`}>{game.title}</h1>
 
                             <div className={styles.card__ratings}>
 
