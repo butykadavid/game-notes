@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap');
+
+.mobile {
+    display: none;
+}
+
+.desktop {
+    width: 100vw;
+    height: 160vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.barcode {
+    position: fixed;
+    top: 2vw;
+    left: 2vw;
+
+    margin: 0;
+    padding: 0;
+
+    text-wrap: nowrap;
+
+    font-family: "Libre Barcode 39 Text", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+    color: rgba(255, 255, 255, 0.4);
+
+    z-index: 10;
+}
+
+.barcode_scanner {
+    position: absolute;
+    top: 2vw;
+    left: 50vw;
+
+    margin: 0;
+    padding: 0;
+
+    text-wrap: nowrap;
+
+    font-family: "Libre Barcode 39 Text", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+    visibility: collapse;
+
+    z-index: 5;
+}
+
+.main__left {
+    width: 50%;
+    height: 100vh;
+}
+
+.main__right {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 50vw;
+    height: 100vh;
+
+    background: #efefef;
+
+    align-self: flex-start;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bestAspects__container {
+    position: absolute;
+    bottom: -2.5px;
+    left: 0;
+
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.bestAspects__label {
+    margin: 0;
+    padding: 2px 10px 2px 6px;
+
+    background-color: magenta;
+    color: #efefef;
+
+    font-style: italic;
+
+    transition: 0.4s ease-in-out;
+}
+
+.bestAspects__label::before {
+    content: "Best aspects";
+}
+
+.bestAspects__bar:hover+.bestAspects__label::before {
+    content: "All aspects";
+}
+
+
+.bestAspects__bar {
+    height: 12.5vh;
+
+    margin-bottom: 1px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    overflow-x: hidden;
+
+    background: #121224;
+
+    border-top: magenta 2px solid;
+    border-right: magenta 2px solid;
+
+    z-index: 5;
+
+    transition: 0.4s ease-in-out;
+}
+
+.aspect {
+    padding: 0px 35px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    color: #efefef;
+    font-style: italic;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    border-left: #858585 1px solid;
+}
+
+.aspect:nth-child(1) {
+    border-left: none;
+}
+
+.aspect p {
+    margin: 0;
+}
+
+.bestAspects__bar .hidden__aspect {
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: transparent;
+
+    transition: opacity 0.4s;
+}
+
+.bestAspects__bar .hidden__aspect .aspect {
+    border-color: transparent;
+}
+
+.bestAspects__bar:hover .hidden__aspect {
+    width: auto;
+    height: auto;
+
+    color: #858585;
+
+    opacity: 1;
+    visibility: visible;
+}
+
+.bestAspects__bar:hover .hidden__aspect .aspect {
+    border-left: #858585 1px solid;
+}
+
+.game__title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+    padding: 0;
+
+    text-wrap: nowrap;
+
+    font-size: 150px;
+    font-weight: 600;
+    font-style: italic;
+
+    color: rgba(255, 255, 255, 1.0);
+
+    mix-blend-mode: difference;
+
+    z-index: 2;
+}
+
+.game__image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    max-height: 250px;
+}
+
+.game__desc {
+    margin-top: 25vh;
+    padding-left: 15px;
+
+    min-width: 12.5vw;
+    max-width: 25vw;
+    max-height: 35vh;
+
+    text-align: justify;
+    font-size: 1.75vh;
+    color: #252525;
+
+    border-left: 1px solid #252525;
+}
+
+.stats__container {
+    width: 100vw;
+    height: 20vh;
+
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    border-top: 2px solid magenta;
+
+    z-index: 2;
+}
+
+.stats__container .aspect {
+    border: none;
+}
+
+.ovr__container{
+    width: 100%;
+    height: 30vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 700;
+}
+
+.ovr__container h1{
+    margin: 0;
+    padding: 0;
+
+    font-size: 14vh;
+}
+
+.ovr__container p{
+    margin: 0;
+    padding: 0;
+
+    color: #efefef;
+}
+
+@media only screen and (max-width: 600px) {
+    .mobile {
+        width: 100vw;
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .game__title{
+        max-width: 100vw;
+
+        text-wrap: wrap;
+        font-size: 5vh;
+        text-align: center;
+    }
+
+    .main__left {
+        width: 100%;
+        height: 50vh;
+
+        margin: 0;
+        padding: 0;
+    }
+
+    .main__right {
+        position: relative;
+
+        width: 100%;
+        height: 50vh;
+
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .game__desc {
+        margin-top: 0;
+        padding-left: 15px;
+    
+        max-width: 85vw;
+        max-height: 80%;
+    
+        text-align: justify;
+        font-size: 2.5vh;
+        color: #252525;
+    
+        border-left: 1px solid #252525;
+    }
+
+    .ratings__container {
+        padding-top: 25px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        border-top: 2px solid magenta;
+    }
+
+    .aspect {
+        padding: 15px;
+
+        color: #efefef;
+        font-weight: 400;
+        border: none;
+    }
+    .aspect p:first-child{
+        font-size: 3.5vh;
+    }
+
+    .aspect p:nth-child(2){
+        font-size: 2vh;
+    }
+
+    .stats__container {
+        width: 100vw;
+        height: 10vh;
+
+        flex-wrap: wrap;
+
+        border: none;
+    }
+
+    .stats__container .aspect p{
+        padding-bottom: 0;
+
+        color: #858585;
+
+        font-weight: 700;
+        font-size: 2.5vw;
+        font-style: normal;
+    }
+
+}

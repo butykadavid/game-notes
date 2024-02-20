@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRef, useState, useEffect } from "react";
 import { auth, signInWithGoogle, signOutFunc, db } from "../public/firebase";
 import { query, getDocs, collection, where, addDoc, updateDoc, doc, orderBy } from 'firebase/firestore';
 
 import GameCardComponent from "../components/GameCardComponent"
 
 import styles from "../styles/index.module.css"
-import { useRef } from "react";
 
 export default function Index({ games }) {
 
@@ -16,7 +16,7 @@ export default function Index({ games }) {
         router.reload();
     }
 
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     const _form = useRef()
 
@@ -97,7 +97,6 @@ export default function Index({ games }) {
         clearFields();
 
         refreshSite();
-
     }
 
     const formatDate = (date) => {
@@ -181,6 +180,7 @@ export default function Index({ games }) {
                   padding: 0;
                   margin: 0;
                   font-family: Roboto, sans-serif;
+                  scroll-behavior: smooth;
                 }
                 
                 body::-webkit-scrollbar{
@@ -188,153 +188,172 @@ export default function Index({ games }) {
                 }
             `}</style>
 
-            {user != null ?
+            {loading ?
 
-                <>
-                    {user.uid == process.env.ADMIN ?
+                <div className={styles.login__container}>
+                    <div className={styles.loader__container}>
 
-                        <div className={styles.main__container} >
+                        <h1 className={styles.loading__title}>Loading</h1>
+                        <div className={styles.loader__circle}></div>
 
-                            <div className={styles.welcome__container}>
-
-                                <h1><span className={styles.welcome__text}>Welcome</span> {user.displayName}</h1>
-
-                                <div>
-                                    <a className={styles.toggleButton} onClick={toggleForm}>Toggle form</a>
-                                    <a className={styles.logout} onClick={signOutFunc}>Log out</a>
-                                </div>
-
-                            </div>
-
-                            <div className={styles.form} ref={_form}>
-
-                                <div className={styles.form__horizontal}>
-                                    <div className={styles.form__left}>
-                                        <div className={styles.form__left__left}>
-                                            <div>
-                                                <label for="title">Title</label>
-                                                <input type="text" id="title" ref={_title}></input>
-                                            </div>
-
-                                            <div>
-                                                <label for="gameplay">Gameplay</label>
-                                                <input type="number" id="gameplay" ref={_gameplay}></input>
-                                            </div>
-
-                                            <div>
-                                                <label for="story">Story</label>
-                                                <input type="number" id="story" ref={_story}></input>
-                                            </div>
-
-                                            <div>
-                                                <label for="atmos">Atmosphere</label>
-                                                <input type="number" id="atmos" ref={_atmosphere}></input>
-                                            </div>
-                                            <div className={styles.checkbox_div}>
-                                                <label for="platinum">Platinum</label>
-                                                <input type="checkbox" id="platinum" ref={_platinum}></input>
-                                            </div>
-                                        </div>
-                                        <div className={styles.form__left__right}>
-                                            <div>
-                                                <label for="visuals">Visuals</label>
-                                                <input type="number" id="visuals" ref={_visuals}></input>
-                                            </div>
-
-                                            <div>
-                                                <label for="chars">Characters</label>
-                                                <input type="number" id="chars" ref={_characters}></input>
-                                            </div>
-
-                                            <div>
-                                                <label for="audio">Audio</label>
-                                                <input type="number" id="audio" ref={_audio}></input>
-                                            </div>
-
-                                            <div>
-                                                <label for="replay">Replayability</label>
-                                                <input type="number" id="replay" ref={_replayability}></input>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.form__right}>
-
-                                        <div className={styles.form__right__group}>
-                                            <div className={styles.form__right__left}>
-                                                <div>
-                                                    <label for="french">Frenchise</label>
-                                                    <input type="text" id="french" ref={_frenchise}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label for="lastPlayed">Last played at</label>
-                                                    <input type="date" id="lastPlayed" ref={_lastPlayed}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label for="playtime">Playtime</label>
-                                                    <input type="number" id="playtime" ref={_playtime}></input>
-                                                </div>
-                                            </div>
-
-
-                                            <div className={styles.form__right__right}>
-                                                <div>
-                                                    <label for="playtroughs">Playtroughs</label>
-                                                    <input type="number" id="playtroughs" ref={_playtroughs}></input>
-                                                </div>
-                                                <div>
-                                                    <label for="price">Price</label>
-                                                    <input type="number" id="price" ref={_price}></input>
-                                                </div>
-                                                <div>
-                                                    <label for="img">Image link</label>
-                                                    <input type="url" id="img" ref={_img}></input>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className={styles.form__notes}>
-                                            <label for="note">Note</label>
-                                            <textarea id="note" rows="3" ref={_notes}></textarea>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div className={styles.loginWrapper}><a className={styles.login} onClick={uploadNewGame}>Add</a></div>
-
-                            </div>
-
-                            <div className={styles.gameCard__container}>
-
-                                <GameCardComponent games={games} fillParentForm={fillForm} />
-
-                            </div>
-
-                        </div>
-
-                        :
-
-                        <div className={styles.main__container}>
-                            <h1>403 - NO PERMISSION</h1>
-                            <a className={styles.logout} onClick={signOutFunc}>Log out</a>
-                        </div>
-                    }
-                </>
+                    </div>
+                </div>
 
                 :
 
-                <div className={styles.login__container}>
+                <>
 
-                    <div className={styles.loginWrapper}>
+                    {user != null ?
 
-                        <a className={styles.login} onClick={signInWithGoogle}>Log in</a>
+                        <>
+                            {user.uid == process.env.ADMIN ?
 
-                    </div>
+                                <div className={styles.main__container} >
 
-                </div>
+                                    <div className={styles.welcome__container}>
+
+                                        <h1><span className={styles.welcome__text}>Welcome</span> {user.displayName}</h1>
+
+                                        <div>
+                                            <a className={styles.toggleButton} onClick={toggleForm}>Toggle form</a>
+                                            <a className={styles.logout} onClick={signOutFunc}>Log out</a>
+                                        </div>
+
+                                    </div>
+
+                                    <div className={styles.form} ref={_form}>
+
+                                        <div className={styles.form__horizontal}>
+                                            <div className={styles.form__left}>
+                                                <div className={styles.form__left__left}>
+                                                    <div>
+                                                        <label htmlFor="title">Title</label>
+                                                        <input type="text" id="title" ref={_title}></input>
+                                                    </div>
+
+                                                    <div>
+                                                        <label htmlFor="gameplay">Gameplay</label>
+                                                        <input type="number" id="gameplay" ref={_gameplay}></input>
+                                                    </div>
+
+                                                    <div>
+                                                        <label htmlFor="story">Story</label>
+                                                        <input type="number" id="story" ref={_story}></input>
+                                                    </div>
+
+                                                    <div>
+                                                        <label htmlFor="atmos">Atmosphere</label>
+                                                        <input type="number" id="atmos" ref={_atmosphere}></input>
+                                                    </div>
+                                                    <div className={styles.checkbox_div}>
+                                                        <label htmlFor="platinum">Platinum</label>
+                                                        <input type="checkbox" id="platinum" ref={_platinum}></input>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.form__left__right}>
+                                                    <div>
+                                                        <label htmlFor="visuals">Visuals</label>
+                                                        <input type="number" id="visuals" ref={_visuals}></input>
+                                                    </div>
+
+                                                    <div>
+                                                        <label htmlFor="chars">Characters</label>
+                                                        <input type="number" id="chars" ref={_characters}></input>
+                                                    </div>
+
+                                                    <div>
+                                                        <label htmlFor="audio">Audio</label>
+                                                        <input type="number" id="audio" ref={_audio}></input>
+                                                    </div>
+
+                                                    <div>
+                                                        <label htmlFor="replay">Replayability</label>
+                                                        <input type="number" id="replay" ref={_replayability}></input>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.form__right}>
+
+                                                <div className={styles.form__right__group}>
+                                                    <div className={styles.form__right__left}>
+                                                        <div>
+                                                            <label htmlFor="french">Frenchise</label>
+                                                            <input type="text" id="french" ref={_frenchise}></input>
+                                                        </div>
+
+                                                        <div>
+                                                            <label htmlFor="lastPlayed">Last played at</label>
+                                                            <input type="date" id="lastPlayed" ref={_lastPlayed}></input>
+                                                        </div>
+
+                                                        <div>
+                                                            <label htmlFor="playtime">Playtime</label>
+                                                            <input type="number" id="playtime" ref={_playtime}></input>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div className={styles.form__right__right}>
+                                                        <div>
+                                                            <label htmlFor="playtroughs">Playtroughs</label>
+                                                            <input type="number" id="playtroughs" ref={_playtroughs}></input>
+                                                        </div>
+                                                        <div>
+                                                            <label htmlFor="price">Price</label>
+                                                            <input type="number" id="price" ref={_price}></input>
+                                                        </div>
+                                                        <div>
+                                                            <label htmlFor="img">Image link</label>
+                                                            <input type="url" id="img" ref={_img}></input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className={styles.form__notes}>
+                                                    <label htmlFor="note">Note</label>
+                                                    <textarea id="note" rows="3" ref={_notes}></textarea>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.loginWrapper}><a className={styles.login} onClick={uploadNewGame}>Add</a></div>
+
+                                    </div>
+
+                                    <div className={styles.gameCard__container}>
+
+                                        <GameCardComponent games={games} fillParentForm={fillForm} />
+
+                                    </div>
+
+                                </div>
+
+                                :
+
+                                <div className={styles.main__container}>
+                                    <h1>403 - NO PERMISSION</h1>
+                                    <a className={styles.logout} onClick={signOutFunc}>Log out</a>
+                                </div>
+                            }
+                        </>
+
+                        :
+
+                        <div className={styles.login__container}>
+
+                            <div className={styles.loginWrapper}>
+
+                                <a className={styles.login} onClick={signInWithGoogle}>Log in</a>
+
+                            </div>
+
+                        </div>
+
+                    }
+
+                </>
 
             }
         </>
