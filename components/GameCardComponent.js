@@ -275,7 +275,7 @@ const GameCardComponent = ({ games, fillParentForm }) => {
                 </div>
 
                 <div>
-                    <button className={`view__button ${styles.re__button}`} onClick={(e) => toggleListView(e)} title="Toggle list view">▭</button>
+                    <button className={`view__button ${styles.re__button}`} onClick={(e) => toggleListView(e)} title="Toggle list view">🔲</button>
                     <button className={`view__button ${styles.re__button}`} onClick={(e) => toggleListView(e)} title="Toggle list view">☰</button>
                 </div>
             </div>
