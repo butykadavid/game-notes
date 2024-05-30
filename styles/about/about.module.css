@@ -1,0 +1,63 @@
+.main__container {
+    width: 100%;
+    height: 90vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo__container h1 {
+    margin: 0;
+
+    color: var(--text-color-1);
+
+    font-family: 'Tektur', sans-serif;
+
+    letter-spacing: 5px;
+}
+
+.logo__container p {
+    margin: 0;
+
+    color: var(--text-color-1);
+
+    font-style: italic;
+}
+
+.logo__container a {
+    position: relative;
+
+    padding: 5px 10px;
+
+    color: var(--text-color-1);
+
+    transition: 0.25s ease-in-out;
+}
+
+.logo__container a::after {
+    content: '🔗';
+    
+    position: absolute;
+    top: 0;
+
+    font-size: 10px;
+}
+
+.logo__container a:hover {
+    opacity: 0.8;
+}
+
+.text__container {
+    color: var(--text-color-1);
+
+    text-align: center;
+}

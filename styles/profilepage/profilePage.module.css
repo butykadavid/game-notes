@@ -1,0 +1,47 @@
+.main__container {
+    width: 100vw;
+    height: 90vh;
+}
+
+.splitter{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+}
+
+.profile__card__side {
+    width: 40%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-right: 2px solid var(--theme-color-tone-2);
+}
+
+.reviews__side {
+    width: 60%;
+    height: 100%;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reviews__side .no__review__message {
+    color: var(--text-color-2);
+
+    font-style: italic;
+}
+
+.reviews__side .bottom__dummy{
+    width: 100%;
+    height: 10vh;
+
+    color: transparent;
+}

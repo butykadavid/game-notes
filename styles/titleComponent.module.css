@@ -1,0 +1,29 @@
+.wrapper{
+    padding: 5vh 0;
+
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(90deg, var(--theme-color-decor-1), var(--theme-color-decor-2));
+}
+
+.title__container {
+    width: 90%;
+    height: 10vh;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title__container h1 {
+    margin: 0;
+
+    font-style: italic;
+    font-family: 'Tektur';
+    color: var(--text-color-2);
+}

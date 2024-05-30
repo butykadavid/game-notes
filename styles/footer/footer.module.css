@@ -1,0 +1,92 @@
+.main__container {
+    width: 100vw;
+    height: 30vh;
+
+    background: #070715;
+
+    border-top: 2px solid var(--theme-color-decor-1);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main__container .main__part {
+    width: 30%;
+    height: 60%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--text-color-3);
+
+    font-size: 1.5vh;
+    font-weight: 700;
+}
+
+.main__container a {
+    position: relative;
+
+    cursor: pointer;
+
+    transition: 0.25s ease-in-out;
+}
+
+.main__container a:hover {
+    color: var(--text-color-1);
+}
+
+.main__container .main__part:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__container .main__part:first-child div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.main__container .main__part:first-child div a {
+    margin: 0 15px;
+
+    opacity: 0.75;
+    transition: 0.25s ease-in-out;
+}
+
+.main__container .main__part:first-child div a:hover {
+    opacity: 1;
+}
+
+.main__container .main__part:nth-child(2) {
+    width: 40%;
+    height: 100%;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__container .main__part:nth-child(2) p{
+    margin: 0;
+
+    font-style: normal;
+    font-family: 'Tektur', sans-serif;
+    font-size: 2vh;
+
+    letter-spacing: 5px;
+
+    cursor: pointer;
+}
+
+.main__container div:nth-child(3) a {
+    margin: 15px;
+}
+
+.logo {
+    cursor: pointer;
+}

@@ -14,7 +14,7 @@
 }
 
 .loginWrapper {
-    padding: 2px;
+    padding: 1px;
 
     align-self: center;
 
@@ -31,7 +31,7 @@
 }
 
 .login {
-    padding: 5px 20px;
+    padding: 5px 20px 4px 20px;
 
     color: #fff;
     font-size: 1rem;
@@ -51,40 +51,6 @@
     background-color: transparent;
 }
 
-.loader__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    align-self: center;
-}
-
-.loading__title {
-    color: #efefef;
-}
-
-.loader__circle {
-    width: 30px;
-    height: 30px;
-
-    border: 6px solid rgba(0, 0, 0, 0.2);
-    border-top: 6px solid #efefef;
-    border-radius: 50%;
-    
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 .main__container {
     width: 100vw;
     height: auto;
@@ -95,66 +61,56 @@
     align-items: center;
 
     color: #efefef;
-    background: linear-gradient(to right, rgba(20, 20, 20, 0.85), rgba(20, 20, 20, 0.85)), url("/bg_2.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: repeat;
 }
 
-.welcome__container {
-    padding: 0vw 2vw;
+.optionBar__container {
+    padding: 1vh 0vw;
 
-    width: 96vw;
-    height: 18vh;
+    width: 100vw;
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    
+    background: var(--theme-color-tone-2);
 }
 
-.welcome__container div * {
+.optionBar__container div * {
     cursor: pointer;
 }
 
-.welcome__container div a:first-child {
-    margin-right: 25px;
+.optionBar__container div a{
+    margin: 0px 10px;
+    padding: 3px 10px 3px 10px;
 
-    color: #efefef;
-    font-size: 1rem;
+    color: var(--text-color-2);
+    background: var(--text-color-3);
+
+    font-weight: 700;
+    font-style: italic;
+    font-size: 2vh;
+
+    border-radius: var(--border-radius-small);
 
     transition: 0.25s ease-in-out;
 }
 
-.welcome__container div a:first-child:hover {
-    color: #a5a5a5;
-}
-
-.welcome__text {
-    background: -webkit-linear-gradient(left, rgb(0, 255, 195), darkorchid);
-    background: -o-linear-gradient(right, rgb(0, 255, 195), darkorchid);
-    background: -moz-linear-gradient(right, rgb(0, 255, 195), darkorchid);
-    background: linear-gradient(to right, rgb(0, 255, 195), darkorchid);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logout {
+.optionBar__container div a:last-child {
     color: crimson;
-    font-size: 1rem;
-
-    cursor: pointer;
-
-    transition: 0.25s ease-in-out;
+    background: var(--theme-color-tone-1);
+    border: crimson 1px solid;
 }
 
-.logout:hover {
-    color: red;
+.optionBar__container div a:hover{
+    opacity: 0.8;
 }
 
 .gameCard__container {
     padding: 5vh 0px;
-    width: 60vw;
+    width: 80vw;
+    min-height: 100vh;
+    height: auto;
 
     display: flex;
     flex-direction: column;
@@ -172,11 +128,12 @@
     justify-content: center;
     align-items: center;
 
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(5px);
+    background: var(--theme-color-tone-2);
+    border-bottom: 2px solid var(--theme-color-tone-2);
+}
 
-    border-top: 2px solid #202040;
-    border-bottom: 2px solid #202040;
+.form label {
+    color: var(--text-color-3);
 }
 
 .form__horizontal {
@@ -304,11 +261,11 @@
     width: 100%;
 
     color-scheme: dark;
-    color: #a5a5a5;
+    color: var(--text-color-3);
     background: transparent;
 
     border: none;
-    border-bottom: 1px solid #a5a5a5;
+    border-bottom: 1px solid var(--text-color-3);
     border-radius: 2px;
 
     cursor: pointer;
@@ -319,11 +276,11 @@
 .form textarea {
     width: 100%;
 
-    color: #a5a5a5;
+    color: var(--text-color-3);
     background: transparent;
 
     border: none;
-    border-bottom: 1px solid #a5a5a5;
+    border-bottom: 1px solid var(--text-color-3);
     border-radius: 2px;
 
     cursor: pointer;
@@ -407,10 +364,10 @@
     .form input {
         text-align: center;
 
-        border-bottom: 2px solid #a5a5a5;
+        border-bottom: 2px solid var(--text-color-3);
     }
 
     .form textarea {
-        border-bottom: 2px solid #a5a5a5;
+        border-bottom: 2px solid var(--text-color-3);
     }
 }

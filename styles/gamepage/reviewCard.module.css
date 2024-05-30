@@ -1,0 +1,219 @@
+.wrapper{
+    margin: 5vh 0;
+
+    width: 75%;
+    height: 25vh;
+    min-height: 20vh;
+}
+
+.card__title{
+    margin: 0;
+
+    color: var(--text-color-1);
+
+    font-style: italic;
+}
+
+.card {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: var(--border-radius-large);
+    border: 2px solid var(--theme-color-tone-2);
+
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+
+    display: flex;
+
+    cursor: default;
+}
+
+.car:last-child{
+    margin-bottom: 25px;
+}
+
+.card .delete{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 900;
+}
+
+.card .delete a {
+    width: 20px;
+    height: 20px;
+
+    padding-bottom: 1px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: rgb(75, 0, 0);
+    background: crimson;
+    border: 1px solid crimson;
+    border-radius: var(--border-radius-small);
+
+    cursor: pointer;
+
+    transition: 0.25s ease-in-out;
+}
+
+.card .delete a:first-child{
+    margin-right: 7px;
+
+    color: var(--text-color-2);
+    background: var(--text-color-3);
+    border: 1px solid var(--text-color-3);
+}
+
+.card .delete a:hover{
+    opacity: 0.8;
+}
+
+.card__user {
+    position: absolute;
+    top: 10%;
+    left: 0;
+
+    background: var(--text-color-1);
+    clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);
+
+    transition: 0.25s ease-in-out;
+}
+
+.card__user:hover {
+    background: var(--text-color-2);
+
+    cursor: pointer;
+}
+
+.card__user:hover p {
+    color: var(--text-color-1);
+}
+
+.card__user p {
+    margin: 0;
+    margin: 4px 25px 3px 4px;
+
+    color: var(--text-color-2);
+    font-weight: 700;
+    font-style: italic;
+}
+
+.card__user span {
+    font-size: 10px;
+}
+
+.card__img {
+    width: 25%;
+    height: 100%;
+}
+
+.card__mid {
+    position: relative;
+
+    width: 55%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.card__mid .card__desc {
+    width: 100%;
+    height: 90%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.card__mid .card__desc p {
+    margin: 10px 20px;
+
+    text-align: justify;
+    text-transform: initial;
+
+    font-size: 90%;
+
+    color: var(--text-color-3);
+}
+
+.card__mid .card__ratings {
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    transform: translate(-50%, 50%);
+
+    background: var(--theme-color-tone-1);
+
+    width: 90%;
+    height: 30%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-self: center;
+
+    border-radius: var(--border-radius-small);
+    border: 2px solid var(--theme-color-tone-2);
+
+    -webkit-box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.card__mid .card__ratings .rating {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__mid .card__ratings .rating p {
+    margin: 0;
+
+    font-weight: 700;
+    font-size: 2.5vh;
+}
+
+.card__mid .card__ratings .rating p:nth-child(2) {
+    font-size: 10px;
+    font-weight: 900;
+
+    color: var(--text-color-2);
+}
+
+.card__ovr {
+    width: 20%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__ovr div {
+    padding: 25px 25px 23px 25px;
+
+    background: var(--text-color-2);
+
+    border-radius: var(--border-radius-large);
+}
+
+.card__ovr div h1 {
+    margin: 0;
+
+    color: var(--text-color-1);
+}

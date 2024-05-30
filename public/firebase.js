@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
+import { getFirestore, query, getDocs, collection, where, setDoc, doc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage'
 import { firebaseConfig } from './firebaseConfig'
 
@@ -18,11 +18,12 @@ const signInWithGoogle = async () => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
         if (docs.docs.length === 0) {
-            await addDoc(collection(db, "users"), {
+            await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: user.displayName,
                 authProvider: "google",
                 email: user.email,
+                image: user.photoURL,
                 createdAt: new Date().getTime()
             });
         }

@@ -1,0 +1,33 @@
+.container {
+    margin: 0;
+    padding: 0;
+
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: var(--theme-color-tone-1);
+    color: var(--text-color-1);
+}
+
+.link{
+    padding: 5px 15px;
+
+    border-radius: var(--border-radius-small);
+
+    color: var(--text-color-1);
+    background: var(--theme-color-tone-2);
+
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: 0.25s ease-in-out;
+}
+
+.link:hover{
+    color: var(--theme-color-decor-1);
+}

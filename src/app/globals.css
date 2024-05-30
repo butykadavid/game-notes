@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap');
+
+:root {
+    --theme-color-tone-1: #121224;
+    --theme-color-tone-2: #202040;
+    --theme-alter: #181836;
+    --theme-alter-2: #070715;
+    --text-color-1: #efefef;
+    --text-color-2: #404080;
+    --text-color-3: #c5c5d5;
+    --theme-color-decor-1: #00FFC3;
+    --theme-color-decor-2: darkorchid;
+    --border-radius-large: 5px;
+    --border-radius-small: 4px;
+}
+
+*::-webkit-scrollbar {
+    width: 3px;
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--text-color-3);
+}
+
+html,
+body {
+    background: #121224;
+    overflow-x: hidden;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    scroll-behavior: smooth;
+    cursor: default;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}

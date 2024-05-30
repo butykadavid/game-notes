@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { db } from "../public/firebase";
 import { query, getDocs, collection, where, doc, deleteDoc } from 'firebase/firestore';
 
-import styles from "../styles/gameCard.module.css"
-import card_styles from "../styles/gameCard.module.css"
+import styles from "../styles/gameCardContainer.module.css"
+import card_styles from "../styles/gameCardContainer.module.css"
 
-const GameCardComponent = ({ games, fillParentForm }) => {
+const GameCardContainerComponent = ({ games, fillParentForm }) => {
 
     const _games = games;
 
@@ -29,26 +29,10 @@ const GameCardComponent = ({ games, fillParentForm }) => {
         return date.getFullYear() + "." + months[date.getMonth()];
     }
 
-    const getOvrRating = (game) => {
+    const getCardStyle = game => {
+        if (!isReviewOutDated(game)) return
 
-        // calculating overall rating
-        // the multipliers are there for weights for certain stats
-        // if a stat is 0 it doesn't count
-
-        var invalids = 0;
-        if (game.gameplay == 0) invalids += 4;
-        if (game.story == 0) invalids += 3;
-        if (game.atmosphere == 0) invalids += 4;
-        if (game.visuals == 0) invalids += 3;
-        if (game.characters == 0) invalids += 2;
-        if (game.audio == 0) invalids += 2;
-        if (game.replayability == 0) invalids++;
-
-        var ovr = (game.gameplay * 4) + (game.story * 3) + (game.atmosphere * 4) + (game.visuals * 3) +
-            (game.characters * 2) + (game.audio * 2) + game.replayability;
-
-
-        return Math.floor(ovr / (19 - invalids));
+        return "linear-gradient(#121224, #121224) padding-box, linear-gradient(to right, yellow, red) border-box"
     }
 
     const getColor = n => {
@@ -70,12 +54,6 @@ const GameCardComponent = ({ games, fillParentForm }) => {
         return false
     }
 
-    const getCardStyle = game => {
-        if (!isReviewOutDated(game)) return
-
-        return "linear-gradient(#121224, #121224) padding-box, linear-gradient(to right, yellow, red) border-box"
-    }
-
     //-----------------------------
     // Short click = redirect
     // Long click = fill form
@@ -91,7 +69,7 @@ const GameCardComponent = ({ games, fillParentForm }) => {
             fillParentForm(game)
         } else {
             router.push({
-                pathname: `/${game.title}`,
+                pathname: `/game/${game.title}`,
                 query: {
                     title: game.title,
                     gameplay: game.gameplay,
@@ -115,32 +93,28 @@ const GameCardComponent = ({ games, fillParentForm }) => {
     }
     //-----------------------------
 
-    const deleteGame = async (game) => {
-        if (confirm("Are you sure you want to delete this review?")) {
+    
 
-            try {
+    const getOvrRating = (game) => {
 
-                const q = query(collection(db, "games"), where("title", "==", game.title))
-                const docs = await getDocs(q);
+        // calculating overall rating
+        // the multipliers are there for weights for certain stats
+        // if a stat is 0 it doesn't count
 
-                var id;
-                docs.forEach(doc => {
-                    id = doc.id;
-                })
+        var invalids = 0;
+        if (game.gameplay == 0) invalids += 4;
+        if (game.story == 0) invalids += 3;
+        if (game.atmosphere == 0) invalids += 4;
+        if (game.visuals == 0) invalids += 3;
+        if (game.characters == 0) invalids += 2;
+        if (game.audio == 0) invalids += 2;
+        if (game.replayability == 0) invalids++;
 
-                const docRef = doc(db, 'games', id)
+        var ovr = (game.gameplay * 4) + (game.story * 3) + (game.atmosphere * 4) + (game.visuals * 3) +
+            (game.characters * 2) + (game.audio * 2) + game.replayability;
 
-                await deleteDoc(docRef);
 
-                router.reload()
-
-            } catch (err) {
-                console.log(err)
-            }
-
-        } else {
-            console.log("Process canceled")
-        }
+        return Math.floor(ovr / (19 - invalids));
     }
 
     const toggleListView = e => {
@@ -245,15 +219,18 @@ const GameCardComponent = ({ games, fillParentForm }) => {
 
         toggleListView(null)
 
+        // calcualting ovr stat for each game
+        gameList.forEach(g => {
+            g.ovr = getOvrRating(g)
+        })
+
         // ordering games accourding to loaded ordering
         const orderingKey = orderingIndex;
         const orderings = {
             0: "lastPlayed",
             1: "playtime",
             2: "price",
-            // Should be ovr, but it is not saved in db
-            3: "gameplay",
-            // --------------
+            3: "ovr",
             4: "platinum"
         }
 
@@ -275,7 +252,7 @@ const GameCardComponent = ({ games, fillParentForm }) => {
                 </div>
 
                 <div>
-                    <button className={`view__button ${styles.re__button}`} onClick={(e) => toggleListView(e)} title="Toggle list view">🔲</button>
+                    <button className={`view__button ${styles.re__button}`} onClick={(e) => toggleListView(e)} title="Toggle list view">▭</button>
                     <button className={`view__button ${styles.re__button}`} onClick={(e) => toggleListView(e)} title="Toggle list view">☰</button>
                 </div>
             </div>
@@ -283,9 +260,7 @@ const GameCardComponent = ({ games, fillParentForm }) => {
             {gameList.map(game => {
 
                 const date = getDateFromTimestamp(game.lastPlayed)
-                game.lastPlayed_Date = getFormattedDate(date)
-                game.ovr = getOvrRating(game)
-
+                const lastPlayed_date = getFormattedDate(date)
 
                 return (
 
@@ -354,7 +329,7 @@ const GameCardComponent = ({ games, fillParentForm }) => {
 
                                 <div>
                                     <p className={styles.card__info__name}>Last played - </p>
-                                    <p>{game.lastPlayed_Date}</p>
+                                    <p>{lastPlayed_date}</p>
                                 </div>
                                 <div className={styles.card__info__visible}>
                                     <p className={styles.card__info__name}>Playtime - </p>
@@ -374,10 +349,11 @@ const GameCardComponent = ({ games, fillParentForm }) => {
                         </div>
 
                     </div>
+
                 )
             })}
         </>
     )
 }
 
-export default GameCardComponent;
+export default GameCardContainerComponent;

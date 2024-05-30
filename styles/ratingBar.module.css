@@ -1,0 +1,57 @@
+.main__bar {
+    position: relative;
+
+    width: 100%;
+    max-width: 80vw;
+    height: 5vh;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    display: flex;
+}
+
+.main__bar .rating__label {
+    position: absolute;
+    top: 130%;
+
+    padding: 5px 5px 3px 5px;
+    
+    background: var(--text-color-1);
+
+    border-radius: var(--border-radius-small);
+}
+
+.main__bar .rating__label::before {
+    content: ' ';
+
+    position: absolute;
+    top: -55%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    height: 0;
+    width: 0;
+    border: 8px solid transparent;
+    border-bottom-color: var(--text-color-1);
+}
+
+.rating__label h1 {
+    margin: 0;
+
+    color: #252525;
+
+    font-size: 100%;
+}
+
+.color__bar {
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.marker {
+    height: 100%;
+    width: 2px;
+    background: var(--text-color-1);
+}
