@@ -25,8 +25,6 @@ export default function Dashboard() {
     const router = useRouter();
 
     const refreshSite = () => {
-        window.scrollTo(0, 0)
-
         router.reload();
     }
 
@@ -60,7 +58,7 @@ export default function Dashboard() {
 
             var id;
             docs.forEach(doc => {
-                    id = doc.id;
+                id = doc.id;
             })
 
             if (docs.docs.length === 0) {
@@ -85,7 +83,8 @@ export default function Dashboard() {
                     platinum: _platinum.current.checked,
                     userName: user.displayName,
                     userPath: `users/${user.uid}`,
-                    created: Date.now()
+                    created: Math.floor(Date.now() / 1000),
+                    updated: Math.floor(Date.now() / 1000)
                 });
 
                 // Adjusting summary
@@ -141,6 +140,7 @@ export default function Dashboard() {
                 }
             }
             else {
+                // updating existing review
                 var docRef = doc(db, "games", id);
                 await updateDoc(docRef, {
                     title: _title.current.value,
@@ -158,7 +158,8 @@ export default function Dashboard() {
                     price: Number(_price.current.value),
                     img: _img.current.value,
                     notes: _notes.current.value,
-                    platinum: _platinum.current.checked
+                    platinum: _platinum.current.checked,
+                    updated: Math.floor(Date.now() / 1000)
                 })
 
                 // Get previous ovr
@@ -321,6 +322,10 @@ export default function Dashboard() {
     useEffect(() => {
         if (user) fetchData()
     }, [user])
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
 
