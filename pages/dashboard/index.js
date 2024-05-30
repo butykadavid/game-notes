@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRef, useState, useEffect } from "react";
 import { auth, signInWithGoogle, signOutFunc, db } from "../../public/firebase";
-import { query, getDocs, collection, where, addDoc, updateDoc, doc, limit } from 'firebase/firestore';
+import { query, getDocs, collection, where, addDoc, updateDoc, doc, limit, orderBy } from 'firebase/firestore';
 
 import styles from "../../styles/dashboard.module.css"
 import loaderStyles from "../../styles/loader.module.css"
@@ -25,6 +25,8 @@ export default function Dashboard() {
     const router = useRouter();
 
     const refreshSite = () => {
+        window.scrollTo(0, 0)
+
         router.reload();
     }
 
