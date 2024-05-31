@@ -30,4 +30,5 @@
 
 .link:hover{
     color: var(--theme-color-decor-1);
+    cursor: pointer;
 }

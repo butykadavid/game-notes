@@ -342,153 +342,152 @@ export default function Dashboard() {
 
                 :
 
-                <>
+                <div className={styles.main__container} >
+
 
                     {user != null ?
 
                         <>
 
-                            <div className={styles.main__container} >
 
-                                <Title text={`Welcome ${user.displayName}`} />
+                            <Title text={`Welcome ${user.displayName}`} />
 
-                                <div className={styles.optionBar__container}>
+                            <div className={styles.optionBar__container}>
 
-                                    <div>
-                                        <a ref={_formMode} onClick={() => toggleForm()}>Add game</a>
-                                        <a ref={_editMode} onClick={() => toggleEditMode()}>Edit mode</a>
-                                        <a onClick={() => signOutFunc()}>Sign out</a>
-                                    </div>
-
+                                <div>
+                                    <a ref={_formMode} onClick={() => toggleForm()}>Add game</a>
+                                    <a ref={_editMode} onClick={() => toggleEditMode()}>Edit mode</a>
+                                    <a onClick={() => signOutFunc()}>Sign out</a>
                                 </div>
-
-                                <div className={styles.form} ref={_form}>
-
-                                    <div className={styles.form__horizontal}>
-                                        <div className={styles.form__left}>
-                                            <div className={styles.form__left__left}>
-                                                <div>
-                                                    <label htmlFor="title">Title</label>
-                                                    <input type="text" id="title" ref={_title}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="gameplay">Gameplay</label>
-                                                    <input type="number" id="gameplay" ref={_gameplay}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="story">Story</label>
-                                                    <input type="number" id="story" ref={_story}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="atmos">Atmosphere</label>
-                                                    <input type="number" id="atmos" ref={_atmosphere}></input>
-                                                </div>
-                                                <div className={styles.checkbox_div}>
-                                                    <label htmlFor="platinum">Platinum</label>
-                                                    <input type="checkbox" id="platinum" ref={_platinum}></input>
-                                                </div>
-                                            </div>
-                                            <div className={styles.form__left__right}>
-                                                <div>
-                                                    <label htmlFor="visuals">Visuals</label>
-                                                    <input type="number" id="visuals" ref={_visuals}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="chars">Characters</label>
-                                                    <input type="number" id="chars" ref={_characters}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="audio">Audio</label>
-                                                    <input type="number" id="audio" ref={_audio}></input>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="replay">Replayability</label>
-                                                    <input type="number" id="replay" ref={_replayability}></input>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className={styles.form__right}>
-
-                                            <div className={styles.form__right__group}>
-                                                <div className={styles.form__right__left}>
-                                                    <div>
-                                                        <label htmlFor="french">Frenchise</label>
-                                                        <input type="text" id="french" ref={_frenchise}></input>
-                                                    </div>
-
-                                                    <div>
-                                                        <label htmlFor="lastPlayed">Last played at</label>
-                                                        <input type="date" id="lastPlayed" ref={_lastPlayed}></input>
-                                                    </div>
-
-                                                    <div>
-                                                        <label htmlFor="playtime">Playtime</label>
-                                                        <input type="number" id="playtime" ref={_playtime}></input>
-                                                    </div>
-                                                </div>
-
-
-                                                <div className={styles.form__right__right}>
-                                                    <div>
-                                                        <label htmlFor="playtroughs">Playtroughs</label>
-                                                        <input type="number" id="playtroughs" ref={_playtroughs}></input>
-                                                    </div>
-                                                    <div>
-                                                        <label htmlFor="price">Price</label>
-                                                        <input type="number" id="price" ref={_price}></input>
-                                                    </div>
-                                                    <div>
-                                                        <label htmlFor="img">Image link</label>
-                                                        <input type="url" id="img" ref={_img}></input>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className={styles.form__notes}>
-                                                <label htmlFor="note">Note</label>
-                                                <textarea id="note" rows="3" ref={_notes}></textarea>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.loginWrapper}><a className={styles.login} onClick={() => uploadNewGame()}>Add</a></div>
-
-                                </div>
-
-                                <InfiniteScroll
-                                    dataLength={items.length}
-                                    next={fetchData}
-                                    hasMore={hasMore}
-                                    loader={
-                                        <div className={loaderStyles.loading__container}>
-                                            <h1 className={loaderStyles.loading__title}>Loading</h1>
-                                            <div className={loaderStyles.loading__circle}></div>
-                                        </div>
-                                    }
-                                >
-                                    <div className={styles.gameCard__container}>
-
-                                        {
-                                            items.map(g => {
-                                                return (
-                                                    <ReviewCard review={g} hasLabel={false} hasTitle={true} deleteButton={isEditEnabled} fillParentForm={fillForm} key={`${g.created} - ${g.title}`} />
-                                                )
-                                            })
-                                        }
-
-                                    </div>
-
-                                </InfiniteScroll>
 
                             </div>
+
+                            <div className={styles.form} ref={_form}>
+
+                                <div className={styles.form__horizontal}>
+                                    <div className={styles.form__left}>
+                                        <div className={styles.form__left__left}>
+                                            <div>
+                                                <label htmlFor="title">Title</label>
+                                                <input type="text" id="title" ref={_title}></input>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="gameplay">Gameplay</label>
+                                                <input type="number" id="gameplay" ref={_gameplay}></input>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="story">Story</label>
+                                                <input type="number" id="story" ref={_story}></input>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="atmos">Atmosphere</label>
+                                                <input type="number" id="atmos" ref={_atmosphere}></input>
+                                            </div>
+                                            <div className={styles.checkbox_div}>
+                                                <label htmlFor="platinum">Platinum</label>
+                                                <input type="checkbox" id="platinum" ref={_platinum}></input>
+                                            </div>
+                                        </div>
+                                        <div className={styles.form__left__right}>
+                                            <div>
+                                                <label htmlFor="visuals">Visuals</label>
+                                                <input type="number" id="visuals" ref={_visuals}></input>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="chars">Characters</label>
+                                                <input type="number" id="chars" ref={_characters}></input>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="audio">Audio</label>
+                                                <input type="number" id="audio" ref={_audio}></input>
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="replay">Replayability</label>
+                                                <input type="number" id="replay" ref={_replayability}></input>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.form__right}>
+
+                                        <div className={styles.form__right__group}>
+                                            <div className={styles.form__right__left}>
+                                                <div>
+                                                    <label htmlFor="french">Frenchise</label>
+                                                    <input type="text" id="french" ref={_frenchise}></input>
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="lastPlayed">Last played at</label>
+                                                    <input type="date" id="lastPlayed" ref={_lastPlayed}></input>
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="playtime">Playtime</label>
+                                                    <input type="number" id="playtime" ref={_playtime}></input>
+                                                </div>
+                                            </div>
+
+
+                                            <div className={styles.form__right__right}>
+                                                <div>
+                                                    <label htmlFor="playtroughs">Playtroughs</label>
+                                                    <input type="number" id="playtroughs" ref={_playtroughs}></input>
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="price">Price</label>
+                                                    <input type="number" id="price" ref={_price}></input>
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="img">Image link</label>
+                                                    <input type="url" id="img" ref={_img}></input>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.form__notes}>
+                                            <label htmlFor="note">Note</label>
+                                            <textarea id="note" rows="3" ref={_notes}></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className={styles.loginWrapper}><a className={styles.login} onClick={() => uploadNewGame()}>Add</a></div>
+
+                            </div>
+
+                            <InfiniteScroll
+                                dataLength={items.length}
+                                next={fetchData}
+                                hasMore={hasMore}
+                                loader={
+                                    <div className={loaderStyles.loading__container}>
+                                        <h1 className={loaderStyles.loading__title}>Loading</h1>
+                                        <div className={loaderStyles.loading__circle}></div>
+                                    </div>
+                                }
+                            >
+                                <div className={styles.gameCard__container}>
+
+                                    {
+                                        items.map(g => {
+                                            return (
+                                                <ReviewCard review={g} hasLabel={false} hasTitle={true} deleteButton={isEditEnabled} fillParentForm={fillForm} key={`${g.created} - ${g.title}`} />
+                                            )
+                                        })
+                                    }
+
+                                </div>
+
+                            </InfiniteScroll>
+
 
                         </>
 
@@ -496,17 +495,15 @@ export default function Dashboard() {
 
                         <div className={styles.login__container}>
 
-                            <div className={styles.loginWrapper}>
-
-                                <a className={styles.login} onClick={signInWithGoogle}>Log in</a>
-
-                            </div>
+                            <h1>403 - no permission</h1>
+                            <p>You are not logged in!</p>
+                            <a className={styles.login} onClick={signInWithGoogle}>Log in</a>
 
                         </div>
 
                     }
 
-                </>
+                </div>
 
             }
         </>

@@ -2,57 +2,36 @@
 
 .login__container {
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
 
     display: flex;
-    justify-content: center;
-
-    background: linear-gradient(to right, rgba(20, 20, 40, 0.85), rgba(20, 20, 40, 0.85)), url("/bg_2.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: repeat;
-}
-
-.loginWrapper {
-    padding: 1px;
-
-    align-self: center;
-
-    width: fit-content;
-    height: fit-content;
-
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    background: linear-gradient(to right, rgb(0, 255, 195), darkorchid);
-
-    border-radius: 5px;
 }
 
 .login {
-    padding: 5px 20px 4px 20px;
+    padding: 5px 15px;
 
-    color: #fff;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-style: italic;
+    border-radius: var(--border-radius-small);
 
-    background-color: #121224;
+    color: var(--text-color-1);
+    background: var(--theme-color-tone-2);
 
-    border-radius: 5px;
-
-    cursor: pointer;
+    font-weight: 700;
+    text-decoration: none;
 
     transition: 0.25s ease-in-out;
 }
 
 .login:hover {
-    background-color: transparent;
+    color: var(--theme-color-decor-1);
+    cursor: pointer;
 }
 
 .main__container {
     width: 100vw;
+    min-height: 90vh;
     height: auto;
 
     display: flex;
@@ -72,7 +51,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    
+
     background: var(--theme-color-tone-2);
 }
 
@@ -80,7 +59,7 @@
     cursor: pointer;
 }
 
-.optionBar__container div a{
+.optionBar__container div a {
     margin: 0px 10px;
     padding: 3px 10px 3px 10px;
 
@@ -102,7 +81,7 @@
     border: crimson 1px solid;
 }
 
-.optionBar__container div a:hover{
+.optionBar__container div a:hover {
     opacity: 0.8;
 }
 
