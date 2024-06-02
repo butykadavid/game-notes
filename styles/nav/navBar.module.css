@@ -17,7 +17,7 @@
 .logo {
     margin: 0;
     margin-left: 25px;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +50,7 @@
 
     background: none;
     color: var(--text-color-3);
-    
+
     border: 2px solid transparent;
     border-bottom: 2px solid var(--theme-color-tone-2);
     outline: none;
@@ -62,7 +62,7 @@
     border-bottom: 2px solid var(--text-color-2);
 }
 
-.search__bar input::before{
+.search__bar input::before {
     content: 'ALMA';
 }
 
@@ -88,11 +88,11 @@
     transition: 0.25s ease-in-out;
 }
 
-.bar__item__container a:hover{
+.bar__item__container a:hover {
     opacity: 0.8;
 }
 
-.bar__item__container .logIn {
+.logIn {
     margin: 0 0 0 50px;
     padding: 7px 10px 6px 10px;
 
@@ -102,7 +102,7 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 2vh;
+    font-size: 2vh !important;
     font-weight: 400;
     font-style: normal;
     text-transform: capitalize;
@@ -113,11 +113,11 @@
     border: 2px solid transparent;
 }
 
-.bar__item__container .logIn svg {
+.logIn svg {
     margin-right: 10px;
 }
 
-.bar__item__container .dashboard {
+.dashboard {
     margin: 0 0 0 50px;
     padding: 7px 10px 6px 10px;
 
@@ -134,4 +134,88 @@
     border-radius: var(--border-radius-small);
 
     transition: 0.25s ease-in-out;
+}
+
+.sandwitch {
+    display: none;
+
+    margin-right: 10px;
+}
+
+.sandwitch button {
+    background: transparent;
+    color: var(--text-color-2);
+
+    border: 1px solid transparent;
+    border-radius: 1px;
+
+    font-size: x-large;
+    font-weight: 900;
+}
+
+.side__panel {
+    display: none;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 50vw;
+    height: 100vh;
+    
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    background: var(--theme-color-tone-1);
+    border-left: 2px solid var(--theme-color-decor-1);
+
+    z-index: 10;
+}
+
+.side__panel a {
+    margin: 15px 0;
+
+    font-size: 2.5vh;
+    font-style: italic;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: 0.25s ease-in-out;
+}
+
+.side__panel a:hover {
+    opacity: 0.8;
+}
+
+@media only screen and (max-width: 600px) {
+    .bar__item__container {
+        display: none;
+    }
+
+    .search__bar {
+        width: 75%;
+    }
+
+    .logIn {
+        max-width: 60%;
+    }
+
+    .logo {
+        margin-left: 10px;
+    }
+
+    .logo h1 {
+        display: none;
+    }
+
+    .logo img {
+        width: 50px;
+        height: 32px;
+    }
+
+    .sandwitch {
+        display: block;
+    }
 }

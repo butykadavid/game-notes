@@ -45,3 +45,52 @@
 
     color: transparent;
 }
+
+.reviews__title {
+    display: none;
+
+    width: 85%;
+
+    margin: 0;
+    margin-top: 25px;
+    padding: 7px 15px;
+
+    align-self: flex-start;
+
+    color: var(--text-color-1);
+    background: var(--theme-color-decor-2);
+    font-style: italic;
+
+    clip-path: polygon(0 0, 100% 0%, 92% 100%, 0% 100%);
+}
+
+@media only screen and (max-width: 600px) {
+    .main__container {
+        height: auto;
+    }
+
+    .splitter {
+        flex-direction: column;
+    }
+
+    .profile__card__side {
+        width: 100%;
+        height: 90vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .reviews__side {
+        width: 100%;
+    }
+
+    .reviews__title {
+        display: block;
+    }
+
+    .no__review__message {
+        text-align: center;
+    }
+}

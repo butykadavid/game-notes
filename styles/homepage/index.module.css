@@ -161,3 +161,37 @@
     margin: 15px 0px;
     justify-content: flex-start;
 }
+
+@media only screen and (max-width: 600px) {
+    .content__container{
+        min-height: 90vh;
+        height: auto;
+        flex-direction: column;
+
+        padding: 10vh 0 0 0;
+    }
+
+    .box {
+        width: 90%;
+        height: auto;
+
+        margin-bottom: 50px;
+    }
+
+    .box__content {
+        padding: 20px 0;
+    }
+
+    .best__wrapper {
+        width: 90%;
+    }
+
+    .best__wrapper .box {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+
+    .best__wrapper .box:last-child {
+        margin-bottom: 50px;
+    }
+}

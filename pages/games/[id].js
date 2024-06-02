@@ -94,7 +94,7 @@ export default function gamePage({ title, reviews, background }) {
                     </div>
 
                     <div className={styles.stat__box}>
-                        <div>
+                        <div className={styles.stat__box__section}>
                             {
                                 Object.keys(avgVals).map(prop => {
                                     const name = prop
@@ -109,7 +109,7 @@ export default function gamePage({ title, reviews, background }) {
                                 })
                             }
                         </div>
-                        <div>
+                        <div className={styles.stat__box__section}>
                             {
                                 Object.keys(sumVals).map(prop => {
                                     const name = prop

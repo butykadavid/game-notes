@@ -71,7 +71,7 @@ export default function About() {
                     </div>
                 </div>
                 <div className={styles.section__image__container}>
-                    <Image src={img_2} width={550} className={styles.section__image} alt='Game reviews example' />
+                    <Image src={img_2} width={0} style={{ width: '100%', height: 'auto' }} className={styles.section__image} alt='Game reviews example' />
                 </div>
             </section >
 
@@ -91,7 +91,7 @@ export default function About() {
                     </div>
                 </div>
                 <div className={styles.section__image__container}>
-                    <Image src={img_1} width={550} className={styles.section__image} alt='Game detail page top view' />
+                    <Image src={img_1} width={0} style={{ width: '100%', height: 'auto' }} className={styles.section__image} alt='Game detail page top view' />
                 </div>
             </section>
 
@@ -113,7 +113,7 @@ export default function About() {
                     </div>
                 </div>
                 <div className={styles.section__image__container}>
-                    <Image src={img_3} width={550} className={styles.section__image} alt='Form' />
+                    <Image src={img_3} width={0} style={{ width: '100%', height: 'auto' }} className={styles.section__image} alt='Form' />
                 </div>
             </section>
 
@@ -127,6 +127,7 @@ export default function About() {
                             The following features are planned for the future:
                         </p>
                         <ul>
+                            <li>User search</li>
                             <li>Filters and ordering options for review lists.</li>
                             <li>Genre specific rating calculations.</li>
                             <li>Game comparison page</li>
@@ -135,7 +136,7 @@ export default function About() {
                     </div>
                 </div>
                 <div className={styles.section__image__container}>
-                    <Image src={img_4} width={550} className={styles.section__image} alt='Game detail page top view' />
+                    <Image src={img_4} width={0} style={{ width: '100%', height: 'auto' }} className={styles.section__image} alt='Game detail page top view' />
                 </div>
             </section>
 

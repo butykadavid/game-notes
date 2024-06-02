@@ -90,3 +90,11 @@
 .logo {
     cursor: pointer;
 }
+
+@media only screen and (max-width: 600px) {
+    .main__container {
+        flex-direction: column-reverse;
+
+        padding-bottom: 5vh;
+    }
+}

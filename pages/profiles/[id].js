@@ -3,7 +3,6 @@ import { db } from "../../public/firebase"
 import { getOvrRating } from "../../public/functions"
 
 import styles from '../../styles/profilepage/profilePage.module.css'
-import NavBar from "../../components/NavBarComponent"
 import ProfileInfo from "../../components/ProfileInfoComponent"
 import ReviewCard from "../../components/ReviewCardComponent"
 
@@ -21,11 +20,12 @@ export default function ProfilePage({ reviews, user }) {
                     <ProfileInfo user={user} reviewCount={reviews.length} playtime={playtime} platinums={platinums} avgRating={avgRating} bestRatedGame={bestRatedGame} />
                 </div>
                 <div className={styles.reviews__side}>
+                    <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
                     {reviews.length != 0 ? <>
                         {
-                            reviews.map(r => {
+                            reviews.map((r, index) => {
                                 return (
-                                    <ReviewCard review={r} hasLabel={false} hasTitle={true} deleteButton={false} />
+                                    <ReviewCard review={r} key={index} hasLabel={false} hasTitle={true} deleteButton={false} />
                                 )
                             })
                         } </>

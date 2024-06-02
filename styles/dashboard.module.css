@@ -11,21 +11,24 @@
 }
 
 .login {
-    padding: 5px 15px;
+    padding: 5px 25px;
 
     border-radius: var(--border-radius-small);
 
-    color: var(--text-color-1);
-    background: var(--theme-color-tone-2);
+    color: var(--theme-color-decor-1);
+    background: var(--theme-alter-2);
 
     font-weight: 700;
+    font-style: italic;
     text-decoration: none;
+
+    border: 1px solid var(--theme-color-decor-1);
 
     transition: 0.25s ease-in-out;
 }
 
 .login:hover {
-    color: var(--theme-color-decor-1);
+    opacity: 0.8;
     cursor: pointer;
 }
 
@@ -108,7 +111,7 @@
     align-items: center;
 
     background: var(--theme-color-tone-2);
-    border-bottom: 2px solid var(--theme-color-tone-2);
+    border-bottom: 2px solid var(--theme-color-decor-1);
 }
 
 .form label {
@@ -281,11 +284,10 @@
     }
 
     .gameCard__container {
-        width: 85vw;
+        width: 100vw;
     }
 
     .form {
-        margin-top: 25px;
         padding: 10px;
 
         width: 100%;
@@ -348,5 +350,9 @@
 
     .form textarea {
         border-bottom: 2px solid var(--text-color-3);
+    }
+
+    .optionBar__container {
+        justify-content: center;
     }
 }

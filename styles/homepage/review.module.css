@@ -55,3 +55,13 @@
 
     font-size: 3vh;
 }
+
+@media only screen and (max-width: 600px) {
+    .card {
+        margin: 10px 0;
+    }
+
+    .card__image{
+        margin-right: 25px;
+    }
+}

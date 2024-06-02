@@ -20,6 +20,8 @@ export default function Dashboard() {
     const [hasMore, setHasMore] = useState(true)
     const [index, setIndex] = useState(3)
 
+    const [isLoading, setIsLoading] = useState(true)
+
     const [isEditEnabled, toggleEdit] = useState(false)
 
     const router = useRouter();
@@ -319,13 +321,22 @@ export default function Dashboard() {
         }
     }
 
+    const signOut = () => {
+        setIsLoading(true)
+        signOutFunc()
+        router.push('/')
+    }
+
     useEffect(() => {
         if (user) fetchData()
     }, [user])
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        setIsLoading(false)
     }, [])
+
+    if(isLoading) return <div className={styles.main__container}></div>
 
     return (
 
@@ -357,7 +368,7 @@ export default function Dashboard() {
                                 <div>
                                     <a ref={_formMode} onClick={() => toggleForm()}>Add game</a>
                                     <a ref={_editMode} onClick={() => toggleEditMode()}>Edit mode</a>
-                                    <a onClick={() => signOutFunc()}>Sign out</a>
+                                    <a onClick={() => signOut()}>Sign out</a>
                                 </div>
 
                             </div>
