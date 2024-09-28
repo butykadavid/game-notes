@@ -94,11 +94,13 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
     return (
         <div className={styles.wrapper}>
             {hasTitle ?
-                <h3 className={styles.card__title}>{review.title}</h3>
+                <h3 className={styles.card__title}>
+                    {review.title}
+                </h3>
                 :
                 <></>
             }
-            <div className={styles.card}>
+            <div className={styles.card} onClick={hasTitle ? () => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` }) : () => {}}>
 
                 {deleteButton ?
                     <div className={styles.delete}>

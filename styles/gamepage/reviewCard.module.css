@@ -6,12 +6,19 @@
     min-height: 20vh;
 }
 
+.wrapper:hover .card__title{
+    opacity: 0.7;
+}
+
+
 .card__title{
     margin: 0;
 
     color: var(--text-color-1);
 
     font-style: italic;
+
+    transition: 0.25s ease-in-out;
 }
 
 .card {
