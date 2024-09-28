@@ -100,11 +100,11 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
                 :
                 <></>
             }
-            <div className={styles.card} onClick={hasTitle ? () => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` }) : () => {}}>
+            <div className={styles.card} onClick={hasTitle ? deleteButton ? null : () => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` }) : null}>
 
                 {deleteButton ?
                     <div className={styles.delete}>
-                        <a onClick={() => fillParentForm(review)} title='Edit review'>✎</a>
+                        <a onClick={(e) => fillParentForm(review)} title='Edit review'>✎</a>
                         <a onClick={() => deleteGame(review)} title='Delete game'>×</a>
                     </div>
                     : <></>
