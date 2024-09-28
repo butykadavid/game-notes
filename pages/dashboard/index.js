@@ -137,7 +137,7 @@ export default function Dashboard() {
                         average: ovr,
                         title: _title.current.value,
                         frenchise: _frenchise.current.value,
-                        searchWords: toSearchWordsArray(_title.current.value)
+                        searchArray: toSearchWordsArray(_title.current.value)
                     })
                 }
             }
