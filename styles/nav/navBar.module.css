@@ -93,7 +93,7 @@
 }
 
 .bar__item__container a:hover {
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .logIn {
@@ -190,7 +190,7 @@
 }
 
 .side__panel a:hover {
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 @media only screen and (max-width: 600px) {
