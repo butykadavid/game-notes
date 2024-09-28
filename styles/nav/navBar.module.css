@@ -1,4 +1,6 @@
 .main__bar {
+    position: fixed;
+    
     width: 100%;
     height: 10vh;
 
@@ -12,6 +14,8 @@
     color: var(--text-color-1);
 
     border-bottom: 2px solid var(--theme-color-decor-2);
+    
+    z-index: 10000;
 }
 
 .logo {

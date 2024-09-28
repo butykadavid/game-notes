@@ -7,6 +7,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return <>
     <NavBar />
+    <div style={{height: `10vh`}}></div>
     <Component {...pageProps} />
     <Footer />
   </>
