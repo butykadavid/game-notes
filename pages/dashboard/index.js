@@ -522,22 +522,26 @@ export default function Dashboard() {
 
                         <div className={styles.filterBar__container}>
 
-                            <div ref={_orderingContainer} className={styles.ordering}>
+                            <div className={styles.ordering}>
                                 <p>Category</p>
-                                <a onClick={(e) => toggleOrdering(e, "overall")}>Ovr</a>
-                                <a onClick={(e) => toggleOrdering(e, "gameplay")}>Gmp</a>
-                                <a onClick={(e) => toggleOrdering(e, "atmosphere")}>Atm</a>
-                                <a onClick={(e) => toggleOrdering(e, "visuals")}>Vis</a>
-                                <a onClick={(e) => toggleOrdering(e, "story")}>Sto</a>
-                                <a onClick={(e) => toggleOrdering(e, "characters")}>Cha</a>
-                                <a onClick={(e) => toggleOrdering(e, "audio")}>Aud</a>
-                                <a onClick={(e) => toggleOrdering(e, "replayability")}>Rpl</a>
+                                <div ref={_orderingContainer}>
+                                    <a onClick={(e) => toggleOrdering(e, "overall")}>Ovr</a>
+                                    <a onClick={(e) => toggleOrdering(e, "gameplay")}>Gmp</a>
+                                    <a onClick={(e) => toggleOrdering(e, "atmosphere")}>Atm</a>
+                                    <a onClick={(e) => toggleOrdering(e, "visuals")}>Vis</a>
+                                    <a onClick={(e) => toggleOrdering(e, "story")}>Sto</a>
+                                    <a onClick={(e) => toggleOrdering(e, "characters")}>Cha</a>
+                                    <a onClick={(e) => toggleOrdering(e, "audio")}>Aud</a>
+                                    <a onClick={(e) => toggleOrdering(e, "replayability")}>Rpl</a>
+                                </div>
                             </div>
 
-                            <div ref={_directionContainer} className={styles.direction}>
+                            <div className={styles.direction}>
                                 <p>Direction</p>
-                                <a className={styles.toggled} onClick={(e) => toggleDirection(e)}>DESC</a>
-                                <a onClick={(e) => toggleDirection(e)}>ASC</a>
+                                <div ref={_directionContainer}>
+                                    <a className={styles.toggled} onClick={(e) => toggleDirection(e)}>DESC</a>
+                                    <a onClick={(e) => toggleDirection(e)}>ASC</a>
+                                </div>
                             </div>
 
                         </div>

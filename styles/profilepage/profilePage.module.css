@@ -95,6 +95,10 @@
     align-items: center;
 }
 
+.filterBar__container .ordering div {
+    margin-bottom: 1px;
+}
+
 .filterBar__container p{
     margin-right: 5px;
 
@@ -140,6 +144,10 @@
     align-items: center;
 }
 
+.filterBar__container .direction div {
+    margin-bottom: 3px;
+}
+
 @media only screen and (max-width: 600px) {
     .main__container {
         height: auto;
@@ -168,5 +176,49 @@
 
     .no__review__message {
         text-align: center;
+    }
+
+    .filterBar__container {
+        width: 90%;
+        height: auto;
+
+        flex-direction: column;
+    }
+
+    .filterBar__container a {
+        margin: 2px;
+    }
+    
+    .filterBar__container p {
+        font-style: italic;
+        align-self: flex-start;
+    }
+
+    .filterBar__container .ordering {
+        width: 95%;
+
+        border-bottom: 1px solid var(--theme-alter);
+    }
+
+    .filterBar__container .ordering div {
+        padding: 10px 0px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .filterBar__container .direction {
+        width: 95%;
+
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .filterBar__container .direction div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
 }
