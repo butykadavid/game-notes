@@ -1,70 +1,25 @@
 import { collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "../../public/firebase"
 import { getOvrRating } from "../../public/functions"
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 
-import styles from '../../styles/profilepage/profilePage.module.css'
 import ProfileInfo from "../../components/ProfileInfoComponent"
 import ReviewCard from "../../components/ReviewCardComponent"
+import ReviewFilterComponent from "../../components/ReviewFilterComponent"
+
+import styles from '../../styles/profilepage/profilePage.module.css'
 
 export default function ProfilePage({ reviews, user }) {
 
     const [items, setItems] = useState([...reviews].sort((a,b) => getOvrRating(b) - getOvrRating(a)))
-
-    const [ordering, setOrdering] = useState('none')
-    const [direction, setDirection] = useState('DESC')
-
-    const _orderingContainer = useRef()
-    const _directionContainer = useRef()
 
     const playtime = Math.round(reviews.reduce((a, c) => a + c.playtime, 0))
     const platinums = reviews.reduce((a, c) => c.platinum ? a + 1 : a, 0)
     const avgRating = Math.round(reviews.reduce((a, c) => a + getOvrRating(c), 0) / reviews.length)
     const bestRatedGame = reviews.sort((a, b) => getOvrRating(b) - getOvrRating(a))[0]
 
-    const toggleOrdering = (event, category) => {
-        Array.from(_orderingContainer.current.children).forEach(e => {
-            if (e == event.target && e.classList.contains(styles.toggled)) {
-                e.classList.remove(styles.toggled)
-                setOrdering('none')
-            }
-            else if (e == event.target && !e.classList.contains(styles.toggled)) {
-                e.classList.add(styles.toggled)
-                setOrdering(category)
-            }
-            else if (!e == event.target) e.classList.remove(styles.toggled)
-        })
-    }
-
-    const toggleDirection = (event) => {
-        Array.from(_directionContainer.current.children).forEach(e => {
-            if (e == event.target && !e.classList.contains(styles.toggled)) {
-                e.classList.add(styles.toggled)
-                setDirection(event.target.innerHTML)
-            }
-            else if (!e == event.target) e.classList.remove(styles.toggled)
-        })
-    }
-
-    const activateOrdering = () => {
-        if (direction === 'ASC') {
-            if (ordering === "overall") setItems([...items].sort((a, b) => getOvrRating(a) - getOvrRating(b)))
-            else if (ordering === "none") setItems([...items].sort((a, b) => b["title"] - a["title"]))
-            else setItems([...items].sort((a, b) => a[ordering] - b[ordering]))
-        }
-        else {
-            if (ordering === "overall") setItems([...items].sort((a, b) => getOvrRating(b) - getOvrRating(a)))
-            else if (ordering === "none") setItems([...items].sort((a, b) => a["title"] - b["title"]))
-            else setItems([...items].sort((a, b) => b[ordering] - a[ordering]))
-        }
-    }
-
     useEffect(() => {
     }, [items])
-
-    useEffect(() => {
-        activateOrdering()
-    }, [ordering, direction])
 
     return (
         <div className={styles.main__container}>
@@ -75,31 +30,7 @@ export default function ProfilePage({ reviews, user }) {
                 <div className={styles.reviews__side}>
                     <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
 
-                    <div className={styles.filterBar__container}>
-
-                        <div className={styles.ordering}>
-                            <p>Category</p>
-                            <div ref={_orderingContainer}>
-                                <a className={styles.toggled} onClick={(e) => toggleOrdering(e, "overall")}>Ovr</a>
-                                <a onClick={(e) => toggleOrdering(e, "gameplay")}>Gmp</a>
-                                <a onClick={(e) => toggleOrdering(e, "atmosphere")}>Atm</a>
-                                <a onClick={(e) => toggleOrdering(e, "visuals")}>Vis</a>
-                                <a onClick={(e) => toggleOrdering(e, "story")}>Sto</a>
-                                <a onClick={(e) => toggleOrdering(e, "characters")}>Cha</a>
-                                <a onClick={(e) => toggleOrdering(e, "audio")}>Aud</a>
-                                <a onClick={(e) => toggleOrdering(e, "replayability")}>Rpl</a>
-                            </div>
-                        </div>
-
-                        <div className={styles.direction}>
-                            <p>Direction</p>
-                            <div ref={_directionContainer}>
-                                <a className={styles.toggled} onClick={(e) => toggleDirection(e)}>DESC</a>
-                                <a onClick={(e) => toggleDirection(e)}>ASC</a>
-                            </div>
-                        </div>
-
-                    </div>
+                    <ReviewFilterComponent reviews={items} setReviews={setItems} />
 
                     {items.length != 0 ? <>
                         {

@@ -69,11 +69,52 @@ const toSearchWordsArray = (str) => {
     return searchArray
 }
 
+const toggleOrdering = (event, category, orderingContainer, setOrdering, styles) => {
+    Array.from(orderingContainer.current.children).forEach(e => {
+        if (e == event.target && e.classList.contains(styles.toggled)) {
+            e.classList.remove(styles.toggled)
+            setOrdering('none')
+        }
+        else if (e == event.target && !e.classList.contains(styles.toggled)) {
+            e.classList.add(styles.toggled)
+            setOrdering(category)
+        }
+        else if (!e == event.target) e.classList.remove(styles.toggled)
+    })
+}
+
+const toggleDirection = (event, directionContainer, setDirection, styles) => {
+    Array.from(directionContainer.current.children).forEach(e => {
+        if (e == event.target && !e.classList.contains(styles.toggled)) {
+            e.classList.add(styles.toggled)
+            setDirection(event.target.innerHTML)
+        }
+        else if (e == event.target && e.classList.contains(styles.toggled)) return
+        else if (!e == event.target) e.classList.remove(styles.toggled)
+    })
+}
+
+const activateOrdering = (ordering, direction, setItems, items) => {
+    if (direction === 'ASC') {
+        if (ordering === "overall") setItems([...items].sort((a, b) => getOvrRating(a) - getOvrRating(b)))
+        else if (ordering === "none") setItems([...items].sort((a, b) => b["title"] - a["title"]))
+        else setItems([...items].sort((a, b) => a[ordering] - b[ordering]))
+    }
+    else {
+        if (ordering === "overall") setItems([...items].sort((a, b) => getOvrRating(b) - getOvrRating(a)))
+        else if (ordering === "none") setItems([...items].sort((a, b) => a["title"] - b["title"]))
+        else setItems([...items].sort((a, b) => b[ordering] - a[ordering]))
+    }
+}
+
 export {
     getOvrRating,
     getColor,
     getDateFromTimestamp,
     getFormattedDate,
     redirectToPage,
-    toSearchWordsArray
+    toSearchWordsArray,
+    toggleOrdering,
+    toggleDirection,
+    activateOrdering
 }

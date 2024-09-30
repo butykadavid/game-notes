@@ -6,8 +6,12 @@ import styles from "../../styles/gamepage/gamePage.module.css"
 
 import RatingBarComponent from "../../components/RatingBarComponent";
 import ReviewCard from "../../components/ReviewCardComponent";
+import ReviewFilterComponent from "../../components/ReviewFilterComponent";
+import { useState } from "react";
 
 export default function gamePage({ title, reviews, background }) {
+
+    const [items, setItems] = useState(reviews)
 
     var avgOvr = 0;
 
@@ -129,9 +133,13 @@ export default function gamePage({ title, reviews, background }) {
                 </div>
 
                 <div className={`${styles.page} ${styles.reviews__page}`}>
+
                     <div className={styles.dummy}></div>
+
+                    <ReviewFilterComponent reviews={items} setReviews={setItems} />
+                    
                     {
-                        reviews.map(review => {
+                        items.map(review => {
                             return (
                                 <ReviewCard key={`${review.userName}-${review.created}`} review={review} hasLabel={true} />
                             )

@@ -10,6 +10,7 @@ import loaderStyles from "../../styles/loader.module.css"
 import ReviewCard from "../../components/ReviewCardComponent";
 import Title from "../../components/TitleComponent";
 import { getOvrRating, toSearchWordsArray } from "../../public/functions";
+import ReviewFilterComponent from "../../components/ReviewFilterComponent";
 
 export default function Dashboard() {
 
@@ -21,9 +22,6 @@ export default function Dashboard() {
 
     const [isEditEnabled, toggleEdit] = useState(false)
 
-    const [ordering, setOrdering] = useState('none')
-    const [direction, setDirection] = useState('DESC')
-
     const router = useRouter();
 
     const refreshSite = () => {
@@ -32,9 +30,6 @@ export default function Dashboard() {
 
     const _editMode = useRef()
     const _formMode = useRef()
-
-    const _orderingContainer = useRef()
-    const _directionContainer = useRef()
 
     const _form = useRef()
 
@@ -325,44 +320,6 @@ export default function Dashboard() {
         setIsLoading(false)
     }
 
-    const toggleOrdering = (event, category) => {
-        Array.from(_orderingContainer.current.children).forEach(e => {
-            if (e == event.target && e.classList.contains(styles.toggled)) {
-                e.classList.remove(styles.toggled)
-                setOrdering('none')
-            }
-            else if (e == event.target && !e.classList.contains(styles.toggled)) {
-                e.classList.add(styles.toggled)
-                setOrdering(category)
-            }
-            else if (!e == event.target) e.classList.remove(styles.toggled)
-        })
-    }
-
-    const toggleDirection = (event) => {
-        Array.from(_directionContainer.current.children).forEach(e => {
-            if (e == event.target && !e.classList.contains(styles.toggled)) {
-                e.classList.add(styles.toggled)
-                setDirection(event.target.innerHTML)
-            }
-            else if (e == event.target && e.classList.contains(styles.toggled)) return
-            else if (!e == event.target) e.classList.remove(styles.toggled)
-        })
-    }
-
-    const activateOrdering = () => {
-        if (direction === 'ASC') {
-            if (ordering === "overall") setItems([...items].sort((a, b) => getOvrRating(a) - getOvrRating(b)))
-            else if (ordering === "none") setItems([...items].sort((a, b) => b["title"] - a["title"]))
-            else setItems([...items].sort((a, b) => a[ordering] - b[ordering]))
-        }
-        else {
-            if (ordering === "overall") setItems([...items].sort((a, b) => getOvrRating(b) - getOvrRating(a)))
-            else if (ordering === "none") setItems([...items].sort((a, b) => a["title"] - b["title"]))
-            else setItems([...items].sort((a, b) => b[ordering] - a[ordering]))
-        }
-    }
-
     const signOut = () => {
         setIsLoading(true)
         signOutFunc()
@@ -380,10 +337,6 @@ export default function Dashboard() {
 
     useEffect(() => {
     }, [items])
-
-    useEffect(() => {
-        activateOrdering()
-    }, [ordering, direction])
 
     if (loading) {
         return (
@@ -405,7 +358,6 @@ export default function Dashboard() {
                 {user != null ?
 
                     <>
-
 
                         <Title text={`Welcome ${user.displayName}`} />
 
@@ -520,31 +472,7 @@ export default function Dashboard() {
 
                         </div>
 
-                        <div className={styles.filterBar__container}>
-
-                            <div className={styles.ordering}>
-                                <p>Category</p>
-                                <div ref={_orderingContainer}>
-                                    <a onClick={(e) => toggleOrdering(e, "overall")}>Ovr</a>
-                                    <a onClick={(e) => toggleOrdering(e, "gameplay")}>Gmp</a>
-                                    <a onClick={(e) => toggleOrdering(e, "atmosphere")}>Atm</a>
-                                    <a onClick={(e) => toggleOrdering(e, "visuals")}>Vis</a>
-                                    <a onClick={(e) => toggleOrdering(e, "story")}>Sto</a>
-                                    <a onClick={(e) => toggleOrdering(e, "characters")}>Cha</a>
-                                    <a onClick={(e) => toggleOrdering(e, "audio")}>Aud</a>
-                                    <a onClick={(e) => toggleOrdering(e, "replayability")}>Rpl</a>
-                                    <a onClick={(e) => toggleOrdering(e, "platinum")}>Plat</a>
-                                </div>
-                            </div>
-                            <div className={styles.direction}>
-                                <p>Direction</p>
-                                <div ref={_directionContainer}>
-                                    <a className={styles.toggled} onClick={(e) => toggleDirection(e)}>DESC</a>
-                                    <a onClick={(e) => toggleDirection(e)}>ASC</a>
-                                </div>
-                            </div>
-
-                        </div>
+                        <ReviewFilterComponent reviews={items} setReviews={setItems}/>
 
                         <div className={styles.gameCard__container}>
 
@@ -566,7 +494,6 @@ export default function Dashboard() {
                             }
 
                         </div>
-
 
                     </>
 
