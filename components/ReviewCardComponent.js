@@ -100,7 +100,9 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
                 :
                 <></>
             }
-            <div className={styles.card} onClick={hasTitle ? deleteButton ? null : () => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` }) : null}>
+
+            <div className={`${styles.card} ${review.platinum ? styles.platinum : null} ${hasTitle ? styles.hoverable : null}`} onClick={hasTitle ? deleteButton ? null : () => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` }) : null}>
+
 
                 {deleteButton ?
                     <div className={styles.delete}>

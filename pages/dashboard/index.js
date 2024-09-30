@@ -533,9 +533,9 @@ export default function Dashboard() {
                                     <a onClick={(e) => toggleOrdering(e, "characters")}>Cha</a>
                                     <a onClick={(e) => toggleOrdering(e, "audio")}>Aud</a>
                                     <a onClick={(e) => toggleOrdering(e, "replayability")}>Rpl</a>
+                                    <a onClick={(e) => toggleOrdering(e, "platinum")}>Plat</a>
                                 </div>
                             </div>
-
                             <div className={styles.direction}>
                                 <p>Direction</p>
                                 <div ref={_directionContainer}>
@@ -547,7 +547,7 @@ export default function Dashboard() {
                         </div>
 
                         <div className={styles.gameCard__container}>
-                            
+
                             {isLoading ?
                                 <div className={loaderStyles.loading__container}>
                                     <h1 className={loaderStyles.loading__title}>Loading</h1>
