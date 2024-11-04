@@ -3,16 +3,17 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRef, useState, useEffect } from "react";
 import { auth, signInWithGoogle, signOutFunc, db } from "../../public/firebase";
 import { query, getDocs, collection, where, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { getOvrRating, toSearchWordsArray } from "../../public/functions";
 
 import styles from "../../styles/dashboard.module.css"
 import loaderStyles from "../../styles/loader.module.css"
 
 import ReviewCard from "../../components/ReviewCardComponent";
 import Title from "../../components/TitleComponent";
-import { getOvrRating, toSearchWordsArray } from "../../public/functions";
 import ReviewFilterComponent from "../../components/ReviewFilterComponent";
+import Head from "next/head";
 
-export default function Dashboard() {
+export default function Dashboard({ summaries }) {
 
     const [user, loading] = useAuthState(auth);
 
@@ -268,6 +269,25 @@ export default function Dashboard() {
         window.scrollTo(0, 0);
     }
 
+    const resetForm = () => {
+        _title.current.value = ""
+        _gameplay.current.value = ""
+        _story.current.value = ""
+        _atmosphere.current.value = ""
+        _visuals.current.value = ""
+        _characters.current.value = ""
+        _audio.current.value = ""
+        _replayability.current.value = ""
+        _frenchise.current.value = ""
+        _lastPlayed.current.value = ""
+        _playtime.current.value = ""
+        _playtroughs.current.value = ""
+        _price.current.value = ""
+        _img.current.value = ""
+        _notes.current.value = ""
+        _platinum.current.value = ""
+    }
+
     const toggleEditMode = () => {
         toggleEdit(!isEditEnabled)
 
@@ -298,6 +318,17 @@ export default function Dashboard() {
         _img.current.value = null;
         _notes.current.value = null;
         _platinum.current.checked = false;
+    }
+
+    const onTitleEntered = e => {
+        const entered = summaries.find(s => s.title == e.target.value)
+        console.log(entered)
+        if (entered) {
+            _frenchise.current.value = entered.frenchise
+        }
+        else if (e.target.value == "") {
+            _frenchise.current.value = ""
+        }
     }
 
     const fetchData = async () => {
@@ -352,7 +383,11 @@ export default function Dashboard() {
     return (
 
         <>
-            <div className={styles.main__container} >
+            <Head>
+                <title>GameNotes | Dashboard</title>
+            </Head>
+
+            <div className={styles.main__container}>
 
 
                 {user != null ?
@@ -378,7 +413,14 @@ export default function Dashboard() {
                                     <div className={styles.form__left__left}>
                                         <div>
                                             <label htmlFor="title">Title</label>
-                                            <input type="text" id="title" ref={_title}></input>
+                                            <input type="text" list="titles" id="title" ref={_title} onChange={(e) => onTitleEntered(e)}></input>
+                                            <datalist id="titles">
+                                                {summaries.map((t, i) => {
+                                                    return (
+                                                        <option key={i} value={t.title}>{t.title}</option>
+                                                    )
+                                                })}
+                                            </datalist>
                                         </div>
 
                                         <div>
@@ -468,11 +510,14 @@ export default function Dashboard() {
                                 </div>
                             </div>
 
-                            <div className={styles.loginWrapper}><a className={styles.login} onClick={() => uploadNewGame()}>Add</a></div>
+                            <div className={styles.form__button__container}>
+                                <div className={styles.loginWrapper}><a className={styles.login} onClick={() => resetForm()}>Reset</a></div>
+                                <div className={styles.loginWrapper}><a className={styles.login} onClick={() => uploadNewGame()}>Add</a></div>
+                            </div>
 
                         </div>
 
-                        <ReviewFilterComponent reviews={items} setReviews={setItems}/>
+                        <ReviewFilterComponent reviews={items} setReviews={setItems} />
 
                         <div className={styles.gameCard__container}>
 
@@ -512,4 +557,20 @@ export default function Dashboard() {
             </div>
         </>
     )
+}
+
+export const getServerSideProps = async () => {
+
+    const q = query(collection(db, 'summaries'))
+    const docs = await getDocs(q)
+
+    const summaries = docs.docs.map(doc => {
+        return { ...doc.data() }
+    })
+
+    return {
+        props: {
+            summaries
+        }
+    }
 }

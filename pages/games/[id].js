@@ -3,6 +3,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { getOvrRating, getColor } from "../../public/functions";
 
 import styles from "../../styles/gamepage/gamePage.module.css"
+import Head from "next/head"
 
 import RatingBarComponent from "../../components/RatingBarComponent";
 import ReviewCard from "../../components/ReviewCardComponent";
@@ -82,6 +83,12 @@ export default function gamePage({ title, reviews, background }) {
     return (
         <>
 
+            <Head>
+                <title>GameNotes | {title}</title>
+                <meta name="description" content={`Reviews of "${title}"`} />
+                <meta name="keywords" content={`GameNotes, Result, Game, Games, Review, ${title}, Videogame`}/>
+            </Head>
+
             {/* desktop view*/}
             <div className={styles.main__container}>
                 <div className={`${styles.first__page} ${styles.page}`} style={{
@@ -137,7 +144,7 @@ export default function gamePage({ title, reviews, background }) {
                     <div className={styles.dummy}></div>
 
                     <ReviewFilterComponent reviews={items} setReviews={setItems} />
-                    
+
                     {
                         items.map(review => {
                             return (

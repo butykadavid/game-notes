@@ -1,9 +1,10 @@
 import { db } from "../public/firebase"
-import { collection, query, orderBy, getDocs, limit} from "firebase/firestore"
-import { getColor} from "../public/functions"
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore"
+import { getColor } from "../public/functions"
 import { useRouter } from "next/router"
 import { redirectToPage } from "../public/functions"
 
+import Head from "next/head"
 import styles from "../styles/homepage/index.module.css"
 
 import MainPageReview from "../components/MainPageReviewComponent"
@@ -18,6 +19,12 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
 
     return (
         <>
+            <Head>
+                <title>GameNotes | HOME</title>
+                <meta name="description" content="Top game ratings and reviews"/>
+                <meta name="keywords" content={`GameNotes, Result, Game, Games, Review, Videogame, Home, Rating`}/>
+            </Head>
+
             <div className={styles.main__container}>
 
                 <div className={styles.content__container}>

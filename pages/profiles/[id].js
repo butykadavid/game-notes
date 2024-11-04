@@ -8,10 +8,11 @@ import ReviewCard from "../../components/ReviewCardComponent"
 import ReviewFilterComponent from "../../components/ReviewFilterComponent"
 
 import styles from '../../styles/profilepage/profilePage.module.css'
+import Head from "next/head"
 
 export default function ProfilePage({ reviews, user }) {
 
-    const [items, setItems] = useState([...reviews].sort((a,b) => getOvrRating(b) - getOvrRating(a)))
+    const [items, setItems] = useState([...reviews].sort((a, b) => getOvrRating(b) - getOvrRating(a)))
 
     const playtime = Math.round(reviews.reduce((a, c) => a + c.playtime, 0))
     const platinums = reviews.reduce((a, c) => c.platinum ? a + 1 : a, 0)
@@ -22,32 +23,39 @@ export default function ProfilePage({ reviews, user }) {
     }, [items])
 
     return (
-        <div className={styles.main__container}>
-            <div className={styles.splitter}>
-                <div className={styles.profile__card__side}>
-                    <ProfileInfo user={user} reviewCount={reviews.length} playtime={playtime} platinums={platinums} avgRating={avgRating} bestRatedGame={bestRatedGame} />
-                </div>
-                <div className={styles.reviews__side}>
-                    <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
+        <>
+            <Head>
+                <title>GameNotes | {user}</title>
+                <meta name="description" content={`${user}'s profile`} />
+                <meta name="keywords" content={`GameNotes, Profile, User, Result, Game, Games, Review, Videogame, ${user}`}/>
+            </Head>
 
-                    <ReviewFilterComponent reviews={items} setReviews={setItems} />
+            <div className={styles.main__container}>
+                <div className={styles.splitter}>
+                    <div className={styles.profile__card__side}>
+                        <ProfileInfo user={user} reviewCount={reviews.length} playtime={playtime} platinums={platinums} avgRating={avgRating} bestRatedGame={bestRatedGame} />
+                    </div>
+                    <div className={styles.reviews__side}>
+                        <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
 
-                    {items.length != 0 ? <>
-                        {
-                            items.map((r, index) => {
-                                return (
-                                    <ReviewCard review={r} key={`${r.created} - ${r.title}`} hasLabel={false} hasTitle={true} deleteButton={false} />
-                                )
-                            })
-                        } </>
-                        :
-                        <h1 className={styles.no__review__message}>No reviews available</h1>
-                    }
-                    <div className={styles.bottom__dummy}><p>Yo!<br />Easter Egg!</p></div>
+                        <ReviewFilterComponent reviews={items} setReviews={setItems} />
+
+                        {items.length != 0 ? <>
+                            {
+                                items.map((r, index) => {
+                                    return (
+                                        <ReviewCard review={r} key={`${r.created} - ${r.title}`} hasLabel={false} hasTitle={true} deleteButton={false} />
+                                    )
+                                })
+                            } </>
+                            :
+                            <h1 className={styles.no__review__message}>No reviews available</h1>
+                        }
+                        <div className={styles.bottom__dummy}><p>Yo!<br />Easter Egg!</p></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </>
     )
 }
 

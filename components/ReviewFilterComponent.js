@@ -17,7 +17,6 @@ export default function ReviewFilterComponent({ reviews, setReviews }) {
 
     return (
         <div className={styles.filterBar__container}>
-
             <div className={styles.ordering}>
                 <p>Category</p>
                 <div ref={_orderingContainer}>
@@ -39,7 +38,6 @@ export default function ReviewFilterComponent({ reviews, setReviews }) {
                     <a onClick={(e) => toggleDirection(e, _directionContainer, setDirection, styles)}>ASC</a>
                 </div>
             </div>
-
         </div>
     )
 }
