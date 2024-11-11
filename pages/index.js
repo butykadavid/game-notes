@@ -10,15 +10,12 @@ import styles from "../styles/homepage/index.module.css"
 import MainPageReview from "../components/MainPageReviewComponent"
 import MainPageUser from "../components/MainPageUserComponent"
 import GamesComponent from "../components/GamesComponent"
-import { getAllGamePassTitles } from "../public/externalAPIcalls"
 
 export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
 
     const router = useRouter()
 
     var i = 0
-
-    const asd = getAllGamePassTitles()
 
     return (
         <>

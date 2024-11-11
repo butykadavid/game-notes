@@ -1,14 +1,8 @@
-const ALL_GAMEPASS_ID_ADDRESS = "https://catalog.gamepass.com/sigls/v2?id=29a81209-df6f-41fd-a528-2ae6b91f719c&language=en-us&market=US"
-const GAMEPASS_DATA_ADDRESS = ["https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=", "&market=US&languages=en-us&MS-CV=DGU1mcuYo0WMMp+F.1"]
-
 const getAllGamePassTitles = async () => {
     var json;
 
     try {
-        const res = await fetch(ALL_GAMEPASS_ID_ADDRESS);
-        if (!res.ok) {
-            throw new Error(`Response status: ${res.status}`);
-        }
+        const res = await fetch('/api/all-gamepass-ids');
 
         json = await res.json();
     } catch (error) {
@@ -18,7 +12,7 @@ const getAllGamePassTitles = async () => {
     const searchArray = Array.from(json).map(x => x["id"] ? x["id"] : null).filter(x => x != null).join(',')
 
     try {
-        const res = await fetch(GAMEPASS_DATA_ADDRESS[0] + searchArray + GAMEPASS_DATA_ADDRESS[1]);
+        const res = await fetch(`/api/gamepass-game-data/${searchArray}`);
         if (!res.ok) {
             throw new Error(`Response status: ${res.status}`);
         }
@@ -36,7 +30,7 @@ const getAllGamePassTitles = async () => {
         }
     })
 
-    console.log(result)
+    return result
 }
 
 export {
