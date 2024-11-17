@@ -21,7 +21,7 @@
 
     color: var(--text-color-3);
 
-    font-size: 1.5vh;
+    font-size: 0.65rem;
     font-weight: 700;
 }
 
@@ -76,7 +76,7 @@
 
     font-style: normal;
     font-family: 'Tektur', sans-serif;
-    font-size: 2vh;
+    font-size: 0.55rem;
 
     letter-spacing: 5px;
 
@@ -91,10 +91,29 @@
     cursor: pointer;
 }
 
+@media only screen and (max-width: 1200px) {
+    .main__container .main__part {
+        flex-wrap: wrap;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .main__container {
         flex-direction: column-reverse;
 
         padding-bottom: 5vh;
+    }
+
+    .main__container .main__part {
+        flex-wrap: nowrap;
+    }
+
+    .main__container .main__part:first-child {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }

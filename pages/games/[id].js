@@ -101,7 +101,7 @@ export default function gamePage({ title, reviews, background }) {
 
                     <div className={styles.center__container}>
                         <h1 className={styles.title}>{title}</h1>
-                        <RatingBarComponent rating={avgOvr} color={getColor(avgOvr)} border={true} />
+                        <RatingBarComponent rating={avgOvr} aspectRatio={"25/1"} border={true} label={true}/>
                     </div>
 
                     <div className={styles.stat__box}>

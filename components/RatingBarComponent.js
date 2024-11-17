@@ -1,6 +1,7 @@
+import { getColor } from '../public/functions';
 import styles from '../styles/ratingBar.module.css'
 
-export default function RatingBarComponent({ rating, color, border }) {
+export default function RatingBarComponent({ rating, aspectRatio, border, label }) {
 
     const keyframes = `
         @keyframes loadIn {
@@ -10,18 +11,23 @@ export default function RatingBarComponent({ rating, color, border }) {
 
     const barStyle = {
         width: `${rating}%`,
-        backgroundColor: `${color}`,
+        backgroundColor: `${getColor(rating)}`,
         animation: 'loadIn 0.75s ease-in-out',
         WebkitAnimation: 'loadIn 0.75s ease-in-out',
     };
 
     return (
 
-        <div className={styles.main__bar} style={border ? { border: `1px solid rgba(255, 255, 255, 0.1)` } : {}}>
+        <div className={styles.main__bar} style={border ? { border: `1px solid rgba(255, 255, 255, 0.1)`, aspectRatio: `${aspectRatio}` } 
+                                                        : {aspectRatio: `${aspectRatio}`}}>
 
-            <div className={styles.rating__label} style={{ left: `${rating}%`, transform: `translateX(-50%)` }}>
-                <h1>{rating}</h1>
-            </div>
+            {label ?
+                <div className={styles.rating__label} style={{ left: `${rating}%`, transform: `translateX(-50%)` }}>
+                    <h1>{rating}</h1>
+                </div>
+                :
+                <></>
+            }
 
             <style>{keyframes}</style>
 

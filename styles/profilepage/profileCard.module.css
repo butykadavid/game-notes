@@ -97,7 +97,7 @@
     color: var(--text-color-1);
     font-style: italic;
     font-style: 700;
-    font-size: 2vh;
+    font-size: 0.75rem;
 }
 
 .info__box h4 {
@@ -111,7 +111,7 @@
 .info__box span {
     color: var(--text-color-1);
 
-    font-size: 5vh;
+    font-size: 1.75rem;
 }
 
 .info__box__review {

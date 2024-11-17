@@ -15,7 +15,7 @@ export default function GamesComponent({ searchWord }) {
 
     const [items, setItems] = useState([])
     const [hasMore, setHasMore] = useState(true)
-    const [index, setIndex] = useState(20)
+    const [index, setIndex] = useState(25)
 
     const router = useRouter()
 
@@ -51,7 +51,7 @@ export default function GamesComponent({ searchWord }) {
             {searchWord ?
                 <Title text={`Games searched: ${searchWord}`} />
                 :
-                <Title text={'All Games'} />
+                <Title text={'GameNotes Reviews'} />
             }
 
             <InfiniteScroll

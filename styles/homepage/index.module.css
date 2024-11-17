@@ -22,6 +22,8 @@
 .box {
     background: linear-gradient(45deg, rgba(150, 150, 150, 0.01), rgba(255, 255, 255, 0.025));
     backdrop-filter: blur(20px);
+
+    overflow: hidden;
 }
 
 .recentGames__box {
@@ -53,7 +55,7 @@
     color: var(--text-color-1);
 
     font-style: italic;
-    font-size: 2vh;
+    font-size: 0.75rem;
 
     background: #070715;
 
@@ -129,7 +131,8 @@
 .bestGames__box .box__content h1 {
     margin: 0;
 
-    font-size: 3vh;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .bestGames__box .box__content p {
@@ -137,12 +140,12 @@
 
     color: var(--text-color-2);
 
-    font-size: 2vh;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
 .bestGames__box .box__content span {
-    font-size: 2.5vh;
+    font-size: 1.1rem;
 }
 
 .recentUsers__box {
@@ -160,6 +163,10 @@
 .recentUsers__box .box__content {
     margin: 15px 0px;
     justify-content: flex-start;
+}
+
+@media only screen and (max-width: 1200px) {
+    
 }
 
 @media only screen and (max-width: 600px) {

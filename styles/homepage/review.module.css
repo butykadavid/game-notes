@@ -36,7 +36,7 @@
 
     color: var(--text-color-1);
 
-    font-size: 2vh;
+    font-size: 0.75rem;
 }
 
 .card__user {
@@ -44,7 +44,7 @@
 
     color: var(--text-color-2);
 
-    font-size: 1.25vh;
+    font-size: 0.55rem;
     font-weight: 600;
 }
 
@@ -53,7 +53,18 @@
 
     color: var(--text-color-1);
 
-    font-size: 3vh;
+    font-size: 1.25rem;
+}
+
+@media only screen and (max-width: 1200px) {
+    .card__image{
+        width: 33%;
+        margin-right: 15px;
+    }
+
+    .card__score {
+        width: 10%;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -62,6 +73,7 @@
     }
 
     .card__image{
+        width: 20%;
         margin-right: 25px;
     }
 }

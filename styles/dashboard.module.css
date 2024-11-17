@@ -71,7 +71,7 @@
 
     font-weight: 700;
     font-style: italic;
-    font-size: 2vh;
+    font-size: 0.75rem;
 
     border-radius: var(--border-radius-small);
 
@@ -367,6 +367,56 @@
     border-color: #efefef;
 }
 
+@media only screen and (max-width: 1200px) {
+    .gameCard__container {
+        width: 100vw;
+    }
+
+    .filterBar__container {
+        width: 90%;
+        height: auto;
+
+        flex-direction: column;
+    }
+
+    .filterBar__container a {
+        margin: 2px;
+    }
+
+    .filterBar__container p {
+        font-style: italic;
+        align-self: flex-start;
+    }
+
+    .filterBar__container .ordering {
+        width: 95%;
+
+        border-bottom: 1px solid var(--theme-alter);
+    }
+
+    .filterBar__container .ordering div {
+        padding: 10px 0px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .filterBar__container .direction {
+        width: 95%;
+
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .filterBar__container .direction div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .form__button__container div {
         margin: 20px 15px 25px 15px;
@@ -378,10 +428,6 @@
 
     .welcome__container h1 {
         font-size: 7vw;
-    }
-
-    .gameCard__container {
-        width: 100vw;
     }
 
     .form {
@@ -451,49 +497,5 @@
 
     .optionBar__container {
         justify-content: center;
-    }
-
-    .filterBar__container {
-        width: 90%;
-        height: auto;
-
-        flex-direction: column;
-    }
-
-    .filterBar__container a {
-        margin: 2px;
-    }
-
-    .filterBar__container p {
-        font-style: italic;
-        align-self: flex-start;
-    }
-
-    .filterBar__container .ordering {
-        width: 95%;
-
-        border-bottom: 1px solid var(--theme-alter);
-    }
-
-    .filterBar__container .ordering div {
-        padding: 10px 0px;
-
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-    }
-
-    .filterBar__container .direction {
-        width: 95%;
-
-        justify-content: space-between;
-        align-items: center;
-
-    }
-
-    .filterBar__container .direction div {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
     }
 }
