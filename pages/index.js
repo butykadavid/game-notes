@@ -10,6 +10,8 @@ import styles from "../styles/homepage/index.module.css"
 import MainPageReview from "../components/MainPageReviewComponent"
 import MainPageUser from "../components/MainPageUserComponent"
 import GamesComponent from "../components/GamesComponent"
+import SubscribtionSectionCompnent from "../components/SubscriptionSectionComponent"
+import Title from "../components/TitleComponent"
 
 export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
 
@@ -85,6 +87,13 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
                     </div>
 
                 </div>
+
+                <Title text={"Gaming deals"} />
+
+                <SubscribtionSectionCompnent category={"recent"} sectionTitle={"GamePass Recent"}/>
+                <SubscribtionSectionCompnent category={"popular"} sectionTitle={"GamePass Popular"}/>
+                <SubscribtionSectionCompnent category={"eaplay"} sectionTitle={"GamePass Eaplay All"}/>
+                <SubscribtionSectionCompnent category={"uplay"} sectionTitle={"GamePass Ubi+ All"}/>
 
                 <GamesComponent />
 
