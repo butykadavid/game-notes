@@ -14,7 +14,6 @@ export default function SubsciptionGameCardComponent({ game }) {
 
     const onCardClick = () => {
         redirectToPage(router, `/games`, { searchWord: `${getFirstWordOfTitle()}` })
-
     }
 
     return (

@@ -44,6 +44,21 @@ export default function GamesComponent({ searchWord }) {
         fetchData()
     }, [searchWord])
 
+    if (items.length === 0) {
+        return <>
+            <div className={styles.main__container}>
+
+                {searchWord ?
+                    <Title text={`Games searched: ${searchWord}`} />
+                    :
+                    <Title text={'GameNotes Reviews'} />
+                }
+
+                <h2 className={styles.no__results__text}>{`No results :(`}</h2>
+            </div>
+        </>
+    }
+
     return (
 
         <div className={styles.main__container}>

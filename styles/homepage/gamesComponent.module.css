@@ -64,6 +64,13 @@
     font-size: 1rem;
 }
 
+.no__results__text {
+    margin: 35px auto;
+
+    text-align: center;
+    color: var(--text-color-2);
+}
+
 @media only screen and (max-width: 600px) {
     .title__container .item__box {
         font-size: 1.15rem;
