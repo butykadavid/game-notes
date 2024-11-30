@@ -19,7 +19,7 @@ export default function SubsciptionGameCardComponent({ game }) {
     return (
         <div className={styles.card} onClick={() => onCardClick()}>
             <div className={styles.img__container}>
-                <img src={game.image} />
+                <img src={game.image} alt={`${game.title}'s poster`}/>
             </div>
             <div className={styles.content}>
                 <h3>{game.title}</h3>
