@@ -112,12 +112,16 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
                     : <></>
                 }
 
+                {review.img ?
                 <div className={styles.card__img} style={{
                     background: `url(${review.img})`,
                     backgroundPosition: `center`,
                     backgroundSize: `cover`,
                     backgroundRepeat: `no-repeat`
-                }}></div>
+                }}></div> : 
+                <div className={`${styles.card__img} bg-[var(--theme-alter)] flex justify-center items-center tracking-[5px] font-bold`}>
+                    <p className='text-[var(--theme-color-alter-2)] min-h-[125px]'>No image</p>
+                </div>}
 
                 {hasLabel ?
                     <div className={styles.card__user} onClick={() => redirectToPage(router, `/profiles/${review.userPath.split('/')[1]}`, { uid: `${review.userPath.split('/')[1]}` })}>
@@ -128,9 +132,15 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
 
                 <div className={styles.card__mid}>
 
-                    <div className={styles.card__desc}>
-                        <p>{review.notes}</p>
-                    </div>
+                    {review.notes === "" ?
+                        <div className='w-full h-full flex justify-center items-center min-h-[125px]'>
+                            <p className='font-bold text-2xl text-[var(--theme-alter)] tracking-[5px]'>No review text</p>
+                        </div>
+                        : 
+                        <div className={styles.card__desc}>
+                            <p>{review.notes}</p>
+                        </div>
+                    }
 
                     <div className={styles.card__ratings}>
                         {
