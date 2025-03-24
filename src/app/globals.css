@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap');
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@layer theme, base, components, utilities;
 
 :root {
     --theme-color-tone-1: #121224;
@@ -30,7 +34,7 @@ body {
     text-transform: uppercase;
     padding: 0;
     margin: 0;
-    font-family: Roboto, sans-serif;
+    font-family: "Roboto", sans-serif !important;
     scroll-behavior: smooth;
     cursor: default;
 }
