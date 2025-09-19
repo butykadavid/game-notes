@@ -69,6 +69,8 @@ const getGamePassData = async (category) => {
         }
     })
 
+    console.log(json)
+
     return result
 }
 

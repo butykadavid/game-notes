@@ -23,7 +23,7 @@ export default function SubscriptionSectionCompnent({ category, sectionTitle }) 
     useEffect(() => {
         getGames()
     }, [])
-
+    
     return (
         <div className={styles.section}>
             <div className={styles.fade__in__div}></div>
