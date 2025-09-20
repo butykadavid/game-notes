@@ -15,7 +15,7 @@
 
     border-bottom: 2px solid var(--theme-color-decor-2);
     
-    z-index: 10000;
+    z-index: 100;
 }
 
 .logo {

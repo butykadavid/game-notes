@@ -165,6 +165,22 @@
     justify-content: flex-start;
 }
 
+.add__news{
+    padding: 2px 9px;
+
+    font-size: 28px;
+    color: var(--text-color-1);
+    background-color: var(--theme-color-tone-1);
+
+    border-radius: var(--border-radius-small);
+    transition: 0.25s ease-in-out;
+}
+
+.add__news:hover{
+    cursor: pointer;
+    background: var(--theme-color-tone-2);
+}
+
 @media only screen and (max-width: 1200px) {
     
 }

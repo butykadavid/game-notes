@@ -1,7 +1,8 @@
 import PostComponent from "./PostComponent"
+import styles from "../styles/posts/post.module.css"
 
 export default function NewsFeedComponent({ posts }) {
-    return <div style={{padding: '25px 5vw'}}>
+    return <div className={styles.posts__container}>
         {posts.map((p, index) => {
             return (
                 <div key={index}>
@@ -9,5 +10,8 @@ export default function NewsFeedComponent({ posts }) {
                 </div>
             )
         })}
+        <div className={styles.post__card} style={{ border: 'none', boxShadow: 'none' }}>
+            <p style={{ color: '#dedede' }}>Click for More...</p>
+        </div>
     </div>
 }

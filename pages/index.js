@@ -1,8 +1,11 @@
 import { db } from "../public/firebase"
-import { collection, query, orderBy, getDocs, limit } from "firebase/firestore"
+import { collection, query, orderBy, getDocs, addDoc, doc, updateDoc, limit } from "firebase/firestore"
 import { getColor } from "../public/functions"
 import { useRouter } from "next/router"
 import { redirectToPage } from "../public/functions"
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../public/firebase'
+import { useState } from "react"
 
 import Head from "next/head"
 import styles from "../styles/homepage/index.module.css"
@@ -13,15 +16,51 @@ import GamesComponent from "../components/GamesComponent"
 import SubscribtionSectionCompnent from "../components/SubscriptionSectionComponent"
 import Title from "../components/TitleComponent"
 import NewsFeedComponent from "../components/NewsFeedComponent"
+import Modal from "../components/Modal"
 
 export default function Index({ recentGames, bestOvrGames, newestProfiles, posts }) {
 
     const router = useRouter()
+    const [user, loading] = useAuthState(auth)
+
+    const [isModalVisible, setModalVisible] = useState(false)
+    const [modalTitle, setModalTitle] = useState("")
+    const [modalText, setModalText] = useState("")
+
+    const submitPost = async () => {
+        try {
+            // Adding new review
+            await addDoc(collection(db, "posts"), {
+                title: modalTitle,
+                text: modalText,
+                createdAt: Math.floor(Date.now() / 1000),
+                userPath: `users/${user.uid}`
+            })
+        } catch (err) { console.error(err) }
+    }
 
     var i = 0
 
     return (
         <>
+            <Modal visible={isModalVisible} setVisible={setModalVisible} title="Create new post">
+                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}>
+                        <div style={{ position: 'relative', width: "94%", margin: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'start' }}>
+                            <p style={{ margin: '5px 0px', color: '#dedede' }}>Title</p>
+                            <input style={{ width: "100%", boxSizing: "border-box" }} onChange={(e) => setModalTitle(e.target.value)} />
+                        </div>
+                        <div style={{ position: 'relative', width: "94%", margin: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'start' }}>
+                            <p style={{ margin: '5px 0px', color: '#dedede' }}>Text</p>
+                            <textarea style={{ width: "100%", boxSizing: "border-box" }} rows={10} onChange={(e) => setModalText(e.target.value)}></textarea>
+                        </div>
+                    </div>
+                    <div style={{ width: '94%', margin: "0px 0px 15px 0px" }}>
+                        <a style={{ padding: "6px 12px 5px 12px", float: "right", background: "#070715", color: "#dedede", border: '1px solid #202040', borderRadius: '4px' }} onClick={() => submitPost()}>Submit</a>
+                    </div>
+                </div>
+            </Modal>
+
             <Head>
                 <title>GameNotes | HOME</title>
                 <meta name="description" content="Top game ratings and reviews" />
@@ -89,7 +128,15 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
                 </div>
 
-                <Title text={"Gamenotes newsfeed"} />
+
+                <Title text={"News & announcements"}>
+                    {user != null && <>
+                        {(!loading && user.uid == process.env.ADMIN) &&
+                            <a className={styles.add__news} title={"Create new post"} onClick={() => setModalVisible(true)}>+</a>
+                        }
+                    </>
+                    }
+                </Title>
                 <NewsFeedComponent posts={posts} />
 
                 <Title text={"Gaming deals"} />
