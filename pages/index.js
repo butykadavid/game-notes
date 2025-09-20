@@ -12,8 +12,9 @@ import MainPageUser from "../components/MainPageUserComponent"
 import GamesComponent from "../components/GamesComponent"
 import SubscribtionSectionCompnent from "../components/SubscriptionSectionComponent"
 import Title from "../components/TitleComponent"
+import NewsFeedComponent from "../components/NewsFeedComponent"
 
-export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
+export default function Index({ recentGames, bestOvrGames, newestProfiles, posts }) {
 
     const router = useRouter()
 
@@ -23,8 +24,8 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
         <>
             <Head>
                 <title>GameNotes | HOME</title>
-                <meta name="description" content="Top game ratings and reviews"/>
-                <meta name="keywords" content={`GameNotes, Result, Game, Games, Review, Videogame, Home, Rating`}/>
+                <meta name="description" content="Top game ratings and reviews" />
+                <meta name="keywords" content={`GameNotes, Result, Game, Games, Review, Videogame, Home, Rating`} />
             </Head>
 
             <div className={styles.main__container}>
@@ -88,12 +89,14 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles }) {
 
                 </div>
 
-                <Title text={"Gaming deals"} />
+                <Title text={"Gamenotes newsfeed"} />
+                <NewsFeedComponent posts={posts} />
 
-                <SubscribtionSectionCompnent category={"recent"} sectionTitle={"GamePass Recent"}/>
-                <SubscribtionSectionCompnent category={"popular"} sectionTitle={"GamePass Popular"}/>
-                <SubscribtionSectionCompnent category={"eaplay"} sectionTitle={"GamePass Eaplay All"}/>
-                <SubscribtionSectionCompnent category={"uplay"} sectionTitle={"GamePass Ubi+ All"}/>
+                <Title text={"Gaming deals"} />
+                <SubscribtionSectionCompnent category={"recent"} sectionTitle={"GamePass Recent"} />
+                <SubscribtionSectionCompnent category={"popular"} sectionTitle={"GamePass Popular"} />
+                <SubscribtionSectionCompnent category={"eaplay"} sectionTitle={"GamePass Eaplay All"} />
+                <SubscribtionSectionCompnent category={"uplay"} sectionTitle={"GamePass Ubi+ All"} />
 
                 <GamesComponent />
 
@@ -130,11 +133,20 @@ export const getServerSideProps = async () => {
         return { ...doc.data() }
     })
 
+    // posts
+    q = query(collection(db, "posts"), orderBy('createdAt', 'desc'), limit(5))
+    docs = await getDocs(q)
+
+    const posts = docs.docs.map(doc => {
+        return { ...doc.data() }
+    })
+
     return {
         props: {
             recentGames,
             bestOvrGames,
-            newestProfiles
+            newestProfiles,
+            posts
         }
     }
 }

@@ -322,7 +322,6 @@ export default function Dashboard({ summaries }) {
 
     const onTitleEntered = e => {
         const entered = summaries.find(s => s.title == e.target.value)
-        console.log(entered)
         if (entered) {
             _frenchise.current.value = entered.frenchise
         }
