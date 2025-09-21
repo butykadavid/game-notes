@@ -107,6 +107,60 @@ const activateOrdering = (ordering, direction, setItems, items) => {
     }
 }
 
+const normalizeGameTitle = (raw) => {
+    if (!raw) return "";
+
+    let s = String(raw);
+
+    s = s.replace(/[|/]+/g, " ");
+
+    s = s.replace(/[\u2122\u00AE\u00A9]/g, "");
+
+    s = s.replace(/\u00A0/g, " ");      // NBSP -> space
+    s = s.replace(/\s+/g, " ").trim();
+
+    const platforms = [
+        "xbox", "xbox one", "xbox series x", "xbox series s", "xbox series",
+        "playstation", "ps5", "ps4", "ps3", "ps2", "ps1", "ps",
+        "switch", "nintendo switch", "pc", "steam", "epic", "stadia", "origin"
+    ];
+    const editions = [
+        "deluxe", "gold", "ultimate", "game of the year", "goty", "standard edition",
+        "complete edition", "remastered", "remaster", "hd collection", "definitive edition",
+        "anniversary edition", "bundle", "cross gen", "cross-gen", "cross gen bundle",
+        "collector's edition", "collector edition", "edition"
+    ];
+
+    const escapeForRegex = (arr) => arr
+        .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        .join("|");
+
+    const platformRegexPart = escapeForRegex(platforms);
+    const editionRegexPart = escapeForRegex(editions);
+
+    const parenPattern = new RegExp(
+        `\\([^)]*\\b(?:${platformRegexPart}|${editionRegexPart})\\b[^)]*\\)`,
+        "gi"
+    );
+    s = s.replace(parenPattern, "");
+
+    const trailingSegmentPattern = new RegExp(
+        `(?:[\\-–—:\\|]\\s*)[^\\-–—:\\|]*\\b(?:${platformRegexPart}|${editionRegexPart})\\b.*$`,
+        "i"
+    );
+    s = s.replace(trailingSegmentPattern, "");
+
+    const leftoverPlatformEdition = new RegExp(`\\b(?:${platformRegexPart}|${editionRegexPart})\\b`, "gi");
+    s = s.replace(leftoverPlatformEdition, "");
+
+    s = s.replace(/[|\/]+/g, " ");              // safety: convert leftover to spaces
+    s = s.replace(/\s+[-—–]\s+/g, " - ");       // normalize interior hyphens to single spaced hyphen
+    s = s.replace(/[:\-\—\–\|]+$/g, "");        // remove trailing :, -, | etc
+    s = s.replace(/\s+/g, " ").trim();
+
+    return s;
+}
+
 export {
     getOvrRating,
     getColor,
@@ -116,5 +170,6 @@ export {
     toSearchWordsArray,
     toggleOrdering,
     toggleDirection,
-    activateOrdering
+    activateOrdering,
+    normalizeGameTitle
 }

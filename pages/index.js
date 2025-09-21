@@ -29,13 +29,15 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
     const submitPost = async () => {
         try {
-            // Adding new review
+            // Adding new post
             await addDoc(collection(db, "posts"), {
                 title: modalTitle,
                 text: modalText,
                 createdAt: Math.floor(Date.now() / 1000),
                 userPath: `users/${user.uid}`
             })
+
+            setModalVisible(false)
         } catch (err) { console.error(err) }
     }
 
@@ -43,20 +45,33 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
     return (
         <>
-            <Modal visible={isModalVisible} setVisible={setModalVisible} title="Create new post">
-                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}>
-                        <div style={{ position: 'relative', width: "94%", margin: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'start' }}>
-                            <p style={{ margin: '5px 0px', color: '#dedede' }}>Title</p>
-                            <input style={{ width: "100%", boxSizing: "border-box" }} onChange={(e) => setModalTitle(e.target.value)} />
+            <Modal
+                visible={isModalVisible}
+                setVisible={setModalVisible}
+                title="Create new post"
+            >
+                <div className={styles.modal__container}>
+                    <div className={styles.modal__content}>
+                        <div className={styles.modal__field}>
+                            <p className={styles.modal__label}>Title</p>
+                            <input
+                                className={styles.modal__input}
+                                onChange={(e) => setModalTitle(e.target.value)}
+                            />
                         </div>
-                        <div style={{ position: 'relative', width: "94%", margin: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'start' }}>
-                            <p style={{ margin: '5px 0px', color: '#dedede' }}>Text</p>
-                            <textarea style={{ width: "100%", boxSizing: "border-box" }} rows={10} onChange={(e) => setModalText(e.target.value)}></textarea>
+                        <div className={styles.modal__field}>
+                            <p className={styles.modal__label}>Text</p>
+                            <textarea
+                                className={styles.modal__textarea}
+                                rows={10}
+                                onChange={(e) => setModalText(e.target.value)}
+                            ></textarea>
                         </div>
                     </div>
-                    <div style={{ width: '94%', margin: "0px 0px 15px 0px" }}>
-                        <a style={{ padding: "6px 12px 5px 12px", float: "right", background: "#070715", color: "#dedede", border: '1px solid #202040', borderRadius: '4px' }} onClick={() => submitPost()}>Submit</a>
+                    <div className={styles.modal__footer}>
+                        <a className={styles.modal__submit} onClick={() => submitPost()}>
+                            Submit
+                        </a>
                     </div>
                 </div>
             </Modal>

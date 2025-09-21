@@ -13,7 +13,7 @@ import Title from "../../components/TitleComponent";
 import ReviewFilterComponent from "../../components/ReviewFilterComponent";
 import Head from "next/head";
 
-export default function Dashboard({ summaries }) {
+export default function Dashboard({ summaries, createReviewTitle }) {
 
     const [user, loading] = useAuthState(auth);
 
@@ -368,6 +368,17 @@ export default function Dashboard({ summaries }) {
     useEffect(() => {
     }, [items])
 
+    useEffect(() => {
+        if (!_form.current || !_title.current || createReviewTitle == null) return
+
+        _title.current.value = createReviewTitle
+        
+        const f = _form.current
+        f.style.display = "flex"
+        _formMode.current.style.background = '#121224'
+        _formMode.current.style.color = '#00ffc3'
+    }, [createReviewTitle, _form.current, _title.current])
+
     if (loading) {
         return (
             <div className={styles.main__container}>
@@ -558,7 +569,9 @@ export default function Dashboard({ summaries }) {
     )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
+
+    const createReviewTitle = context.query.createReviewTitle
 
     const q = query(collection(db, 'summaries'))
     const docs = await getDocs(q)
@@ -569,7 +582,8 @@ export const getServerSideProps = async () => {
 
     return {
         props: {
-            summaries
+            summaries,
+            createReviewTitle: createReviewTitle || null
         }
     }
 }

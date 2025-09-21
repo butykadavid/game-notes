@@ -10,8 +10,8 @@ export default function NewsFeedComponent({ posts }) {
                 </div>
             )
         })}
-        <div className={styles.post__card} style={{ border: 'none', boxShadow: 'none' }}>
-            <p style={{ color: '#dedede' }}>Click for More...</p>
-        </div>
+        {/* <div className={styles.more__button}>
+            <a>Previous posts...</a>
+        </div> */}
     </div>
 }

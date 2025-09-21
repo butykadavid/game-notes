@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { redirectToPage } from "../public/functions"
+import { redirectToPage, normalizeGameTitle } from "../public/functions"
 import styles from "../styles/subscriptionSection/subscriptionGameCard.module.css"
 import RatingBarComponent from "./RatingBarComponent"
 import { useState } from "react"
@@ -47,11 +47,11 @@ export default function SubsciptionGameCardComponent({ game }) {
                         </div>
                         <h4>Google search</h4>
                     </Link>
-                    <div className={styles.toggle__option} onClick={() => redirectToPage(router, `/dashboard`)}>
+                    <div className={styles.toggle__option} onClick={() => redirectToPage(router, `/dashboard`, { createReviewTitle: normalizeGameTitle(game.title) })}>
                         <div style={{ background: '#d5d5d5', borderRadius: '3px' }}>
                             <h3 style={{ color: '#252525', fontWeight: '900', fontSize: '9px', padding: '3px 6px', margin: '0', }}>NEW</h3>
                         </div>
-                        <h4>Write rewiew</h4>
+                        <h4>Write review</h4>
                     </div>
                 </div>
             }

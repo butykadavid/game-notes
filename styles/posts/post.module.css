@@ -6,7 +6,7 @@
     overflow-x: auto;
 }
 
-.posts__container::-webkit-scrollbar{
+.posts__container::-webkit-scrollbar {
     height: 2px;
 }
 
@@ -49,7 +49,7 @@
     height: 20%;
 
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 
     border-bottom: 1px solid var(--theme-color-tone-2);
@@ -79,4 +79,63 @@
     overflow-y: hidden;
 
     background-color: var(--theme-alter-2);
+}
+
+.more__button {
+    height: 30vh;
+    margin: 0px 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.more__button a {
+    padding: 5px 15px;
+
+    color: var(--text-color-1);
+
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 600;
+    text-decoration: underline;
+
+    transition: 0.25s ease-in-out;
+}
+
+.more__button a:hover {
+    cursor: pointer;
+    color: var(--text-color-2);
+}
+
+.delete__button{
+    padding: 1px 6px;
+    margin: 5px 10px;
+
+    border-radius: var(--border-radius-small);
+    background: crimson;
+    color: #050505;
+    font-weight: 600;
+    text-transform: none;
+
+    transition: 0.25s ease-in-out;
+}
+
+.delete__button:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+@media only screen and (max-width: 1200px) {
+}
+
+@media only screen and (max-width: 600px) {
+    .post__card {
+        width: 70vw;
+        height: 50vh;
+    }
+
+    .more__button {
+        height: 50vh;
+    }
 }

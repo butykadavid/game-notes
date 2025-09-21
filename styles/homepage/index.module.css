@@ -165,7 +165,7 @@
     justify-content: flex-start;
 }
 
-.add__news{
+.add__news {
     padding: 2px 9px;
 
     font-size: 28px;
@@ -176,17 +176,85 @@
     transition: 0.25s ease-in-out;
 }
 
-.add__news:hover{
+.add__news:hover {
     cursor: pointer;
     background: var(--theme-color-tone-2);
 }
 
-@media only screen and (max-width: 1200px) {
-    
+.modal__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.modal__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.modal__field {
+    position: relative;
+    width: 94%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.modal__label {
+    margin: 5px 0;
+
+    font-size: 14px;
+    font-style: italic;
+    color: #dedede;
+}
+
+.modal__input,
+.modal__textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    background: var(--theme-alter-2);
+    color: var(--text-color-3);
+    border: 2px solid var(--theme-alter);
+    border-radius: var(--border-radius-small);
+}
+
+.modal__footer {
+    width: 94%;
+    margin: 0 0 15px 0;
+}
+
+.modal__submit {
+    padding: 6px 12px 5px 12px;
+    float: right;
+    background: var(--theme-alter-2);
+    color: var(--text-color-1);
+    border: 1px solid var(--theme-color-tone-2);
+    border-radius: 4px;
+    cursor: pointer;
+    font-style: italic;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 0.25s ease-in-out;
+}
+
+.modal__submit:hover {
+    background: var(--theme-alter);
+}
+
+@media only screen and (max-width: 1200px) {}
+
 @media only screen and (max-width: 600px) {
-    .content__container{
+    .content__container {
         min-height: 90vh;
         height: auto;
         flex-direction: column;
