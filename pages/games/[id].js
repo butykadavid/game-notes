@@ -60,18 +60,15 @@ export default function gamePage({ title, reviews, background }) {
     const getSumValues = () => {
 
         var playtime = 0
-        var playtroughs = 0
         var platinums = 0
 
         reviews.map(r => {
             playtime += r.playtime
-            playtroughs += r.playtroughs
             platinums += (r.platinum ? 1 : 0)
         })
 
         return {
             playtime: playtime,
-            playtroughs: playtroughs,
             platinums: platinums
         }
 
@@ -163,14 +160,21 @@ export const getServerSideProps = async (context) => {
 
     const title = context.query.title
 
-    const q = query(collection(db, 'games'), where('title', '==', title))
-    const docs = await getDocs(q)
+    var q = query(collection(db, 'games'), where('title', '==', title))
+    var docs = await getDocs(q)
 
     const reviews = docs.docs.map(doc => {
         return { ...doc.data() }
     })
 
-    const background = reviews[0].img
+    q = query(collection(db, 'summaries'), where('title', '==', title))
+    docs = await getDocs(q)
+
+    const summary = docs.docs.map(doc => {
+        return { ...doc.data() }
+    })
+
+    const background = summary[0].img || null
 
     return { props: { title, reviews, background } }
 }

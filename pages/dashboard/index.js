@@ -42,12 +42,8 @@ export default function Dashboard({ summaries, createReviewTitle }) {
     const _characters = useRef()
     const _audio = useRef()
     const _replayability = useRef()
-    const _frenchise = useRef()
     const _lastPlayed = useRef()
     const _playtime = useRef()
-    const _playtroughs = useRef()
-    const _price = useRef()
-    const _img = useRef()
     const _notes = useRef()
     const _platinum = useRef()
 
@@ -74,12 +70,11 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                     characters: Number(_characters.current.value),
                     audio: Number(_audio.current.value),
                     replayability: Number(_replayability.current.value),
-                    frenchise: _frenchise.current.value,
+                    frenchise: null,
                     lastPlayed: new Date(_lastPlayed.current.value).getTime() / 1000,
                     playtime: Number(_playtime.current.value),
-                    playtroughs: Number(_playtroughs.current.value),
-                    price: Number(_price.current.value),
-                    img: _img.current.value,
+                    playtroughs: null,
+                    price: null,
                     notes: _notes.current.value,
                     platinum: _platinum.current.checked,
                     userName: user.displayName,
@@ -135,7 +130,7 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                         count: 1,
                         average: ovr,
                         title: _title.current.value,
-                        frenchise: _frenchise.current.value,
+                        frenchise: null,
                         searchArray: toSearchWordsArray(_title.current.value)
                     })
                 }
@@ -152,12 +147,8 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                     characters: Number(_characters.current.value),
                     audio: Number(_audio.current.value),
                     replayability: Number(_replayability.current.value),
-                    frenchise: _frenchise.current.value,
                     lastPlayed: new Date(_lastPlayed.current.value).getTime() / 1000,
                     playtime: Number(_playtime.current.value),
-                    playtroughs: Number(_playtroughs.current.value),
-                    price: Number(_price.current.value),
-                    img: _img.current.value,
                     notes: _notes.current.value,
                     platinum: _platinum.current.checked,
                     updated: Math.floor(Date.now() / 1000)
@@ -255,12 +246,8 @@ export default function Dashboard({ summaries, createReviewTitle }) {
         _characters.current.value = game.characters;
         _audio.current.value = game.audio;
         _replayability.current.value = game.replayability;
-        _frenchise.current.value = game.frenchise;
         _lastPlayed.current.value = formatDate(game.lastPlayed * 1000);
         _playtime.current.value = game.playtime;
-        _playtroughs.current.value = game.playtroughs;
-        _price.current.value = game.price;
-        _img.current.value = game.img;
         _notes.current.value = game.notes;
         _platinum.current.checked = game.platinum;
 
@@ -278,12 +265,8 @@ export default function Dashboard({ summaries, createReviewTitle }) {
         _characters.current.value = ""
         _audio.current.value = ""
         _replayability.current.value = ""
-        _frenchise.current.value = ""
         _lastPlayed.current.value = ""
         _playtime.current.value = ""
-        _playtroughs.current.value = ""
-        _price.current.value = ""
-        _img.current.value = ""
         _notes.current.value = ""
         _platinum.current.value = ""
     }
@@ -310,24 +293,10 @@ export default function Dashboard({ summaries, createReviewTitle }) {
         _characters.current.value = null;
         _audio.current.value = null;
         _replayability.current.value = null;
-        _frenchise.current.value = null;
         _lastPlayed.current.value = null;
         _playtime.current.value = null;
-        _playtroughs.current.value = null;
-        _price.current.value = null;
-        _img.current.value = null;
         _notes.current.value = null;
         _platinum.current.checked = false;
-    }
-
-    const onTitleEntered = e => {
-        const entered = summaries.find(s => s.title == e.target.value)
-        if (entered) {
-            _frenchise.current.value = entered.frenchise
-        }
-        else if (e.target.value == "") {
-            _frenchise.current.value = ""
-        }
     }
 
     const fetchData = async () => {
@@ -423,7 +392,7 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                                     <div className={styles.form__left__left}>
                                         <div>
                                             <label htmlFor="title">Title</label>
-                                            <input type="text" list="titles" id="title" ref={_title} onChange={(e) => onTitleEntered(e)}></input>
+                                            <input type="text" list="titles" id="title" ref={_title}></input>
                                             <datalist id="titles">
                                                 {summaries.map((t, i) => {
                                                     return (
@@ -480,34 +449,16 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                                     <div className={styles.form__right__group}>
                                         <div className={styles.form__right__left}>
                                             <div>
-                                                <label htmlFor="french">Frenchise</label>
-                                                <input type="text" id="french" ref={_frenchise}></input>
-                                            </div>
-
-                                            <div>
                                                 <label htmlFor="lastPlayed">Last played at</label>
                                                 <input type="date" id="lastPlayed" ref={_lastPlayed}></input>
-                                            </div>
-
-                                            <div>
-                                                <label htmlFor="playtime">Playtime</label>
-                                                <input type="number" id="playtime" ref={_playtime}></input>
                                             </div>
                                         </div>
 
 
                                         <div className={styles.form__right__right}>
-                                            <div>
-                                                <label htmlFor="playtroughs">Playtroughs</label>
-                                                <input type="number" id="playtroughs" ref={_playtroughs}></input>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="price">Price</label>
-                                                <input type="number" id="price" ref={_price}></input>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="img">Image link</label>
-                                                <input type="url" id="img" ref={_img}></input>
+                                             <div>
+                                                <label htmlFor="playtime">Playtime</label>
+                                                <input type="number" id="playtime" ref={_playtime}></input>
                                             </div>
                                         </div>
                                     </div>

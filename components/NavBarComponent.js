@@ -118,6 +118,7 @@ export default function NavBar() {
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/', {})}>Home</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/games', {})}>Games</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/about', {})}>About</a>
+                            <a className={`${styles.bar__item} ${styles.admin}`} style={{ visibility: `${user.uid === process.env.ADMIN ? "visible" : "hidden"}` }} onClick={() => redirectToPage(router, '/admin', {})}>Admin</a>
                             <a className={`${styles.bar__item} ${styles.dashboard}`} onClick={() => redirectToPage(router, '/dashboard', {})}>Dashboard</a>
 
                         </div>
@@ -132,6 +133,7 @@ export default function NavBar() {
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/', {})}>Home</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/games', {})}>Games</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/about', {})}>About</a>
+                            <a className={`${styles.bar__item} ${styles.admin}`} style={{ visibility: `${user.uid === process.env.ADMIN ? "visible" : "hidden"}` }} onClick={() => redirectToPage(router, '/admin', {})}>Admin</a>
                             <a className={`${styles.bar__item} ${styles.dashboard}`} onClick={() => redirectToPage(router, '/dashboard', {})}>Dashboard</a>
                         </div>
 

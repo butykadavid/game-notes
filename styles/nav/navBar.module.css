@@ -83,7 +83,7 @@
 .bar__item__container a {
     margin: 0 15px;
 
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-style: italic;
     font-weight: 700;
     text-decoration: none;
@@ -119,6 +119,25 @@
 
 .logIn svg {
     margin-right: 10px;
+}
+
+.admin {
+    margin: 0 0 0 25px !important;
+    padding: 7px 10px 6px 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-style: italic;
+    font-weight: 600;
+
+    color: crimson;
+    background: var(--theme-color-tone-2);
+
+    border-radius: var(--border-radius-small);
+
+    transition: 0.25s ease-in-out;
 }
 
 .dashboard {

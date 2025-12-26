@@ -79,12 +79,8 @@ const GameCardContainerComponent = ({ games, fillParentForm }) => {
                     characters: game.characters,
                     audio: game.audio,
                     replayability: game.replayability,
-                    frenchise: game.frenchise,
                     lastPlayed: game.lastPlayed,
                     playtime: game.playtime,
-                    playtroughs: game.playtroughs,
-                    price: game.price,
-                    img: game.img,
                     notes: game.notes,
                     platinum: game.platinum
                 }
@@ -326,7 +322,6 @@ const GameCardContainerComponent = ({ games, fillParentForm }) => {
 
 
                             <div className={styles.card__infos}>
-
                                 <div>
                                     <p className={styles.card__info__name}>Last played - </p>
                                     <p>{lastPlayed_date}</p>
@@ -335,15 +330,6 @@ const GameCardContainerComponent = ({ games, fillParentForm }) => {
                                     <p className={styles.card__info__name}>Playtime - </p>
                                     <p>{game.playtime} h</p>
                                 </div>
-                                <div>
-                                    <p className={styles.card__info__name}>Playthrougs - </p>
-                                    <p>{game.playtroughs}</p>
-                                </div>
-                                <div>
-                                    <p className={styles.card__info__name}>Price - </p>
-                                    <p>{game.price}$</p>
-                                </div>
-
                             </div>
 
                         </div>

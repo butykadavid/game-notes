@@ -113,7 +113,7 @@ export default function About() {
                             <p>You can very easily create your own reviews by registrating
                                 with a Google account and navigating to the user "Dashboard".
                                 <br />
-                                <b>While creating a review you must write the title and frenchise correctly!</b>
+                                <b>While creating a review you must write the title correctly!</b>
                                 <br />
                                 This is important because otherwise it is going to be registered for a separate, "new" game.
                                 <br />
