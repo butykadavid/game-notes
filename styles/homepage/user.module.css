@@ -23,7 +23,8 @@
     width: 20%;
     height: 100%;
 
-    border: 1px solid var(--theme-color-tone-2)
+    border: 1px solid var(--theme-color-tone-2);
+    border-radius: var(--border-radius-small);
 }
 
 .card__mid {
