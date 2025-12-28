@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import { getOvrRating, getColor } from '../../public/functions'
 import { redirectToPage } from '../../public/functions'
 
+import { PiGameControllerFill } from "react-icons/pi";
+
 import styles from '../../styles/homepage/review.module.css'
 
 export default function MainPageReview({ game }) {
@@ -12,7 +14,7 @@ export default function MainPageReview({ game }) {
 
     return (
         <div className={styles.card} onClick={() => redirectToPage(router, `/games/${game.title}`, { title: `${game.title}` })}>
-            <div className={styles.card__image}><h1>asd</h1></div>
+            <div className={styles.card__image}><h1><PiGameControllerFill /></h1></div>
 
             <div className={styles.card__mid}>
                 <h1 className={styles.card__title}>{game.title}</h1>
