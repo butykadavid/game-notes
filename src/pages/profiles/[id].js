@@ -1,23 +1,37 @@
 import { collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "../../../public/firebase"
 import { getOvrRating } from "../../../public/functions"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 
 import ProfileInfo from "../../components/ProfileInfoComponent"
 import ReviewCard from "../../components/ReviewCardComponent"
-import ReviewFilterComponent from "../../components/ReviewFilterComponent"
+import ReviewFilter from "../../components/ReviewFilterComponent"
 
 import styles from '../../../styles/profilepage/profilePage.module.css'
 import Head from "next/head"
 
 export default function ProfilePage({ reviews, user }) {
 
-    const [items, setItems] = useState([...reviews].sort((a, b) => getOvrRating(b) - getOvrRating(a)))
+    const [items, setItems] = useState([...reviews])
+    const [ordering, setOrdering] = useState("created")
+    const [direction, setDirection] = useState("DESC")
 
     const playtime = Math.round(reviews.reduce((a, c) => a + c.playtime, 0))
     const platinums = reviews.reduce((a, c) => c.platinum ? a + 1 : a, 0)
     const avgRating = Math.round(reviews.reduce((a, c) => a + getOvrRating(c), 0) / reviews.length)
     const bestRatedGame = reviews.sort((a, b) => getOvrRating(b) - getOvrRating(a))[0]
+
+    const sortedItems = useMemo(() => {
+        const sorted = [...items]
+
+        sorted.sort((a, b) => {
+            const aVal = ordering === "overall" ? getOvrRating(a) : a[ordering]
+            const bVal = ordering === "overall" ? getOvrRating(b) : b[ordering]
+            return direction === "ASC" ? aVal - bVal : bVal - aVal
+        })
+
+        return sorted
+    }, [items, ordering, direction])
 
     useEffect(() => {
     }, [items])
@@ -27,7 +41,7 @@ export default function ProfilePage({ reviews, user }) {
             <Head>
                 <title>GameNotes | {user}</title>
                 <meta name="description" content={`${user}'s profile`} />
-                <meta name="keywords" content={`GameNotes, Profile, User, Result, Game, Games, Review, Videogame, ${user}`}/>
+                <meta name="keywords" content={`GameNotes, Profile, User, Result, Game, Games, Review, Videogame, ${user}`} />
             </Head>
 
             <div className={styles.main__container}>
@@ -38,13 +52,18 @@ export default function ProfilePage({ reviews, user }) {
                     <div className={styles.reviews__side}>
                         <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
 
-                        <ReviewFilterComponent reviews={items} setReviews={setItems} />
+                        <ReviewFilter
+                            ordering={ordering}
+                            setOrdering={setOrdering}
+                            direction={direction}
+                            setDirection={setDirection}
+                        />
 
-                        {items.length != 0 ? <>
+                        {sortedItems.length != 0 ? <>
                             {
-                                items.map((r, index) => {
+                                sortedItems.map((r, index) => {
                                     return (
-                                        <ReviewCard review={r} key={`${r.created} - ${r.title}`} hasLabel={false} hasTitle={true} deleteButton={false} />
+                                        <ReviewCard review={r} key={index} hasLabel={false} hasTitle={true} deleteButton={false} />
                                     )
                                 })
                             } </>

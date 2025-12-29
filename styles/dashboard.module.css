@@ -93,6 +93,7 @@
     height: auto;
 
     margin-top: 5vh;
+    padding: 10px;
 
     display: flex;
     flex-wrap: wrap;
@@ -110,7 +111,7 @@
 
 .filterBar__container .ordering {
     width: auto;
-    height: 40px;
+    min-height: 40px;
 
     padding: 0% 2%;
 
@@ -125,26 +126,35 @@
 
 .filterBar__container p {
     margin: 0;
-    margin-right: 5px;
+    margin-right: 10px;
 
     font-weight: 700;
     font-size: small;
     color: var(--text-color-3);
 }
 
-.filterBar__container a {
+.filterBar__container button {
     padding: 2px 10px;
     padding-top: 3px;
-    margin-bottom: 1px;
-    margin-right: 3px;
+    margin: 2px 3px 2px 0px; 
 
     font-size: x-small;
     font-weight: 700;
     font-style: italic;
+    text-transform: uppercase;
 
     color: var(--text-color-2);
     background: var(--text-color-3);
+    border: none;
     border-radius: var(--border-radius-small);
+
+    cursor: pointer;
+
+    transition: 0.25s ease-in-out;
+}
+
+.filterBar__container button:hover{
+    opacity: 0.65;
 }
 
 .filterBar__container .ordering .toggled {
@@ -159,7 +169,7 @@
 
 .filterBar__container .direction {
     width: auto;
-    height: 40px;
+    min-height: 40px;
 
     padding: 0% 2%;
 
@@ -495,4 +505,5 @@
     .optionBar__container {
         justify-content: center;
     }
+
 }

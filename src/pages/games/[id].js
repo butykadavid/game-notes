@@ -1,3 +1,5 @@
+import { useState, useMemo } from "react";
+
 import { db } from "../../../public/firebase"
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { getOvrRating, getColor } from "../../../public/functions";
@@ -7,14 +9,27 @@ import Head from "next/head"
 
 import RatingBarComponent from "../../components/RatingBarComponent";
 import ReviewCard from "../../components/ReviewCardComponent";
-import ReviewFilterComponent from "../../components/ReviewFilterComponent";
-import { useState } from "react";
+import ReviewFilter from "../../components/ReviewFilterComponent";
 
 export default function gamePage({ title, reviews, background }) {
 
     const [items, setItems] = useState(reviews)
+    const [ordering, setOrdering] = useState("created")
+    const [direction, setDirection] = useState("DESC")
 
     var avgOvr = 0;
+
+    const sortedItems = useMemo(() => {
+        const sorted = [...items]
+
+        sorted.sort((a, b) => {
+            const aVal = ordering === "overall" ? getOvrRating(a) : a[ordering]
+            const bVal = ordering === "overall" ? getOvrRating(b) : b[ordering]
+            return direction === "ASC" ? aVal - bVal : bVal - aVal
+        })
+
+        return sorted
+    }, [items, ordering, direction])
 
     const getAverageValues = () => {
         var gameplay = 0
@@ -83,7 +98,7 @@ export default function gamePage({ title, reviews, background }) {
             <Head>
                 <title>GameNotes | {title}</title>
                 <meta name="description" content={`Reviews of "${title}"`} />
-                <meta name="keywords" content={`GameNotes, Result, Game, Games, Review, ${title}, Videogame`}/>
+                <meta name="keywords" content={`GameNotes, Result, Game, Games, Review, ${title}, Videogame`} />
             </Head>
 
             {/* desktop view*/}
@@ -98,7 +113,7 @@ export default function gamePage({ title, reviews, background }) {
 
                     <div className={styles.center__container}>
                         <h1 className={styles.title}>{title}</h1>
-                        <RatingBarComponent rating={avgOvr} aspectRatio={"25/1"} border={true} label={true}/>
+                        <RatingBarComponent rating={avgOvr} aspectRatio={"25/1"} border={true} label={true} />
                     </div>
 
                     <div className={styles.stat__box}>
@@ -140,10 +155,15 @@ export default function gamePage({ title, reviews, background }) {
 
                     <div className={styles.dummy}></div>
 
-                    <ReviewFilterComponent reviews={items} setReviews={setItems} />
+                    <ReviewFilter
+                        ordering={ordering}
+                        setOrdering={setOrdering}
+                        direction={direction}
+                        setDirection={setDirection}
+                    />
 
                     {
-                        items.map(review => {
+                        sortedItems.map(review => {
                             return (
                                 <ReviewCard key={`${review.userName}-${review.created}`} review={review} hasLabel={true} />
                             )

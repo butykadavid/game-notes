@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import styles from "../../../styles/admin/admin.module.css"
-import { query, getDocs, collection, updateDoc, doc } from "firebase/firestore"
+import { query, getDocs, collection, updateDoc, doc, orderBy } from "firebase/firestore"
 import { auth, db } from "../../../public/firebase"
 
 async function fetchAdminData(setDataLoading, setData) {
     setDataLoading(true)
 
-    const q = query(collection(db, "summaries"))
+    const q = query(collection(db, "summaries"), orderBy('title', 'asc'))
     const docs = await getDocs(q)
 
     const summaries = docs.docs.map(d => ({
@@ -143,7 +143,7 @@ export default function Admin() {
                 </div>
             </div>
             <div className={styles.display__wrapper}>
-                <div className={styles.display} style={{ backgroundImage: `url(${selected?.img || "asd"})`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
+                <div className={styles.display} style={{ backgroundImage: `url(${selected?.img})`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
             </div>
         </div>
     )

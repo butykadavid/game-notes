@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { auth, signInWithGoogle, signOutFunc, db } from "../../../public/firebase";
 import { query, getDocs, collection, where, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { getOvrRating, toSearchWordsArray } from "../../../public/functions";
@@ -10,7 +10,7 @@ import loaderStyles from "../../../styles/loader.module.css"
 
 import ReviewCard from "../../components/ReviewCardComponent";
 import Title from "../../components/TitleComponent";
-import ReviewFilterComponent from "../../components/ReviewFilterComponent";
+import ReviewFilter from "../../components/ReviewFilterComponent";
 import Head from "next/head";
 
 export default function Dashboard({ summaries, createReviewTitle }) {
@@ -18,9 +18,10 @@ export default function Dashboard({ summaries, createReviewTitle }) {
     const [user, loading] = useAuthState(auth);
 
     const [items, setItems] = useState([])
+    const [ordering, setOrdering] = useState("created")
+    const [direction, setDirection] = useState("DESC")
 
     const [isLoading, setIsLoading] = useState(true)
-
     const [isEditEnabled, toggleEdit] = useState(false)
 
     const router = useRouter();
@@ -319,6 +320,20 @@ export default function Dashboard({ summaries, createReviewTitle }) {
         setIsLoading(false)
     }
 
+    const sortedItems = useMemo(() => {
+        setIsLoading(true)
+        const sorted = [...items]
+
+        sorted.sort((a, b) => {
+            const aVal = ordering === "overall" ? getOvrRating(a) : a[ordering]
+            const bVal = ordering === "overall" ? getOvrRating(b) : b[ordering]
+            return direction === "ASC" ? aVal - bVal : bVal - aVal
+        })
+
+        setIsLoading(false)
+        return sorted
+    }, [items, ordering, direction])
+
     const signOut = () => {
         setIsLoading(true)
         signOutFunc()
@@ -335,13 +350,10 @@ export default function Dashboard({ summaries, createReviewTitle }) {
     }, [])
 
     useEffect(() => {
-    }, [items])
-
-    useEffect(() => {
         if (!_form.current || !_title.current || createReviewTitle == null) return
 
         _title.current.value = createReviewTitle
-        
+
         const f = _form.current
         f.style.display = "flex"
         _formMode.current.style.background = '#121224'
@@ -456,7 +468,7 @@ export default function Dashboard({ summaries, createReviewTitle }) {
 
 
                                         <div className={styles.form__right__right}>
-                                             <div>
+                                            <div>
                                                 <label htmlFor="playtime">Playtime</label>
                                                 <input type="number" id="playtime" ref={_playtime}></input>
                                             </div>
@@ -478,7 +490,12 @@ export default function Dashboard({ summaries, createReviewTitle }) {
 
                         </div>
 
-                        <ReviewFilterComponent reviews={items} setReviews={setItems} />
+                        <ReviewFilter
+                            ordering={ordering}
+                            setOrdering={setOrdering}
+                            direction={direction}
+                            setDirection={setDirection}
+                        />
 
                         <div className={styles.gameCard__container}>
 
@@ -490,7 +507,7 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                                 :
                                 <>
                                     {
-                                        items.map(g => {
+                                        sortedItems.map(g => {
                                             return (
                                                 <ReviewCard review={g} hasLabel={false} hasTitle={true} deleteButton={isEditEnabled} fillParentForm={fillForm} key={`${g.created} - ${g.title}`} />
                                             )

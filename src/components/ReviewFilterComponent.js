@@ -1,43 +1,75 @@
-import { useRef, useState, useEffect } from "react";
-import { toggleOrdering, toggleDirection, activateOrdering } from "../../public/functions";
+import styles from "../../styles/dashboard.module.css";
 
-import styles from "../../styles/dashboard.module.css"
+import { IoCalendarClearSharp } from "react-icons/io5";
+import { SiCoveralls } from "react-icons/si";
 
-export default function ReviewFilterComponent({ reviews, setReviews }) {
+import { MdVideogameAsset } from "react-icons/md";
+import { IoImages } from "react-icons/io5";
+import { HiSparkles } from "react-icons/hi2";
+import { MdOutlineHistoryEdu } from "react-icons/md";
+import { MdAudioFile } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
+import { MdRepeatOn } from "react-icons/md";
 
-    const [ordering, setOrdering] = useState('none')
-    const [direction, setDirection] = useState('DESC')
+import { FaTrophy } from "react-icons/fa";
 
-    const _orderingContainer = useRef()
-    const _directionContainer = useRef()
+import { FaSortAmountDown } from "react-icons/fa";
+import { FaSortAmountUp } from "react-icons/fa";
 
-    useEffect(() => {
-        activateOrdering(ordering, direction, setReviews, reviews)
-    }, [ordering, direction])
+const ORDERING_OPTIONS = [
+    { key: "created", label: "Created", icon: <IoCalendarClearSharp /> },
+    { key: "overall", label: "Ovr", icon: <SiCoveralls /> },
+    { key: "gameplay", label: "Gmp", icon: <MdVideogameAsset /> },
+    { key: "atmosphere", label: "Atm", icon: <IoImages /> },
+    { key: "visuals", label: "Vis", icon: <HiSparkles /> },
+    { key: "story", label: "Sto", icon: <MdOutlineHistoryEdu /> },
+    { key: "characters", label: "Cha", icon: <MdAudioFile /> },
+    { key: "audio", label: "Aud", icon: <FaUsers /> },
+    { key: "replayability", label: "Rpl", icon: <MdRepeatOn /> },
+    { key: "platinum", label: "Plat", icon: <FaTrophy /> },
+];
 
+const DIRECTIONS = [
+    { key: "DESC", icon: <FaSortAmountDown /> },
+    { key: "ASC", icon: <FaSortAmountUp /> }
+];
+
+export default function ReviewFilter({ ordering, setOrdering, direction, setDirection }) {
     return (
         <div className={styles.filterBar__container}>
             <div className={styles.ordering}>
-                <p>Category</p>
-                <div ref={_orderingContainer}>
-                    <a onClick={(e) => toggleOrdering(e, "overall", _orderingContainer, setOrdering, styles)}>Ovr</a>
-                    <a onClick={(e) => toggleOrdering(e, "gameplay", _orderingContainer, setOrdering, styles)}>Gmp</a>
-                    <a onClick={(e) => toggleOrdering(e, "atmosphere", _orderingContainer, setOrdering, styles)}>Atm</a>
-                    <a onClick={(e) => toggleOrdering(e, "visuals", _orderingContainer, setOrdering, styles)}>Vis</a>
-                    <a onClick={(e) => toggleOrdering(e, "story", _orderingContainer, setOrdering, styles)}>Sto</a>
-                    <a onClick={(e) => toggleOrdering(e, "characters", _orderingContainer, setOrdering, styles)}>Cha</a>
-                    <a onClick={(e) => toggleOrdering(e, "audio", _orderingContainer, setOrdering, styles)}>Aud</a>
-                    <a onClick={(e) => toggleOrdering(e, "replayability", _orderingContainer, setOrdering, styles)}>Rpl</a>
-                    <a onClick={(e) => toggleOrdering(e, "platinum", _orderingContainer, setOrdering, styles)}>Plat</a>
+                <p>Order by</p>
+                <div>
+                    {ORDERING_OPTIONS.map(({ key, label, icon }) => (
+                        <button
+                            key={key}
+                            className={`${styles.filterButton} ${ordering === key ? styles.toggled : ""
+                                }`}
+                            onClick={() =>
+                                setOrdering(prev => (prev === key ? "created" : key))
+                            }
+                        >
+                            {icon || label}
+                        </button>
+                    ))}
                 </div>
             </div>
+
             <div className={styles.direction}>
                 <p>Direction</p>
-                <div ref={_directionContainer}>
-                    <a className={styles.toggled} onClick={(e) => toggleDirection(e, _directionContainer, setDirection, styles)}>DESC</a>
-                    <a onClick={(e) => toggleDirection(e, _directionContainer, setDirection, styles)}>ASC</a>
+                <div>
+                    {DIRECTIONS.map(({ key, icon }) => (
+                        <button
+                            key={key}
+                            className={`${styles.filterButton} ${direction === key ? styles.toggled : ""
+                                }`}
+                            onClick={() => setDirection(key)}
+                        >
+                            {icon || key}
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>
-    )
+    );
 }
