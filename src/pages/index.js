@@ -172,7 +172,7 @@ export const getServerSideProps = async () => {
 
     // get data from db
     // recent reviews
-    var q = query(collection(db, "games"), orderBy('updated', 'desc'), limit(5))
+    var q = query(collection(db, "games"), orderBy('created', 'desc'), limit(5))
     var docs = await getDocs(q)
 
     const recentGames = docs.docs.map(doc => {

@@ -14,14 +14,82 @@ import { MdAudioFile } from "react-icons/md";
 import { FaUsers } from "react-icons/fa6";
 import { MdRepeatOn } from "react-icons/md";
 
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from "../../public/firebase";
+import { collection, deleteDoc, query, doc, getDocs, where, updateDoc } from 'firebase/firestore'
+import { db } from '../../public/firebase'
 
 import styles from '../../styles/gamepage/reviewCard.module.css'
 
 export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, fillParentForm }) {
 
     const router = useRouter()
+    const [user, loading] = useAuthState(auth);
 
     const ovr = getOvrRating(review)
+
+    const deleteGame = async (game) => {
+        if (confirm("Are you sure you want to delete this review?")) {
+
+            try {
+
+                // Delete game
+                var q = query(collection(db, "games"), where("title", "==", game.title), where("userPath", "==", `users/${user.uid}`))
+                var docs = await getDocs(q);
+
+                var id;
+                docs.forEach(doc => {
+                    id = doc.id;
+                })
+
+                var docRef = doc(db, 'games', id)
+
+                await deleteDoc(docRef);
+
+                // Adjust summary
+                q = query(collection(db, "summaries"), where("title", "==", game.title))
+                docs = await getDocs(q)
+
+                const _doc = docs.docs.map(doc => {
+                    return { ...doc.data() }
+                })
+
+                var count = _doc[0].count
+                var avg = _doc[0].average
+                var sum = count * avg
+
+                count -= 1
+                sum -= getOvrRating(game)
+
+                id;
+                docs.forEach(doc => {
+                    id = doc.id;
+                })
+
+                if (count > 0) {
+                    avg = Math.round(sum / count)
+
+                    docRef = doc(db, "summaries", id);
+                    await updateDoc(docRef, {
+                        count: count,
+                        average: avg
+                    })
+                } else {
+                    docRef = doc(db, "summaries", id);
+                    await deleteDoc(docRef)
+                }
+
+                window.scrollTo(0, 0)
+                router.reload()
+
+            } catch (err) {
+                console.log(err)
+            }
+
+        } else {
+            console.log("Process canceled")
+        }
+    }
 
     const HashTags = useCallback(() => {
         const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -48,9 +116,21 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
         </>
     }, [review])
 
-    return (
-        <div className={styles.card} onClick={() => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` })}>
-            <div className={styles.card__main}>
+    return <>
+        <div className={styles.card} onClick={() => { }}>
+
+            {deleteButton ?
+                <div className={styles.delete}>
+                    <h1 className={styles.card__title}>{review.title}</h1>
+                    <div>
+                        <a className={styles.edit} onClick={(e) => fillParentForm(review)} title='Edit review'>Edit entry</a>
+                        <a className={styles.remove} onClick={() => deleteGame(review)} title='Delete game'>Delete</a>
+                    </div>
+                </div>
+                : <></>
+            }
+
+            <div className={styles.card__main} onClick={() => redirectToPage(router, `/games/${review.title}`, { title: `${review.title}` })}>
 
                 <div className={styles.card__image}>{hasTitle ? <h1 className={styles.rotate}><PiGameControllerFill /></h1> : <h1><MdRateReview /></h1>}</div>
 
@@ -89,7 +169,6 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
                     </div>
                 </div>
 
-
                 <h1 className={styles.card__score} style={{ color: `${getColor(ovr)}` }}>{ovr}</h1>
 
             </div>
@@ -97,5 +176,5 @@ export default function ReviewCard({ review, hasLabel, hasTitle, deleteButton, f
                 <HashTags />
             </div>
         </div>
-    )
+    </>
 }
