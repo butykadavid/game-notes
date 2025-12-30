@@ -1,40 +1,19 @@
 import { collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "../../../public/firebase"
 import { getOvrRating } from "../../../public/functions"
-import { useState, useEffect, useMemo } from "react"
 
 import ProfileInfo from "../../components/ProfileInfoComponent"
-import ReviewCard from "../../components/ReviewCardComponent"
-import ReviewFilter from "../../components/ReviewFilterComponent"
+import FilteredReviewList from "../../components/FilteredReviewListComponent"
 
 import styles from '../../../styles/profilepage/profilePage.module.css'
 import Head from "next/head"
 
 export default function ProfilePage({ reviews, user }) {
 
-    const [items, setItems] = useState([...reviews])
-    const [ordering, setOrdering] = useState("created")
-    const [direction, setDirection] = useState("DESC")
-
     const playtime = Math.round(reviews.reduce((a, c) => a + c.playtime, 0))
     const platinums = reviews.reduce((a, c) => c.platinum ? a + 1 : a, 0)
     const avgRating = Math.round(reviews.reduce((a, c) => a + getOvrRating(c), 0) / reviews.length)
     const bestRatedGame = reviews.sort((a, b) => getOvrRating(b) - getOvrRating(a))[0]
-
-    const sortedItems = useMemo(() => {
-        const sorted = [...items]
-
-        sorted.sort((a, b) => {
-            const aVal = ordering === "overall" ? getOvrRating(a) : a[ordering]
-            const bVal = ordering === "overall" ? getOvrRating(b) : b[ordering]
-            return direction === "ASC" ? aVal - bVal : bVal - aVal
-        })
-
-        return sorted
-    }, [items, ordering, direction])
-
-    useEffect(() => {
-    }, [items])
 
     return (
         <>
@@ -52,24 +31,16 @@ export default function ProfilePage({ reviews, user }) {
                     <div className={styles.reviews__side}>
                         <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
 
-                        <ReviewFilter
-                            ordering={ordering}
-                            setOrdering={setOrdering}
-                            direction={direction}
-                            setDirection={setDirection}
+                        <FilteredReviewList
+                            reviews={reviews}
+                            reviewCardProps={{
+                                hasLabel: false,
+                                hasTitle: true,
+                                deleteButton: false
+                            }}
+                            emptyMessage={<h1 className={styles.no__review__message}>No reviews available</h1>}
+                            keyGenerator={(review, index) => index}
                         />
-
-                        {sortedItems.length != 0 ? <>
-                            {
-                                sortedItems.map((r, index) => {
-                                    return (
-                                        <ReviewCard review={r} key={index} hasLabel={false} hasTitle={true} deleteButton={false} />
-                                    )
-                                })
-                            } </>
-                            :
-                            <h1 className={styles.no__review__message}>No reviews available</h1>
-                        }
                         <div className={styles.bottom__dummy}><p>Yo!<br />Easter Egg!</p></div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ import loaderStyles from "../../../styles/loader.module.css"
 
 import ReviewCard from "../../components/ReviewCardComponent";
 import Title from "../../components/TitleComponent";
-import ReviewFilter from "../../components/ReviewFilterComponent";
+import FilteredReviewList from "../../components/FilteredReviewListComponent";
 import Head from "next/head";
 
 export default function Dashboard({ summaries, createReviewTitle }) {
@@ -18,8 +18,6 @@ export default function Dashboard({ summaries, createReviewTitle }) {
     const [user, loading] = useAuthState(auth);
 
     const [items, setItems] = useState([])
-    const [ordering, setOrdering] = useState("created")
-    const [direction, setDirection] = useState("DESC")
 
     const [isLoading, setIsLoading] = useState(true)
     const [isEditEnabled, toggleEdit] = useState(false)
@@ -320,19 +318,6 @@ export default function Dashboard({ summaries, createReviewTitle }) {
         setIsLoading(false)
     }
 
-    const sortedItems = useMemo(() => {
-        setIsLoading(true)
-        const sorted = [...items]
-
-        sorted.sort((a, b) => {
-            const aVal = ordering === "overall" ? getOvrRating(a) : a[ordering]
-            const bVal = ordering === "overall" ? getOvrRating(b) : b[ordering]
-            return direction === "ASC" ? aVal - bVal : bVal - aVal
-        })
-
-        setIsLoading(false)
-        return sorted
-    }, [items, ordering, direction])
 
     const signOut = () => {
         setIsLoading(true)
@@ -490,13 +475,6 @@ export default function Dashboard({ summaries, createReviewTitle }) {
 
                         </div>
 
-                        <ReviewFilter
-                            ordering={ordering}
-                            setOrdering={setOrdering}
-                            direction={direction}
-                            setDirection={setDirection}
-                        />
-
                         <div className={styles.gameCard__container}>
 
                             {isLoading ?
@@ -505,15 +483,16 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                                     <div className={loaderStyles.loading__circle}></div>
                                 </div>
                                 :
-                                <>
-                                    {
-                                        sortedItems.map(g => {
-                                            return (
-                                                <ReviewCard review={g} hasLabel={false} hasTitle={true} deleteButton={isEditEnabled} fillParentForm={fillForm} key={`${g.created} - ${g.title}`} />
-                                            )
-                                        })
-                                    }
-                                </>
+                                <FilteredReviewList
+                                    reviews={items}
+                                    reviewCardProps={{
+                                        hasLabel: false,
+                                        hasTitle: true,
+                                        deleteButton: isEditEnabled,
+                                        fillParentForm: fillForm
+                                    }}
+                                    keyGenerator={(review) => `${review.created} - ${review.title}`}
+                                />
                             }
 
                         </div>

@@ -1,5 +1,3 @@
-import { useState, useMemo } from "react";
-
 import { db } from "../../../public/firebase"
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { getOvrRating, getColor } from "../../../public/functions";
@@ -8,28 +6,11 @@ import styles from "../../../styles/gamepage/gamePage.module.css"
 import Head from "next/head"
 
 import RatingBarComponent from "../../components/RatingBarComponent";
-import ReviewCard from "../../components/ReviewCardComponent";
-import ReviewFilter from "../../components/ReviewFilterComponent";
+import FilteredReviewList from "../../components/FilteredReviewListComponent";
 
 export default function gamePage({ title, reviews, background }) {
 
-    const [items, setItems] = useState(reviews)
-    const [ordering, setOrdering] = useState("created")
-    const [direction, setDirection] = useState("DESC")
-
     var avgOvr = 0;
-
-    const sortedItems = useMemo(() => {
-        const sorted = [...items]
-
-        sorted.sort((a, b) => {
-            const aVal = ordering === "overall" ? getOvrRating(a) : a[ordering]
-            const bVal = ordering === "overall" ? getOvrRating(b) : b[ordering]
-            return direction === "ASC" ? aVal - bVal : bVal - aVal
-        })
-
-        return sorted
-    }, [items, ordering, direction])
 
     const getAverageValues = () => {
         var gameplay = 0
@@ -155,20 +136,12 @@ export default function gamePage({ title, reviews, background }) {
 
                     <div className={styles.dummy}></div>
 
-                    <ReviewFilter
-                        ordering={ordering}
-                        setOrdering={setOrdering}
-                        direction={direction}
-                        setDirection={setDirection}
+                    <FilteredReviewList
+                        reviews={reviews}
+                        reviewCardProps={{
+                            hasLabel: true
+                        }}
                     />
-
-                    {
-                        sortedItems.map(review => {
-                            return (
-                                <ReviewCard key={`${review.userName}-${review.created}`} review={review} hasLabel={true} />
-                            )
-                        })
-                    }
                 </div>
             </div>
 
