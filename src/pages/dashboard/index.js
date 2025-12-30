@@ -13,6 +13,18 @@ import Title from "../../components/TitleComponent";
 import FilteredReviewList from "../../components/FilteredReviewListComponent";
 import Head from "next/head";
 
+import { IoCalendarClearSharp } from "react-icons/io5";
+import { MdVideogameAsset } from "react-icons/md";
+import { IoImages } from "react-icons/io5";
+import { HiSparkles } from "react-icons/hi2";
+import { MdOutlineHistoryEdu } from "react-icons/md";
+import { MdAudioFile } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
+import { MdRepeatOn } from "react-icons/md";
+import { FaTrophy } from "react-icons/fa";
+import { MdAccessTime } from "react-icons/md";
+import { MdNotes } from "react-icons/md";
+
 export default function Dashboard({ summaries, createReviewTitle }) {
 
     const [user, loading] = useAuthState(auth);
@@ -383,96 +395,128 @@ export default function Dashboard({ summaries, createReviewTitle }) {
                         </div>
 
                         <div className={styles.form} ref={_form}>
-
-                            <div className={styles.form__horizontal}>
-                                <div className={styles.form__left}>
-                                    <div className={styles.form__left__left}>
-                                        <div>
-                                            <label htmlFor="title">Title</label>
-                                            <input type="text" list="titles" id="title" ref={_title}></input>
-                                            <datalist id="titles">
-                                                {summaries.map((t, i) => {
-                                                    return (
-                                                        <option key={i} value={t.title}>{t.title}</option>
-                                                    )
-                                                })}
-                                            </datalist>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="gameplay">Gameplay</label>
-                                            <input type="number" id="gameplay" ref={_gameplay}></input>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="story">Story</label>
-                                            <input type="number" id="story" ref={_story}></input>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="atmos">Atmosphere</label>
-                                            <input type="number" id="atmos" ref={_atmosphere}></input>
-                                        </div>
-                                        <div className={styles.checkbox_div}>
-                                            <label htmlFor="platinum">Platinum</label>
-                                            <input type="checkbox" id="platinum" ref={_platinum}></input>
-                                        </div>
+                            <div className={styles.form__content}>
+                                <div className={styles.form__section}>
+                                    <div className={styles.form__field}>
+                                        <label htmlFor="title">
+                                            <span>Title</span>
+                                        </label>
+                                        <input type="text" list="titles" id="title" ref={_title} placeholder="Enter game title" />
+                                        <datalist id="titles">
+                                            {summaries.map((t, i) => {
+                                                return (
+                                                    <option key={i} value={t.title}>{t.title}</option>
+                                                )
+                                            })}
+                                        </datalist>
                                     </div>
-                                    <div className={styles.form__left__right}>
-                                        <div>
-                                            <label htmlFor="visuals">Visuals</label>
-                                            <input type="number" id="visuals" ref={_visuals}></input>
+                                </div>
+
+                                <div className={styles.form__section}>
+                                    <h3 className={styles.form__section__title}>Ratings</h3>
+                                    <div className={styles.form__grid}>
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="gameplay">
+                                                <MdVideogameAsset />
+                                                <span>Gameplay</span>
+                                            </label>
+                                            <input type="number" id="gameplay" ref={_gameplay} min="0" max="100" placeholder="0-100" />
                                         </div>
 
-                                        <div>
-                                            <label htmlFor="chars">Characters</label>
-                                            <input type="number" id="chars" ref={_characters}></input>
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="story">
+                                                <MdOutlineHistoryEdu />
+                                                <span>Story</span>
+                                            </label>
+                                            <input type="number" id="story" ref={_story} min="0" max="100" placeholder="0-100" />
                                         </div>
 
-                                        <div>
-                                            <label htmlFor="audio">Audio</label>
-                                            <input type="number" id="audio" ref={_audio}></input>
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="atmos">
+                                                <IoImages />
+                                                <span>Atmosphere</span>
+                                            </label>
+                                            <input type="number" id="atmos" ref={_atmosphere} min="0" max="100" placeholder="0-100" />
                                         </div>
 
-                                        <div>
-                                            <label htmlFor="replay">Replayability</label>
-                                            <input type="number" id="replay" ref={_replayability}></input>
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="visuals">
+                                                <HiSparkles />
+                                                <span>Visuals</span>
+                                            </label>
+                                            <input type="number" id="visuals" ref={_visuals} min="0" max="100" placeholder="0-100" />
+                                        </div>
+
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="chars">
+                                                <FaUsers />
+                                                <span>Characters</span>
+                                            </label>
+                                            <input type="number" id="chars" ref={_characters} min="0" max="100" placeholder="0-100" />
+                                        </div>
+
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="audio">
+                                                <MdAudioFile />
+                                                <span>Audio</span>
+                                            </label>
+                                            <input type="number" id="audio" ref={_audio} min="0" max="100" placeholder="0-100" />
+                                        </div>
+
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="replay">
+                                                <MdRepeatOn />
+                                                <span>Replayability</span>
+                                            </label>
+                                            <input type="number" id="replay" ref={_replayability} min="0" max="100" placeholder="0-100" />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className={styles.form__right}>
-
-                                    <div className={styles.form__right__group}>
-                                        <div className={styles.form__right__left}>
-                                            <div>
-                                                <label htmlFor="lastPlayed">Last played at</label>
-                                                <input type="date" id="lastPlayed" ref={_lastPlayed}></input>
-                                            </div>
+                                <div className={styles.form__section}>
+                                    <h3 className={styles.form__section__title}>Details</h3>
+                                    <div className={styles.form__row}>
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="lastPlayed">
+                                                <IoCalendarClearSharp />
+                                                <span>Last Played</span>
+                                            </label>
+                                            <input type="date" id="lastPlayed" ref={_lastPlayed} />
                                         </div>
 
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="playtime">
+                                                <MdAccessTime />
+                                                <span>Playtime (hours)</span>
+                                            </label>
+                                            <input type="number" id="playtime" ref={_playtime} min="0" placeholder="0" />
+                                        </div>
 
-                                        <div className={styles.form__right__right}>
-                                            <div>
-                                                <label htmlFor="playtime">Playtime</label>
-                                                <input type="number" id="playtime" ref={_playtime}></input>
-                                            </div>
+                                        <div className={styles.form__field}>
+                                            <label htmlFor="platinum" className={styles.checkbox__label}>
+                                                <FaTrophy />
+                                                <span>Platinum</span>
+                                                <input type="checkbox" id="platinum" ref={_platinum} />
+                                            </label>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div className={styles.form__notes}>
-                                        <label htmlFor="note">Note</label>
-                                        <textarea id="note" rows="3" ref={_notes}></textarea>
+                                <div className={styles.form__section}>
+                                    <div className={styles.form__field}>
+                                        <label htmlFor="note">
+                                            <MdNotes />
+                                            <span>Notes</span>
+                                        </label>
+                                        <textarea id="note" rows="4" ref={_notes} placeholder="Add your notes here..."></textarea>
                                     </div>
+                                </div>
 
+                                <div className={styles.form__button__container}>
+                                    <button className={styles.form__button__reset} onClick={() => resetForm()}>Reset</button>
+                                    <button className={styles.form__button__submit} onClick={() => uploadNewGame()}>Add Game</button>
                                 </div>
                             </div>
-
-                            <div className={styles.form__button__container}>
-                                <div className={styles.loginWrapper}><a className={styles.login} onClick={() => resetForm()}>Reset</a></div>
-                                <div className={styles.loginWrapper}><a className={styles.login} onClick={() => uploadNewGame()}>Add</a></div>
-                            </div>
-
                         </div>
 
                         <div className={styles.gameCard__container}>
