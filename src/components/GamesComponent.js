@@ -1,6 +1,5 @@
-import { db } from "../../public/firebase";
-import { collection, getDocs, orderBy, query, limit, where } from "firebase/firestore";
 import { getColor, redirectToPage } from "../../public/functions";
+import { fetchSummaries } from "../lib/firestore";
 
 import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -21,17 +20,7 @@ export default function GamesComponent({ searchWord }) {
 
     const fetchData = async () => {
 
-        var q;
-        if (searchWord) {
-            q = query(collection(db, 'summaries'), where('searchArray', 'array-contains', `${searchWord.toLowerCase()}`), limit(index))
-        } else {
-            q = query(collection(db, 'summaries'), orderBy('count', 'desc'), limit(index))
-        }
-        const docs = await getDocs(q)
-
-        const data = docs.docs.map(d => {
-            return { ...d.data() }
-        })
+        const data = await fetchSummaries({ searchWord, limitCount: index })
 
         data.length < index ? setHasMore(false) : setHasMore(true)
 

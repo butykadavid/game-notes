@@ -137,7 +137,6 @@ export default function About() {
                             </p>
                             <ul>
                                 <li>User search</li>
-                                <li>Filters and ordering options for review lists.</li>
                                 <li>Genre specific rating calculations.</li>
                                 <li>Game comparison page</li>
                                 <li>Alternative ranking system for own reviewed games, based on <a href='https://en.wikipedia.org/wiki/Elo_rating_system' target='_blank'>Elo ranking system</a>.</li>

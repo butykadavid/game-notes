@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import styles from "../../../styles/admin/admin.module.css"
-import { query, getDocs, collection, updateDoc, doc, orderBy } from "firebase/firestore"
-import { auth, db } from "../../../public/firebase"
+import { auth } from "../../../public/firebase"
+import { fetchAllSummariesOrderedByTitle, updateSummaryImage } from "../../lib/firestore"
 
 async function fetchAdminData(setDataLoading, setData) {
     setDataLoading(true)
 
-    const q = query(collection(db, "summaries"), orderBy('title', 'asc'))
-    const docs = await getDocs(q)
-
-    const summaries = docs.docs.map(d => ({
-        id: d.id,
-        ...d.data()
-    }))
-
+    const summaries = await fetchAllSummariesOrderedByTitle()
     setData(summaries)
     setDataLoading(false)
 }
@@ -81,8 +74,7 @@ export default function Admin() {
         }
 
         try {
-            const ref = doc(db, "summaries", itemId);
-            await updateDoc(ref, { img: url });
+            await updateSummaryImage(itemId, url);
 
             setData(prev =>
                 prev.map(item =>

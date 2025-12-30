@@ -1,6 +1,6 @@
 import { db } from "../../../public/firebase"
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { getOvrRating, getColor } from "../../../public/functions";
+import { fetchGameReviewsByTitle, fetchSummaryByTitle } from "../../lib/firestore";
 
 import styles from "../../../styles/gamepage/gamePage.module.css"
 import Head from "next/head"
@@ -153,21 +153,12 @@ export const getServerSideProps = async (context) => {
 
     const title = context.query.title
 
-    var q = query(collection(db, 'games'), where('title', '==', title))
-    var docs = await getDocs(q)
+    const [reviews, summary] = await Promise.all([
+        fetchGameReviewsByTitle(title),
+        fetchSummaryByTitle(title),
+    ])
 
-    const reviews = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
-
-    q = query(collection(db, 'summaries'), where('title', '==', title))
-    docs = await getDocs(q)
-
-    const summary = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
-
-    const background = summary[0].img || null
+    const background = summary?.img || null
 
     return { props: { title, reviews, background } }
 }

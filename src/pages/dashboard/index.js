@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
-import { auth, signInWithGoogle, signOutFunc, db } from "../../../public/firebase";
-import { query, getDocs, collection, where, addDoc, updateDoc, doc } from 'firebase/firestore';
-import { getOvrRating, toSearchWordsArray } from "../../../public/functions";
+import { auth, signInWithGoogle, signOutFunc } from "../../../public/firebase";
+import { upsertUserGame, fetchGamesForUser, fetchAllSummaries } from "../../lib/firestore";
 
 import styles from "../../../styles/dashboard.module.css"
 import loaderStyles from "../../../styles/loader.module.css"
@@ -61,154 +60,29 @@ export default function Dashboard({ summaries, createReviewTitle }) {
     const uploadNewGame = async () => {
 
         try {
-            var q = query(collection(db, "games"), where("title", "==", _title.current.value), where("userPath", "==", `users/${user.uid}`))
-            var docs = await getDocs(q);
+            const game = {
+                title: _title.current.value,
+                gameplay: Number(_gameplay.current.value),
+                story: Number(_story.current.value),
+                atmosphere: Number(_atmosphere.current.value),
+                visuals: Number(_visuals.current.value),
+                characters: Number(_characters.current.value),
+                audio: Number(_audio.current.value),
+                replayability: Number(_replayability.current.value),
+                frenchise: null,
+                lastPlayed: new Date(_lastPlayed.current.value).getTime() / 1000,
+                playtime: Number(_playtime.current.value),
+                playtroughs: null,
+                price: null,
+                notes: _notes.current.value,
+                platinum: _platinum.current.checked,
+            }
 
-            var id;
-            docs.forEach(doc => {
-                id = doc.id;
+            await upsertUserGame({
+                userUid: user.uid,
+                userName: user.displayName,
+                game,
             })
-
-            if (docs.docs.length === 0) {
-
-                // Adding new review
-                await addDoc(collection(db, "games"), {
-                    title: _title.current.value,
-                    gameplay: Number(_gameplay.current.value),
-                    story: Number(_story.current.value),
-                    atmosphere: Number(_atmosphere.current.value),
-                    visuals: Number(_visuals.current.value),
-                    characters: Number(_characters.current.value),
-                    audio: Number(_audio.current.value),
-                    replayability: Number(_replayability.current.value),
-                    frenchise: null,
-                    lastPlayed: new Date(_lastPlayed.current.value).getTime() / 1000,
-                    playtime: Number(_playtime.current.value),
-                    playtroughs: null,
-                    price: null,
-                    notes: _notes.current.value,
-                    platinum: _platinum.current.checked,
-                    userName: user.displayName,
-                    userPath: `users/${user.uid}`,
-                    created: Math.floor(Date.now() / 1000),
-                    updated: Math.floor(Date.now() / 1000)
-                });
-
-                // Adjusting summary
-                q = query(collection(db, "summaries"), where("title", "==", _title.current.value))
-                docs = await getDocs(q)
-
-                const _g = {
-                    gameplay: _gameplay.current.value,
-                    visuals: _visuals.current.value,
-                    atmosphere: _atmosphere.current.value,
-                    story: _story.current.value,
-                    characters: _characters.current.value,
-                    audio: _audio.current.value,
-                    replayability: _replayability.current.value
-                }
-
-                const ovr = getOvrRating(_g)
-
-                if (docs.docs.length != 0) {
-
-                    const _doc = docs.docs.map(doc => {
-                        return { ...doc.data() }
-                    })
-
-                    var count = _doc[0].count
-                    var avg = _doc[0].average
-                    var sum = count * avg
-
-                    count++
-
-                    sum += ovr
-
-                    avg = Math.round(sum / count)
-
-                    id;
-                    docs.forEach(doc => {
-                        id = doc.id;
-                    })
-
-                    const docRef = doc(db, "summaries", id);
-                    await updateDoc(docRef, {
-                        count: count,
-                        average: avg
-                    })
-                } else {
-                    await addDoc(collection(db, "summaries"), {
-                        count: 1,
-                        average: ovr,
-                        title: _title.current.value,
-                        frenchise: null,
-                        searchArray: toSearchWordsArray(_title.current.value)
-                    })
-                }
-            }
-            else {
-                // updating existing review
-                var docRef = doc(db, "games", id);
-                await updateDoc(docRef, {
-                    title: _title.current.value,
-                    gameplay: Number(_gameplay.current.value),
-                    story: Number(_story.current.value),
-                    atmosphere: Number(_atmosphere.current.value),
-                    visuals: Number(_visuals.current.value),
-                    characters: Number(_characters.current.value),
-                    audio: Number(_audio.current.value),
-                    replayability: Number(_replayability.current.value),
-                    lastPlayed: new Date(_lastPlayed.current.value).getTime() / 1000,
-                    playtime: Number(_playtime.current.value),
-                    notes: _notes.current.value,
-                    platinum: _platinum.current.checked,
-                    updated: Math.floor(Date.now() / 1000)
-                })
-
-                // Get previous ovr
-                const prevOvr = getOvrRating(docs.docs[0].data())
-
-                // Adjusting summary
-                q = query(collection(db, "summaries"), where("title", "==", _title.current.value))
-                docs = await getDocs(q)
-
-                const _g = {
-                    gameplay: _gameplay.current.value,
-                    visuals: _visuals.current.value,
-                    atmosphere: _atmosphere.current.value,
-                    story: _story.current.value,
-                    characters: _characters.current.value,
-                    audio: _audio.current.value,
-                    replayability: _replayability.current.value
-                }
-
-                const ovr = getOvrRating(_g)
-
-                const _doc = docs.docs.map(doc => {
-                    return { ...doc.data() }
-                })
-
-                var count = _doc[0].count
-                var avg = _doc[0].average
-                var sum = count * avg
-
-                sum -= prevOvr
-                sum += ovr
-
-                avg = Math.round(sum / count)
-
-                id;
-                docs.forEach(doc => {
-                    id = doc.id;
-                })
-
-                docRef = doc(db, "summaries", id);
-                await updateDoc(docRef, {
-                    count: count,
-                    average: avg
-                })
-
-            }
 
             clearFields()
 
@@ -314,15 +188,8 @@ export default function Dashboard({ summaries, createReviewTitle }) {
         setIsLoading(true)
 
         try {
-            const q = query(collection(db, 'games'), where('userPath', '==', `users/${user.uid}`))
-            const docs = await getDocs(q)
-
-            const data = docs.docs.map(d => {
-                return { ...d.data() }
-            })
-
+            const data = await fetchGamesForUser(user.uid)
             setItems(data)
-
         } catch (err) {
             console.log(err)
         }
@@ -564,12 +431,7 @@ export const getServerSideProps = async (context) => {
 
     const createReviewTitle = context.query.createReviewTitle
 
-    const q = query(collection(db, 'summaries'))
-    const docs = await getDocs(q)
-
-    const summaries = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
+    const summaries = await fetchAllSummaries()
 
     return {
         props: {

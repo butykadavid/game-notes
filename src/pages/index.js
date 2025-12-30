@@ -1,11 +1,16 @@
-import { db } from "../../public/firebase"
-import { collection, query, orderBy, getDocs, addDoc, doc, updateDoc, limit } from "firebase/firestore"
 import { getColor } from "../../public/functions"
 import { useRouter } from "next/router"
 import { redirectToPage } from "../../public/functions"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../public/firebase'
 import { useState } from "react"
+import {
+    fetchRecentGames,
+    fetchBestOverallGames,
+    fetchNewestProfiles,
+    fetchRecentPosts,
+    createPost,
+} from "../lib/firestore"
 
 import Head from "next/head"
 import styles from "../../styles/homepage/index.module.css"
@@ -29,16 +34,15 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
     const submitPost = async () => {
         try {
-            // Adding new post
-            await addDoc(collection(db, "posts"), {
+            await createPost({
                 title: modalTitle,
                 text: modalText,
-                createdAt: Math.floor(Date.now() / 1000),
-                userPath: `users/${user.uid}`
+                userId: user.uid,
             })
-
             setModalVisible(false)
-        } catch (err) { console.error(err) }
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     var i = 0
@@ -170,38 +174,12 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
 export const getServerSideProps = async () => {
 
-    // get data from db
-    // recent reviews
-    var q = query(collection(db, "games"), orderBy('created', 'desc'), limit(5))
-    var docs = await getDocs(q)
-
-    const recentGames = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
-
-    // best rated 4
-    q = query(collection(db, 'summaries'), orderBy('average', 'desc'), limit(4))
-    docs = await getDocs(q)
-
-    const bestOvrGames = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
-
-    // profiles
-    q = query(collection(db, "users"), limit(10))
-    docs = await getDocs(q)
-
-    const newestProfiles = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
-
-    // posts
-    q = query(collection(db, "posts"), orderBy('createdAt', 'desc'), limit(5))
-    docs = await getDocs(q)
-
-    const posts = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
+    const [recentGames, bestOvrGames, newestProfiles, posts] = await Promise.all([
+        fetchRecentGames(5),
+        fetchBestOverallGames(4),
+        fetchNewestProfiles(10),
+        fetchRecentPosts(5),
+    ])
 
     return {
         props: {

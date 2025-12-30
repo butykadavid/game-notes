@@ -1,6 +1,5 @@
-import { collection, query, where, getDocs } from "firebase/firestore"
-import { db } from "../../../public/firebase"
 import { getOvrRating } from "../../../public/functions"
+import { fetchUserByUid, fetchGamesForUser } from "../../lib/firestore"
 
 import ProfileInfo from "../../components/ProfileInfoComponent"
 import FilteredReviewList from "../../components/FilteredReviewListComponent"
@@ -54,10 +53,7 @@ export const getServerSideProps = async (context) => {
     var user = {}
 
     if (context.query.createdAt == null) {
-        const q = query(collection(db, 'users'), where('uid', '==', context.query.uid))
-        const docs = await getDocs(q)
-
-        user = docs.docs[0].data()
+        user = await fetchUserByUid(context.query.uid)
     } else {
         user = {
             uid: context.query.uid,
@@ -67,12 +63,7 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-    const q = query(collection(db, 'games'), where('userPath', '==', `users/${user.uid}`))
-    const docs = await getDocs(q)
-
-    const reviews = docs.docs.map(doc => {
-        return { ...doc.data() }
-    })
+    const reviews = await fetchGamesForUser(user.uid)
 
     return {
         props: {
