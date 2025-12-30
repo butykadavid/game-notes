@@ -119,11 +119,15 @@ export default function Admin() {
                 <div className={styles.summaries}>
                     <div className={styles.list}>
                         {filteredData.length === 0 && (
-                            <p className={styles.empty}>No items require attention 🎉</p>
+                            <p className={styles.empty}>No items require attention</p>
                         )}
 
                         {filteredData.map(item => (
-                            <div key={item.id} className={styles.item} onClick={() => setSelected(item)}>
+                            <div
+                                key={item.id}
+                                className={`${styles.item} ${selected?.id === item.id ? styles.selected : ""}`}
+                                onClick={() => setSelected(item)}
+                            >
                                 <div className={styles.info}>
                                     <span className={styles.title}>{item.title}</span>
                                     {!item.img && (
