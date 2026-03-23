@@ -6,6 +6,7 @@ import FilteredReviewList from "../../components/FilteredReviewListComponent"
 
 import styles from '../../../styles/profilepage/profilePage.module.css'
 import Head from "next/head"
+import { useMemo } from "react"
 
 export default function ProfilePage({ reviews, user }) {
 
@@ -13,6 +14,22 @@ export default function ProfilePage({ reviews, user }) {
     const platinums = reviews.reduce((a, c) => c.platinum ? a + 1 : a, 0)
     const avgRating = Math.round(reviews.reduce((a, c) => a + getOvrRating(c), 0) / reviews.length)
     const bestRatedGame = reviews.sort((a, b) => getOvrRating(b) - getOvrRating(a))[0]
+
+    const activityData = useMemo(() => {
+        const creations = reviews.map(review => {
+            const title = review.title
+            const creation = new Date(review.created * 1000)
+            return { title, date: creation, type: 'Created' }
+        })
+
+        const updates = reviews.filter(review => review.updatedAt != review.createdAt).map(review => {
+            const title = review.title
+            const update = new Date(review.updated * 1000)
+            return { title, date: update, type: 'Updated' }
+        })
+
+        return [...creations, ...updates]
+    }, [reviews])
 
     return (
         <>
@@ -25,7 +42,7 @@ export default function ProfilePage({ reviews, user }) {
             <div className={styles.main__container}>
                 <div className={styles.splitter}>
                     <div className={styles.profile__card__side}>
-                        <ProfileInfo user={user} reviewCount={reviews.length} playtime={playtime} platinums={platinums} avgRating={avgRating} bestRatedGame={bestRatedGame} />
+                        <ProfileInfo user={user} reviewCount={reviews.length} playtime={playtime} platinums={platinums} avgRating={avgRating} bestRatedGame={bestRatedGame} activityData={activityData}/>
                     </div>
                     <div className={styles.reviews__side}>
                         <h2 className={styles.reviews__title}>{user.name}'s reviews</h2>
