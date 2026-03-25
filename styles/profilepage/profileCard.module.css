@@ -2,6 +2,9 @@
     width: auto;
     height: 100%;
 
+    padding: 25px 0;
+    gap: 10px;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

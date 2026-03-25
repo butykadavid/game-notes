@@ -1,43 +1,48 @@
-import { getActivityColor, getActivityLevel } from '../../public/functions'
+import { useCallback } from 'react';
 import styles from '../../styles/profilepage/activityGrid.module.css'
 
-export default function ActivityGridComponent({ weeks }) {
-    const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
 
-    return (
-        <div className={styles.activity__container}>
-            <div className={styles.activity__grid}>
-                <div className={styles.day__labels}>
-                    {dayLabels.map((day, idx) => (
-                        <div key={idx} className={styles.day__label}>
-                            {day}
-                        </div>
-                    ))}
-                </div>
+const getActivityLevel = (count) => {
+    if (count === 0) return
+    if (count === 1) return styles.day__level__1;
+    if (count <= 3) return styles.day__level__2;
+    if (count <= 5) return styles.day__level__3;
+    return styles.day__level__4;
+}
 
-                <div className={styles.weeks__container}>
-                    {weeks.map((week, weekIdx) => (
-                        <div key={weekIdx} className={styles.week}>
-                            {week.map((day, dayIdx) => {
-                                const level = getActivityLevel(day.count);
-                                const color = getActivityColor(level);
-                                const tooltip = day.count === 0 
-                                    ? 'No activity' 
-                                    : `${day.count} activity item${day.count > 1 ? 's' : ''} on ${day.date.toLocaleDateString()}`;
-                                
-                                return (
-                                    <div
-                                        key={dayIdx}
-                                        className={styles.day__cell}
-                                        style={{ backgroundColor: color }}
-                                        title={tooltip}
-                                    />
-                                );
-                            })}
-                        </div>
-                    ))}
-                </div>
+export default function ActivityGridComponent({ activityData }) {
+
+    const Content = useCallback(() => {
+        const today = new Date();
+
+        let daysRecorded = activityData.map(item => item.date.toLocaleDateString('en-CA').toString());
+        let dayGrids = [];
+        for (let i = 0; i < 365; i++) {
+            let temp = today.addDays(i * -1);
+            let dayGridDate = new Date(temp).toLocaleDateString('en-CA').toString();
+            if (daysRecorded.includes(dayGridDate)) {
+                let count = activityData.filter(item => item.date.toLocaleDateString('en-CA').toString() === dayGridDate).length;
+                dayGrids.unshift(<div className={`${styles.day} ${getActivityLevel(count)}`} key={i} title={`${count} activitie(s) on ${temp.toLocaleDateString()}`} />);
+            } else {
+                dayGrids.unshift(<div className={styles.day} key={i} title={temp.toLocaleDateString()}/>);
+            }
+        }
+
+        return (
+            <div className={styles.days}>
+                {dayGrids}
             </div>
+        )
+    }, [activityData])
+
+    return <>
+        <div className={styles.activity__grid}>
+            <Content />
         </div>
-    );
+    </>
 }

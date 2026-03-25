@@ -1,14 +1,9 @@
-import { getDateFromTimestamp, getFormattedDate, generateActivityGrid } from '../../public/functions'
+import { getDateFromTimestamp, getFormattedDate } from '../../public/functions'
 import styles from '../../styles/profilepage/profileCard.module.css'
 import MainPageReview from './MainPageReviewComponent'
 import ActivityGridComponent from './ActivityGridComponent'
-import { useMemo } from 'react'
 
 export default function ProfileInfo({ user, reviewCount, playtime, platinums, avgRating, bestRatedGame, activityData }) {
-
-    const activityWeeks = useMemo(() => {
-        return generateActivityGrid(activityData);
-    }, [activityData]);
 
     return (
         <div className={styles.profile__wrapper}>
@@ -40,9 +35,9 @@ export default function ProfileInfo({ user, reviewCount, playtime, platinums, av
 
             <div className={styles.info__box}>
                 <div className={styles.box__label}>
-                    <h5>Activity</h5>
+                    <h5>Activity in last year</h5>
                 </div>
-                <ActivityGridComponent weeks={activityWeeks} />
+                <ActivityGridComponent activityData={activityData} />
             </div>
 
             <div className={`${styles.info__box} ${styles.info__box__review}`}>

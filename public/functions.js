@@ -123,70 +123,6 @@ const normalizeGameTitle = (raw) => {
     return s;
 }
 
-const generateActivityGrid = (activityData) => {
-    const activityMap = new Map();
-    
-    activityData.forEach(item => {
-        const date = item.date
-        const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        activityMap.set(dateStr, (activityMap.get(dateStr) || 0) + 1);
-    });
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const oneYearAgo = new Date(today);
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-    
-    const startDate = new Date(oneYearAgo);
-    startDate.setDate(startDate.getDate() - startDate.getDay());
-    
-    const weeks = [];
-    let currentDate = new Date(startDate);
-    
-    while (currentDate.getTime() <= today.getTime()) {
-        const week = [];
-        
-        for (let i = 0; i < 7; i++) {
-            const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-            const count = activityMap.get(dateStr) || 0;
-            
-            week.push({
-                date: new Date(currentDate),
-                dateStr: dateStr,
-                count: count,
-                dayOfWeek: i
-            });
-            
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-        
-        weeks.push(week);
-    }
-    
-    return weeks;
-}
-
-const getActivityLevel = (count) => {
-    if (count === 0) return 0;
-    if (count <= 2) return 1;
-    if (count <= 5) return 2;
-    if (count <= 10) return 3;
-    return 4;
-}
-
-const getActivityColor = (level) => {
-    const colors = {
-        0: '#202040', 
-        1: '#00755A', 
-        2: '#00A37D', 
-        3: '#00D1A0',
-        4: '#00FFC3' 
-    };
-
-    return colors[level] || colors[0];
-}
-
 export {
     getOvrRating,
     getColor,
@@ -194,8 +130,5 @@ export {
     getFormattedDate,
     redirectToPage,
     toSearchWordsArray,
-    normalizeGameTitle,
-    generateActivityGrid,
-    getActivityLevel,
-    getActivityColor
+    normalizeGameTitle
 }

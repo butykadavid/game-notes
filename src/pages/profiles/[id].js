@@ -22,7 +22,7 @@ export default function ProfilePage({ reviews, user }) {
             return { title, date: creation, type: 'Created' }
         })
 
-        const updates = reviews.filter(review => review.updatedAt != review.createdAt).map(review => {
+        const updates = reviews.filter(review => review.updated != review.created).map(review => {
             const title = review.title
             const update = new Date(review.updated * 1000)
             return { title, date: update, type: 'Updated' }
