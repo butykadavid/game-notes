@@ -46,6 +46,27 @@ export async function createPost({ title, text, userId }) {
     });
 }
 
+export async function fetchSiteActivityFromLastYear() {
+    const q = query(collection(db, "games"), where("created", ">=", Math.floor(Date.now() / 1000) - 365 * 24 * 60 * 60));
+    const docs = await getDocs(q);
+
+    const games = docs.docs.map((d) => ({ ...d.data() }));
+
+    const updates = games.map(g => {
+        const title = g.title
+        const timestamp = g.updated * 1000
+        return { title, date: timestamp, type: 'Updated' }
+    })
+
+    const created = games.filter(g => g.updated != g.created).map(g => {
+        const title = g.title
+        const timestamp = g.created * 1000
+        return { title, date: timestamp, type: 'Created' }
+    })
+    
+    return [...created, ...updates]
+}
+
 // Games list / summaries
 export async function fetchSummaries({ searchWord = null, limitCount = 25 } = {}) {
     let q;

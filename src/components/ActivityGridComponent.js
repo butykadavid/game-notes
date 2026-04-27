@@ -7,7 +7,7 @@ Date.prototype.addDays = function (days) {
     return date;
 }
 
-const getActivityLevel = (count) => {
+const getActivityLevelStyleSelector = (count) => {
     if (count === 0) return
     if (count === 1) return styles.day__level__1;
     if (count <= 3) return styles.day__level__2;
@@ -25,13 +25,16 @@ export default function ActivityGridComponent({ activityData }) {
         for (let i = 0; i < 365; i++) {
             let temp = today.addDays(i * -1);
             let dayGridDate = new Date(temp).toLocaleDateString('en-CA').toString();
-            let dayActivities = activityData.filter(item => item.date.toLocaleDateString('en-CA').toString() === dayGridDate);
+            let dayActivities = activityData.filter(item => {
+                const date = typeof item.date === 'number' ? new Date(item.date) : item.date;
+                return date.toLocaleDateString('en-CA').toString() === dayGridDate;
+            });
             
             if (dayActivities.length > 0) {
                 const count = dayActivities.length;
                 dayGrids.unshift(
                     <div 
-                        className={`${styles.day} ${getActivityLevel(count)}`} 
+                        className={`${styles.day} ${getActivityLevelStyleSelector(count)}`} 
                         key={i}
                         onMouseEnter={(e) => setTooltip({ x: e.clientX, y: e.clientY, activities: dayActivities, date: temp })}
                         onMouseLeave={() => setTooltip(null)}
@@ -65,16 +68,18 @@ export default function ActivityGridComponent({ activityData }) {
                     position: 'fixed',
                     left: `${tooltip.x}px`,
                     top: `${tooltip.y + 10}px`,
-                    zIndex: 1000,
+                    zIndex: 9999999,
                 }}
             >
                 <div className={styles.tooltip__header}>{tooltip.date.toLocaleDateString()}</div>
                 <div className={styles.tooltip__content}>
                     {tooltip.activities.map((activity, idx) => (
                         <div key={idx} className={styles.tooltip__item}>
-                            <span className={styles.tooltip__type} data-type={activity.type.toLowerCase()}>
-                                {activity.type.substring(0, 1).toUpperCase()}
-                            </span>
+                            {activity.type && (
+                                <span className={styles.tooltip__type} data-type={activity.type.toLowerCase()}>
+                                    {activity.type.substring(0, 1).toUpperCase()}
+                                </span>
+                            )}
                             <span className={styles.tooltip__title}>{activity.title}</span>
                         </div>
                     ))}

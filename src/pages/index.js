@@ -9,6 +9,7 @@ import {
     fetchBestOverallGames,
     fetchNewestProfiles,
     fetchRecentPosts,
+    fetchSiteActivityFromLastYear,
     createPost,
 } from "../lib/firestore"
 
@@ -22,8 +23,9 @@ import SubscribtionSectionCompnent from "../components/SubscriptionSectionCompon
 import Title from "../components/TitleComponent"
 import NewsFeedComponent from "../components/NewsFeedComponent"
 import Modal from "../components/Modal"
+import ActivityGridComponent from "@/components/ActivityGridComponent"
 
-export default function Index({ recentGames, bestOvrGames, newestProfiles, posts }) {
+export default function Index({ recentGames, bestOvrGames, newestProfiles, posts, siteActivity }) {
 
     const router = useRouter()
     const [user, loading] = useAuthState(auth)
@@ -129,24 +131,35 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
                     </div>
 
-                    <div className={`${styles.box} ${styles.recentUsers__box}`}>
-                        <div className={styles.box__title__container}>
-                            <h1 className={styles.box__title}>Newest users</h1>
+                    <div style={{ width: '20%', height: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div className={`${styles.box} ${styles.recentUsers__box}`}>
+                            <div className={styles.box__title__container}>
+                                <h1 className={styles.box__title}>Newest users</h1>
+                            </div>
+
+                            <div className={styles.box__content}>
+                                {
+                                    newestProfiles.map(user => {
+                                        return (
+                                            <MainPageUser key={user.uid} user={user} />
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
 
-                        <div className={styles.box__content}>
-                            {
-                                newestProfiles.map(user => {
-                                    return (
-                                        <MainPageUser key={user.uid} user={user} />
-                                    )
-                                })
-                            }
+                        <div className={`${styles.box} ${styles.recentUsers__box}`}>
+                            <div className={styles.box__title__container}>
+                                <h1 className={styles.box__title}>Site activity</h1>
+                            </div>
+
+                            <div className={styles.box__content}>
+                                <ActivityGridComponent activityData={siteActivity.map(s => ({ ...s, date: new Date(s.date) }))} />
+                            </div>
                         </div>
                     </div>
 
                 </div>
-
 
                 <Title text={"News & announcements"}>
                     {user != null && <>
@@ -174,11 +187,12 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
 export const getServerSideProps = async () => {
 
-    const [recentGames, bestOvrGames, newestProfiles, posts] = await Promise.all([
+    const [recentGames, bestOvrGames, newestProfiles, posts, siteActivity] = await Promise.all([
         fetchRecentGames(5),
         fetchBestOverallGames(4),
         fetchNewestProfiles(10),
         fetchRecentPosts(5),
+        fetchSiteActivityFromLastYear(),
     ])
 
     return {
@@ -186,7 +200,8 @@ export const getServerSideProps = async () => {
             recentGames,
             bestOvrGames,
             newestProfiles,
-            posts
+            posts,
+            siteActivity
         }
     }
 }
