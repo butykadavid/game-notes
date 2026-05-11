@@ -67,7 +67,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: var(--text-primary);
+    color: var(--text-color-1);
 }
 
 .tooltip__type {

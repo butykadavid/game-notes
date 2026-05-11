@@ -131,7 +131,7 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
                     </div>
 
-                    <div style={{ width: '20%', height: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div style={{ width: '20%', height: '80%' }}>
                         <div className={`${styles.box} ${styles.recentUsers__box}`}>
                             <div className={styles.box__title__container}>
                                 <h1 className={styles.box__title}>Newest users</h1>
@@ -145,16 +145,6 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
                                         )
                                     })
                                 }
-                            </div>
-                        </div>
-
-                        <div className={`${styles.box} ${styles.recentUsers__box}`}>
-                            <div className={styles.box__title__container}>
-                                <h1 className={styles.box__title}>Site activity</h1>
-                            </div>
-
-                            <div className={styles.box__content}>
-                                <ActivityGridComponent activityData={siteActivity.map(s => ({ ...s, date: new Date(s.date) }))} />
                             </div>
                         </div>
                     </div>
