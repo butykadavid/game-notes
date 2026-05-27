@@ -73,6 +73,7 @@ export default function NavBar() {
 
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/', {})}>Home</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/games', {})}>Games</a>
+                            <a className={styles.bar__item} onClick={() => redirectToPage(router, '/gaming-deals', {})}>Gaming Deals</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/about', {})}>About</a>
                             <a className={`${styles.bar__item} ${styles.logIn}`} onClick={signInWithGoogle}>
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -96,6 +97,7 @@ export default function NavBar() {
                         <div className={styles.side__panel} id='side_bar'>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/', {})}>Home</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/games', {})}>Games</a>
+                            <a className={styles.bar__item} onClick={() => redirectToPage(router, '/gaming-deals', {})}>Gaming Deals</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/about', {})}>About</a>
                             <a className={`${styles.bar__item} ${styles.logIn}`} onClick={signInWithGoogle}>
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -118,6 +120,7 @@ export default function NavBar() {
                         <div className={styles.bar__item__container}>
 
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/', {})}>Home</a>
+                            <a className={styles.bar__item} onClick={() => redirectToPage(router, '/gaming-deals', {})}>Gaming Deals</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/games', {})}>Games</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/about', {})}>About</a>
                             <a className={`${styles.bar__item} ${styles.admin}`} style={{ visibility: `${user.uid === process.env.ADMIN ? "visible" : "hidden"}` }} onClick={() => redirectToPage(router, '/admin', {})}>Admin</a>
@@ -133,6 +136,7 @@ export default function NavBar() {
 
                         <div className={styles.side__panel} id='side_bar'>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/', {})}>Home</a>
+                            <a className={styles.bar__item} onClick={() => redirectToPage(router, '/gaming-deals', {})}>Gaming Deals</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/games', {})}>Games</a>
                             <a className={styles.bar__item} onClick={() => redirectToPage(router, '/about', {})}>About</a>
                             <a className={`${styles.bar__item} ${styles.admin}`} style={{ visibility: `${user.uid === process.env.ADMIN ? "visible" : "hidden"}` }} onClick={() => redirectToPage(router, '/admin', {})}>Admin</a>

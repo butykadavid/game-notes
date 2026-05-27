@@ -1,0 +1,157 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  overflow: hidden;
+  border: 1px solid var(--theme-color-tone-2);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-color-tone-1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-color-1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 14px 56px;
+  flex: 1;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.titleRow h3 {
+  margin: 0;
+  color: var(--text-color-1);
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.titleRow p {
+  margin: 0;
+}
+
+.ratingBadge {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-color-1);
+  font-size: 0.8rem;
+}
+
+.content p {
+  margin: 0;
+  color: var(--text-color-2);
+  font-size: 0.9rem;
+}
+
+.actions {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+}
+
+.optionsButton {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--theme-color-tone-2);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--text-color-1);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.optionsButton:hover {
+  background: rgba(0, 0, 0, 0.72);
+  border-color: var(--text-color-1);
+}
+
+.optionsMenu {
+  position: absolute;
+  left: 0;
+  bottom: 42px;
+  z-index: 20;
+  min-width: 220px;
+  padding: 8px;
+  border: 1px solid var(--theme-color-tone-2);
+  border-radius: 12px;
+  background: rgba(14, 14, 14, 0.95);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+.optionItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-color-1);
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.optionItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.optionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+
+.newBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #d5d5d5;
+  color: #252525;
+  font-size: 0.65rem;
+  font-weight: 900;
+}
+
+@media only screen and (max-width: 640px) {
+  .card {
+    min-height: 360px;
+  }
+
+  .optionsMenu {
+    min-width: 200px;
+  }
+}
