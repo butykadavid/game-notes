@@ -1,4 +1,4 @@
-import { getDateFromTimestamp, getFormattedDate } from '../../public/functions'
+import { getDateFromTimestamp, getFormattedDate } from '../lib/functions'
 import styles from '../../styles/profilepage/profileCard.module.css'
 import MainPageReview from './MainPageReviewComponent'
 import ActivityGridComponent from './ActivityGridComponent'

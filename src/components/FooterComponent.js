@@ -1,4 +1,4 @@
-import { redirectToPage } from '../../public/functions'
+import { redirectToPage } from '../lib/functions'
 
 import Image from 'next/image'
 

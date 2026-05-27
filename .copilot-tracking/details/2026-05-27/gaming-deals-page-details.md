@@ -96,7 +96,7 @@ export default function GamingDealsPage() {
 **Imports Needed**:
 1. React hooks: useState, useEffect, useRef
 2. Next.js utilities: useRouter, Head
-3. APIHandler: import { getGamePassData } from '@/public/APIHandler'
+3. APIHandler: import { getGamePassData } from '@/lib/APIHandler'
 4. Components to create: DealsGridCardComponent (coming in Phase 3)
 5. Styles: Create gaming-deals-grid.module.css
 6. Utilities: redirectToPage function (existing)
@@ -196,7 +196,7 @@ const TAB_OPTIONS = [
 * src/pages/gaming-deals/index.js — Add useEffect for data fetching
 
 **API Pattern Reference** (from existing homepage usage):
-* Import: `import { getGamePassData } from '@/public/APIHandler'`
+* Import: `import { getGamePassData } from '@/lib/APIHandler'`
 * Usage: `const data = await getGamePassData(category)`
 
 **Implementation Details**:
@@ -279,7 +279,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '@/styles/deals-card.module.css';
-import { redirectToPage } from '@/public/functions';
+import { redirectToPage } from '@/lib/functions';
 
 export default function DealsGridCardComponent({ game }) {
   const router = useRouter();

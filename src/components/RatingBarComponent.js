@@ -1,4 +1,4 @@
-import { getColor } from '../../public/functions';
+import { getColor } from '../lib/functions';
 import styles from '../../styles/ratingBar.module.css'
 
 export default function RatingBarComponent({ rating, aspectRatio, border, label }) {

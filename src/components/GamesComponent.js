@@ -1,4 +1,4 @@
-import { getColor, redirectToPage } from "../../public/functions";
+import { getColor, redirectToPage } from "../lib/functions";
 import { fetchSummaries } from "../lib/firestore";
 
 import React, { useState, useEffect } from "react";

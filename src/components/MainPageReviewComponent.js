@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
-import { getOvrRating, getColor } from '../../public/functions'
-import { redirectToPage } from '../../public/functions'
+import { getOvrRating, getColor } from '../lib/functions'
+import { redirectToPage } from '../lib/functions'
 
 import { PiGameControllerFill } from "react-icons/pi";
 

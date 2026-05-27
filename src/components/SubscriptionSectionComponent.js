@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getGamePassData } from "../../public/APIHandler";
+import { getGamePassData } from "@/lib/APIHandler";
 import styles from "../../styles/subscriptionSection/subscriptionSection.module.css"
 import SubsciptionGameCardComponent from "./SubscriptionGameCardComponent";
 import Loader from "./LoaderComponent";

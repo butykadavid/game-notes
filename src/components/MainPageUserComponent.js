@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { getDateFromTimestamp, getFormattedDate } from '../../public/functions'
+import { getDateFromTimestamp, getFormattedDate } from '../lib/functions'
 import styles from '../../styles/homepage/user.module.css'
-import { redirectToPage } from '../../public/functions';
+import { redirectToPage } from '../lib/functions';
 
 export default function MainPageUser({ user }) {
 

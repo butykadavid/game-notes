@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { getOvrRating } from "../../public/functions";
+import { getOvrRating } from "@/lib/functions";
 import ReviewFilter from "./ReviewFilterComponent";
 import ReviewCard from "./ReviewCardComponent";
 

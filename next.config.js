@@ -8,11 +8,11 @@ const GAMEPASS_DATA_ADDRESS = ["https://displaycatalog.mp.microsoft.com/v7.0/pro
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     async rewrites() {
-		return [
-			{
-				source: '/api/all-gamepass-ids',
-				destination: `${ALL_GAMEPASS_ID_ADDRESS}`,
-			},
+        return [
+            {
+                source: '/api/all-gamepass-ids',
+                destination: `${ALL_GAMEPASS_ID_ADDRESS}`,
+            },
             {
                 source: '/api/popular-gamepass-ids',
                 destination: `${POPULAR_GAMEPASS_ID_ADDRESS}`
@@ -33,10 +33,13 @@ const nextConfig = {
                 source: '/api/gamepass-data/:searchList',
                 destination: `${GAMEPASS_DATA_ADDRESS[0]}:searchList${GAMEPASS_DATA_ADDRESS[1]}`
             }
-		]
-	},
+        ]
+    },
     env: {
         ADMIN: process.env.ADMIN,
+    },
+    images: {
+        remotePatterns: [new URL('https://store-images.s-microsoft.com/**')],
     },
 }
 

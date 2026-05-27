@@ -1,6 +1,6 @@
-import { getColor } from "../../public/functions"
+import { getColor } from "../lib/functions"
 import { useRouter } from "next/router"
-import { redirectToPage } from "../../public/functions"
+import { redirectToPage } from "../lib/functions"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../public/firebase'
 import { useState } from "react"

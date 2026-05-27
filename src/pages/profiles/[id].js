@@ -1,4 +1,4 @@
-import { getOvrRating } from "../../../public/functions"
+import { getOvrRating } from "../../lib/functions"
 import { fetchUserByUid, fetchGamesForUser } from "../../lib/firestore"
 
 import ProfileInfo from "../../components/ProfileInfoComponent"

@@ -1,6 +1,6 @@
 import { collection, deleteDoc, query, doc, getDocs, where } from 'firebase/firestore'
 import { db } from '../../public/firebase'
-import { getDateFromTimestamp, getFormattedDate } from '../../public/functions'
+import { getDateFromTimestamp, getFormattedDate } from '../lib/functions'
 import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../public/firebase'

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { redirectToPage, normalizeGameTitle } from "../../public/functions"
+import { redirectToPage, normalizeGameTitle } from "../lib/functions"
 import styles from "../../styles/subscriptionSection/subscriptionGameCard.module.css"
 import RatingBarComponent from "./RatingBarComponent"
 import { useState } from "react"

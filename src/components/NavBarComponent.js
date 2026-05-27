@@ -3,7 +3,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth, signInWithGoogle } from '../../public/firebase'
 import { useRouter } from 'next/router'
-import { redirectToPage } from '../../public/functions'
+import { redirectToPage } from '../lib/functions'
 import { useEffect, useState } from 'react'
 
 import Image from 'next/image'

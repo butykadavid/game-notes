@@ -10,7 +10,7 @@ import {
     limit,
     doc,
 } from "firebase/firestore";
-import { getOvrRating, toSearchWordsArray } from "../../public/functions";
+import { getOvrRating, toSearchWordsArray } from "./functions";
 
 // Home page data
 export async function fetchRecentGames(limitCount = 5) {

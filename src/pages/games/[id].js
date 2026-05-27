@@ -1,5 +1,5 @@
 import { db } from "../../../public/firebase"
-import { getOvrRating, getColor } from "../../../public/functions";
+import { getOvrRating, getColor } from "../../lib/functions";
 import { fetchGameReviewsByTitle, fetchSummaryByTitle } from "../../lib/firestore";
 
 import styles from "../../../styles/gamepage/gamePage.module.css"
