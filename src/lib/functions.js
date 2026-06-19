@@ -123,6 +123,11 @@ const normalizeGameTitle = (raw) => {
     return s;
 }
 
+const getFirstWordOfTitle = (title) => {
+    // (the regex is for removing superscript characters)
+    return title.split(' ')[0].replace(/[\u00A9\u00AE\u2122\u00B9\u00B2\u00B3\u2070-\u207F]+/g, '')
+}
+
 export {
     getOvrRating,
     getColor,
@@ -130,5 +135,6 @@ export {
     getFormattedDate,
     redirectToPage,
     toSearchWordsArray,
-    normalizeGameTitle
+    normalizeGameTitle,
+    getFirstWordOfTitle
 }

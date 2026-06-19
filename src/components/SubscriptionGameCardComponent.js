@@ -7,17 +7,13 @@ import Image from "next/image"
 import logo from '../../public/logo.png'
 import google_logo from '../../public/google_logo.svg'
 import Link from "next/link"
+import { getFirstWordOfTitle } from "@/lib/functions"
 
 export default function SubsciptionGameCardComponent({ game }) {
 
     const router = useRouter()
 
     const [optionsToggled, setOptionsToggled] = useState(false)
-
-    const getFirstWordOfTitle = () => {
-        // (the regex is for removing superscript characters)
-        return game.title.split(' ')[0].replace(/[\u00A9\u00AE\u2122\u00B9\u00B2\u00B3\u2070-\u207F]+/g, '')
-    }
 
     const onCardMouseOver = () => setOptionsToggled(true)
 
@@ -35,7 +31,7 @@ export default function SubsciptionGameCardComponent({ game }) {
             </div>
             {optionsToggled &&
                 <div className={styles.toggle__option__box}>
-                    <div className={styles.toggle__option} onClick={() => redirectToPage(router, `/games`, { searchWord: `${getFirstWordOfTitle()}` })}>
+                    <div className={styles.toggle__option} onClick={() => redirectToPage(router, `/games`, { searchWord: `${getFirstWordOfTitle(game.title)}` })}>
                         <div style={{ width: '25px' }}>
                             <Image src={logo} alt="Logo" style={{ width: '100%' }} />
                         </div>

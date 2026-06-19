@@ -6,6 +6,7 @@ import { normalizeGameTitle, redirectToPage } from '@/lib/functions';
 import styles from '../../styles/deals-card.module.css';
 import logo from '../../public/logo.png';
 import googleLogo from '../../public/google_logo.svg';
+import { getFirstWordOfTitle } from "@/lib/functions"
 
 import RatingBarComponent from './RatingBarComponent';
 
@@ -70,7 +71,7 @@ export default function DealsGridCardComponent({ game }) {
 
         {optionsOpen && (
           <div ref={optionsRef} className={styles.optionsMenu}>
-            <button type="button" className={styles.optionItem} onClick={() => redirectToPage(router, '/games', { searchWord: searchTitle })}>
+            <button type="button" className={styles.optionItem} onClick={() => redirectToPage(router, '/games', { searchWord: getFirstWordOfTitle(searchTitle) })}>
               <span className={styles.optionIcon}>
                 <Image src={logo} alt="GameNotes" width={"auto"} height={18} />
               </span>
