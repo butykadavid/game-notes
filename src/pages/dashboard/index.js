@@ -61,7 +61,7 @@ export default function Dashboard({ summaries, createReviewTitle }) {
 
         try {
             const game = {
-                title: _title.current.value,
+                title: _title.current.value.trim(),
                 gameplay: Number(_gameplay.current.value),
                 story: Number(_story.current.value),
                 atmosphere: Number(_atmosphere.current.value),
