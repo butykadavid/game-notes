@@ -10,8 +10,8 @@ export default function Modal({ visible, setVisible, title = 'Popup', width = '3
     }
 
     return <>
-        <div ref={overlayRef} style={{ display: `${visible ? "flex" : "none"}` }} className={styles.overlay} onClick={(e) => closeOnOutsideClick(e)}>
-            <div style={{ width: width, maxWidth: "85%", height: height, maxHeight: '85%' }} className={styles.window}>
+        <div ref={overlayRef} style={{ display: `${visible ? "flex" : "none"}`}} className={styles.overlay} onClick={(e) => closeOnOutsideClick(e)}>
+            <div style={{ width: width, maxWidth: "92%", height: height, maxHeight: '92%' }} className={styles.window}>
                 <div className={styles.window__toolbar}>
                     <h2 className={styles.window__title}>{title}</h2>
                     <a className={styles.window__close__button} onClick={() => setVisible(false)}>x</a>

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { redirectToPage, normalizeGameTitle } from "../lib/functions"
+import { redirectToPage } from "../lib/functions"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../public/firebase'
 import { useState } from "react"
@@ -23,8 +23,9 @@ import SubscribtionSectionCompnent from "../components/SubscriptionSectionCompon
 import Title from "../components/TitleComponent"
 import NewsFeedComponent from "../components/NewsFeedComponent"
 import Modal from "../components/Modal"
+import TriviaGameComponent from "../components/TriviaGameComponent"
 
-export default function Index({ recentGames, bestOvrGames, newestProfiles, posts, siteActivity }) {
+export default function Index({ recentGames, bestOvrGames, posts }) {
 
     const router = useRouter()
     const [user, loading] = useAuthState(auth)
@@ -174,13 +175,7 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
                                 </Link>
                             </div>
                         </div>
-                        <a className={`${styles.box} ${styles.card__trivia}`}>
-                            <div className={styles.card__icon}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M560-360q17 0 29.5-12.5T602-402q0-17-12.5-29.5T560-444q-17 0-29.5 12.5T518-402q0 17 12.5 29.5T560-360Zm-30-128h60q0-29 6-42.5t28-35.5q30-30 40-48.5t10-43.5q0-45-31.5-73.5T560-760q-41 0-71.5 23T446-676l54 22q9-25 24.5-37.5T560-704q24 0 39 13.5t15 36.5q0 14-8 26.5T578-596q-33 29-40.5 45.5T530-488ZM320-240q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z" /></svg>
-                            </div>
-                            <h2>Trivia Game</h2>
-                            <p>Test your GameNotes knowledge</p>
-                        </a>
+                        <TriviaGameComponent user={user} />
 
                     </div>
                 </div>
@@ -211,21 +206,17 @@ export default function Index({ recentGames, bestOvrGames, newestProfiles, posts
 
 export const getServerSideProps = async () => {
 
-    const [recentGames, bestOvrGames, newestProfiles, posts, siteActivity] = await Promise.all([
+    const [recentGames, bestOvrGames, posts] = await Promise.all([
         fetchRecentGames(5),
         fetchBestOverallGames(4),
-        fetchNewestProfiles(10),
         fetchRecentPosts(5),
-        fetchSiteActivityFromLastYear(),
     ])
 
     return {
         props: {
             recentGames,
             bestOvrGames,
-            newestProfiles,
-            posts,
-            siteActivity
+            posts
         }
     }
 }

@@ -96,8 +96,8 @@ export default function Admin() {
 
     return (
         <div className={styles.main__container}>
-            <div className={styles.summaries__wrapper}>
-                <div className={styles.summaries__header}>
+            <div className={styles.image__upload__container}>
+                <div className={styles.header}>
                     <h2>Game summaries</h2>
                     <label className={styles.toggle}>
                         <input
@@ -108,38 +108,42 @@ export default function Admin() {
                         Hide complete
                     </label>
                 </div>
-                <div className={styles.summaries}>
-                    <div className={styles.list}>
-                        {filteredData.length === 0 && (
-                            <p className={styles.empty}>No items require attention</p>
-                        )}
+                <div className={styles.summaries__content}>
+                    <div className={styles.summaries__wrapper}>
+                        <div className={styles.summaries}>
+                            <div className={styles.list}>
+                                {filteredData.length === 0 && (
+                                    <p className={styles.empty}>No items require attention</p>
+                                )}
 
-                        {filteredData.map(item => (
-                            <div
-                                key={item.id}
-                                className={`${styles.item} ${selected?.id === item.id ? styles.selected : ""}`}
-                                onClick={() => setSelected(item)}
-                            >
-                                <div className={styles.info}>
-                                    <span className={styles.title}>{item.title}</span>
-                                    {!item.img && (
-                                        <span className={styles.badge}>Missing image</span>
-                                    )}
-                                </div>
+                                {filteredData.map(item => (
+                                    <div
+                                        key={item.id}
+                                        className={`${styles.item} ${selected?.id === item.id ? styles.selected : ""}`}
+                                        onClick={() => setSelected(item)}
+                                    >
+                                        <div className={styles.info}>
+                                            <span className={styles.title}>{item.title}</span>
+                                            {!item.img && (
+                                                <span className={styles.badge}>Missing image</span>
+                                            )}
+                                        </div>
 
-                                <button
-                                    className={styles.button}
-                                    onClick={() => handleImageUpdate(item.id)}
-                                >
-                                    {item.img ? "Change image" : "Add image"}
-                                </button>
+                                        <button
+                                            className={styles.button}
+                                            onClick={() => handleImageUpdate(item.id)}
+                                        >
+                                            {item.img ? "Change image" : "Add image"}
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
+                    </div>
+                    <div className={styles.display__wrapper}>
+                        <div className={styles.display} style={{ backgroundImage: `url(${selected?.img})`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
                     </div>
                 </div>
-            </div>
-            <div className={styles.display__wrapper}>
-                <div className={styles.display} style={{ backgroundImage: `url(${selected?.img})`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
             </div>
         </div>
     )

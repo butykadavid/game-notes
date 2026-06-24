@@ -81,7 +81,7 @@ export async function fetchSummaries({ searchWord = null, limitCount = 25 } = {}
     }
 
     const docs = await getDocs(q);
-    return docs.docs.map((d) => ({ ...d.data() }));
+    return docs.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 // Game detail
@@ -96,6 +96,24 @@ export async function fetchSummaryByTitle(title) {
     const docs = await getDocs(q);
     const items = docs.docs.map((d) => ({ id: d.id, ...d.data() }));
     return items[0] || null;
+}
+
+export async function fetchTopTriviaPlayers(limitCount = 10) {
+    const q = query(
+        collection(db, "users"),
+        where("bestTriviaScore", ">", 0),
+        orderBy("bestTriviaScore", "desc"),
+        limit(limitCount)
+    );
+    const docs = await getDocs(q);
+    return docs.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function updateUserTriviaBest(uid, score) {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, {
+        bestTriviaScore: score,
+    });
 }
 
 // Profile
