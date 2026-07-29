@@ -7,7 +7,7 @@
     padding: 25px;
 
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
@@ -71,16 +71,44 @@
     color: var(--text-color-2);
 }
 
-@media only screen and (max-width: 600px) {
-    .title__container .item__box {
-        font-size: 1.15rem;
+@media only screen and (max-width: 1024px) {
+    .title__container div {
+        padding: 10px 20px;
+        margin: 10px;
     }
 
-    .title__container p {
+    .title__container .item__box {
         font-size: 0.85rem;
     }
 
+    .title__container p {
+        font-size: 0.65rem;
+    }
+
     .title__container p span {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .title__container {
+        padding: 25px 10px;
+    }
+
+    .title__container div {
+        padding: 5px 10px;
+        margin: 5px;
+    }
+
+    .title__container .item__box {
+        font-size: 0.6rem;
+    }
+
+    .title__container p {
+        font-size: 0.4rem;
+    }
+
+    .title__container p span {
+        font-size: 0.45rem;
     }
 }

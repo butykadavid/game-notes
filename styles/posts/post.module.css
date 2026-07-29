@@ -48,6 +48,8 @@
     width: 100%;
     height: 20%;
 
+    padding: 0px 15px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,6 +61,8 @@
     width: 100%;
     height: 70%;
     max-height: 75%;
+
+    padding: 0px 15px;
 
     overflow-y: auto;
 
@@ -108,7 +112,7 @@
     color: var(--text-color-2);
 }
 
-.delete__button{
+.delete__button {
     padding: 1px 6px;
     margin: 5px 10px;
 
@@ -121,13 +125,12 @@
     transition: 0.25s ease-in-out;
 }
 
-.delete__button:hover{
+.delete__button:hover {
     cursor: pointer;
     opacity: 0.7;
 }
 
-@media only screen and (max-width: 1200px) {
-}
+@media only screen and (max-width: 1200px) {}
 
 @media only screen and (max-width: 600px) {
     .post__card {

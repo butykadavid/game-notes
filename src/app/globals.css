@@ -18,6 +18,10 @@
     --border-radius-small: 4px;
 }
 
+* {
+    box-sizing: border-box !important;
+}
+
 *::-webkit-scrollbar {
     width: 3px;
     background: transparent;

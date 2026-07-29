@@ -10,11 +10,13 @@ import loaderStyles from "../../styles/loader.module.css"
 
 import { useRouter } from "next/router";
 
-export default function GamesComponent({ searchWord }) {
+const stepSize = 10
+
+export default function GamesComponent({ searchWord, initialAmount = 25 }) {
 
     const [items, setItems] = useState([])
     const [hasMore, setHasMore] = useState(true)
-    const [index, setIndex] = useState(25)
+    const [index, setIndex] = useState(initialAmount)
 
     const router = useRouter()
 
@@ -26,7 +28,7 @@ export default function GamesComponent({ searchWord }) {
 
         setItems(data)
 
-        setIndex((prev) => prev + 10)
+        setIndex((prev) => prev + stepSize)
     }
 
     useEffect(() => {
@@ -38,7 +40,7 @@ export default function GamesComponent({ searchWord }) {
             <div className={styles.main__container}>
 
                 {searchWord ?
-                    <Title text={`Games searched: ${searchWord}`} />
+                    <Title text={`Searched: ${searchWord}`} />
                     :
                     <Title text={'GameNotes Reviews'} />
                 }
@@ -53,7 +55,7 @@ export default function GamesComponent({ searchWord }) {
         <div className={styles.main__container}>
 
             {searchWord ?
-                <Title text={`Games searched: ${searchWord}`} />
+                <Title text={`Searched: ${searchWord}`} />
                 :
                 <Title text={'GameNotes Reviews'} />
             }
@@ -78,7 +80,8 @@ export default function GamesComponent({ searchWord }) {
                                     <h1 className={styles.item__box}>{item.title}</h1>
                                     <p>Average rating <span style={{ color: `${getColor(item.average)}` }}>{item.average}</span></p>
                                     <p>Reviews <span>{item.count}</span></p>
-                                </div>)
+                                </div>
+                            )
                         })
                     }
 
