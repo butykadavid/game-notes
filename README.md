@@ -1,3 +1,11 @@
+# GameNotes
+
+GameNotes is a community-driven video game review platform designed to encourage **objective game analysis** rather than simple overall ratings. Instead of assigning a single score, each review evaluates a game across seven carefully chosen aspects that together provide a more meaningful picture of its design.
+
+Originally developed by **Dávid Butyka**, GameNotes focuses on evaluating games from an artistic and game design perspective while also providing a centralized place for players to share detailed reviews.
+
+---
+
 # Running the Project
 
 > [!IMPORTANT]
@@ -23,14 +31,6 @@ The application will then be available at:
 ```text
 http://localhost:3000
 ```
-
----
-
-# GameNotes
-
-GameNotes is a community-driven video game review platform designed to encourage **objective game analysis** rather than simple overall ratings. Instead of assigning a single score, each review evaluates a game across seven carefully chosen aspects that together provide a more meaningful picture of its design.
-
-Originally developed by **Dávid Butyka**, GameNotes focuses on evaluating games from an artistic and game design perspective while also providing a centralized place for players to share detailed reviews.
 
 ---
 
